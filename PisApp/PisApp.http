@@ -1,0 +1,6 @@
+@PisApp_HostAddress = http://localhost:5216
+
+GET {{PisApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
