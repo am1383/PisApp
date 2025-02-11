@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PisApp", "PisApp.csproj", "{71D48137-99E4-7BF6-F0E8-3E1DEC9AFAE9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{71D48137-99E4-7BF6-F0E8-3E1DEC9AFAE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71D48137-99E4-7BF6-F0E8-3E1DEC9AFAE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71D48137-99E4-7BF6-F0E8-3E1DEC9AFAE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71D48137-99E4-7BF6-F0E8-3E1DEC9AFAE9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8CF78E91-D728-45B2-B547-6A2FAC3A7B55}
+	EndGlobalSection
+EndGlobal
