@@ -12,12 +12,12 @@ namespace MRH.Backend.Customers.Persistence
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Name = "Authorization",
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT",
-                    In = ParameterLocation.Header,
-                    Description = "Please enter your Bearer token"
+                    Name          = "Authorization",
+                    Type          = SecuritySchemeType.ApiKey,
+                    Scheme        = "Bearer",
+                    BearerFormat  = "JWT",
+                    In            = ParameterLocation.Header,
+                    Description   = "Please enter your Bearer token"
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -28,7 +28,7 @@ namespace MRH.Backend.Customers.Persistence
                             Reference = new OpenApiReference
                             {
                                 Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
+                                Id   = "Bearer"
                             }
                         },
                         new string[] {}

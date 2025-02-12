@@ -15,12 +15,12 @@ namespace MRH.Backend.Customers.Persistence
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
+                    ValidateIssuer    = true,
+                    ValidateAudience  = true,
+                    ValidateLifetime  = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = configuration["JwtSettings:Issuer"],
-                    ValidAudience = configuration["JwtSettings:Issuer"],
+                    ValidIssuer      = configuration["JwtSettings:Issuer"],
+                    ValidAudience    = configuration["JwtSettings:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Secret"]!))
                 };
             });
