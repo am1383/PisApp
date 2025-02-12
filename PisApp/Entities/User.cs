@@ -1,4 +1,0 @@
-namespace PisApp.API.Entities
-{
-    
-}

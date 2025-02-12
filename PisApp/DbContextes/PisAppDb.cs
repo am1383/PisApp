@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using PisApp.API.Entities;
+using PisApp.API.Entities.Common;
 
 namespace PisApp.API.DbContextes
 {
@@ -11,7 +11,8 @@ namespace PisApp.API.DbContextes
             //
         }
 
-        public required DbSet<User> User { get; set; }
+        public DbSet<BaseEntity> UserResults { get; set; } 
+        public DbSet<UserId> userIds { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

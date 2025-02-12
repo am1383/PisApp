@@ -4,6 +4,6 @@ namespace PisApp.API.DTOs.LoginDto
 {
     public class LoginDto : CommonDto
     {
-        //
+        
     }
 }
