@@ -1,4 +1,4 @@
-namespace MRH.Backend.Identity.API.Exceptions
+namespace PisApp.API.Exceptions
 {
     public class NotFoundExceptions : ApplicationException
     {

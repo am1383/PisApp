@@ -1,6 +1,7 @@
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Microsoft.IdentityModel.Tokens;
+using System.Net.Http.Headers;
 using System.Text;
 
 public class JwtService
@@ -20,14 +21,14 @@ public class JwtService
                 new Claim("userId", userId.ToString())
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
+        var key   = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: _issuer,
-            audience: _issuer,
-            claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(expiryMinutes),
+            issuer   : _issuer,
+            audience : _issuer,
+            claims   : claims,
+            expires  : DateTime.UtcNow.AddMinutes(expiryMinutes),
             signingCredentials: creds
         );
 
@@ -43,13 +44,13 @@ public class JwtService
         {
             var validationParameters = new TokenValidationParameters
             {
-                ValidateIssuer = true,
+                ValidateIssuer   = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,
-                ValidIssuer = _issuer,
-                ValidAudience = _issuer,
+                ValidIssuer      = _issuer,
+                ValidAudience    = _issuer,
                 IssuerSigningKey = key,
-                ClockSkew = TimeSpan.Zero // Prevent clock skew issues
+                ClockSkew        = TimeSpan.Zero // Prevent clock skew issues
             };
 
             var principal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
@@ -68,47 +69,35 @@ public class JwtService
         }
     }
 
-    public string GetUserId(HttpRequest request)
+    public int GetUserId(HttpRequest request)
     {
         var token = ExtractTokenFromRequest(request);
 
         return GetUserIdFromToken(token);
     }
 
-    public List<string> ExtractRolesFromToken(HttpRequest request)
-    {
-        var token = ExtractTokenFromRequest(request);
-
-        return ExtractRolesFromToken(token);
-    }
-
-    public List<string> ExtractRolesFromToken(string token)
+    private int GetUserIdFromToken(string token)
     {
         var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
 
-        return jwtToken.Claims
-                       .Where(c => c.Type == ClaimTypes.Role)
-                       .Select(c => c.Value)
-                       .ToList();
-    }
+        var userId = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value
+                    ?? throw new InvalidOperationException("User ID claim not found.");
 
-    private string GetUserIdFromToken(string token)
-    {
-        var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+        if (!int.TryParse(userId, out int clientId))
+            throw new ArgumentException("Invalid userId format");
 
-        return jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value 
-               ?? throw new InvalidOperationException("User ID claim not found.");
+        return clientId;
     }
 
     private string ExtractTokenFromRequest(HttpRequest request)
     {
-        if (request?.Headers == null || !request.Headers.ContainsKey("Authorization"))
-            throw new InvalidOperationException("Authorization header is missing.");
+        var authHeader = request?.Headers["Authorization"].FirstOrDefault();
+        
+        if (AuthenticationHeaderValue.TryParse(authHeader, out var headerValue) && headerValue.Scheme.Equals("Bearer", StringComparison.OrdinalIgnoreCase))
+        {
+            return headerValue.Parameter;
+        }
 
-        var authHeader = request.Headers["Authorization"].FirstOrDefault();
-        if (string.IsNullOrWhiteSpace(authHeader) || !authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
-            throw new InvalidOperationException("Authorization header is invalid.");
-
-        return authHeader["Bearer ".Length..].Trim();
+        throw new InvalidOperationException("Invalid or missing Authorization header.");
     }
 }

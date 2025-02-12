@@ -4,13 +4,17 @@ using PisApp.API.Interface.UnitOfWork;
 
 namespace PisApp.API.Repositories.UnitOfWork
 {
-    public class UnitOfWork(PisAppDb context) : IUnitOfWork
+    public class UnitOfWork(PisAppDbContext context) : IUnitOfWork
     {
-        private readonly PisAppDb _context = context;
+        private readonly PisAppDbContext _context = context;
         
         private IUserRepository? _usersRepository;
 
+        private IAddressRepository? _addressRepository;
+
         public IUserRepository Users => _usersRepository ??= new UserRepository(_context);
+
+        public IAddressRepository Addresses => _addressRepository ??= new AddressRepository(_context);
 
         public async Task<int> CompleteAsync()
         {
