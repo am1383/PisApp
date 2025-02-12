@@ -15,7 +15,7 @@ namespace MRH.Backend.Customers.Persistence
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         
-            services.AddDbContext<PisAppDb>(options =>
+            services.AddDbContext<PisAppDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("MainDB")));
             
             services.Configure<JwtService>(configuration.GetSection("JwtSettings"));
