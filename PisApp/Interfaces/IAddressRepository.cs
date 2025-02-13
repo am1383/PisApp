@@ -1,6 +1,6 @@
 using PisApp.API.DTOs;
 
-namespace PisApp.API.Interface
+namespace PisApp.API.Interfaces
 {
     public interface IAddressRepository
     {
