@@ -27,6 +27,7 @@ namespace PisApp.API.DbContextes
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<VIPUser>      ().HasNoKey();
+            modelBuilder.Entity<BaseEntity>   ().HasNoKey();
             modelBuilder.Entity<User>         ().HasNoKey();
             modelBuilder.Entity<Cart>         ().HasNoKey();
             modelBuilder.Entity<Discount>     ().HasNoKey();
