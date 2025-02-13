@@ -1,7 +1,8 @@
 using PisApp.API.Exceptions;
 using PisApp.API.DTOs;
-using PisApp.API.Interface;
-using PisApp.API.Interface.UnitOfWork;
+using PisApp.API.Interfaces;
+using PisApp.API.Interfaces.UnitOfWork;
+using PisApp.API.Entities;
 
 namespace PisApp.API.Services
 {
@@ -14,6 +15,19 @@ namespace PisApp.API.Services
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<UserDetailDto> Details(UserDetail user, VIPUserDetailDto isUserVIP, int countUserReffer)
+        {
+            return new UserDetailDto {
+                first_name      = user.first_name,
+                last_name       = user.last_name, 
+                wallet_balance  = user.wallet_balance,
+                referral_code   = user.referral_code,
+                countUserReffer = countUserReffer,
+                time_stamp      = user.time_stamp,
+                vip_detail      = isUserVIP,
+            };
+        }
+        
         public async Task<int> FindUserIdByPhoneNumber(string phoneNumber)
         {
             if (await _unitOfWork.Users.GetUserByPhoneNumberAsync(phoneNumber))
@@ -25,7 +39,7 @@ namespace PisApp.API.Services
             }
         }
 
-        public async Task<UserDetailDto> GetUserDetailsById(int userId)
+        public async Task<UserDetail> GetUserDetailsById(int userId)
         {
             return await _unitOfWork.Users.GetUserDetailAsync(userId);
         }
@@ -38,7 +52,7 @@ namespace PisApp.API.Services
             {
                 return new VIPUserDetailDto
                 {
-                    is_VIP = false, 
+                    is_VIP         = false, 
                     remaining_time = 0, 
                 };
             }
@@ -56,6 +70,94 @@ namespace PisApp.API.Services
         public async Task<IEnumerable<AddressDetailDto>> GetUserAddressesById(int userId)
         {
             return await _unitOfWork.Addresses.GetAllAddressesById(userId);
+        }
+
+        public async Task<int> CountUserRefferer(string referCode)
+        {
+            return await _unitOfWork.Refers.CountUserReferrerByCode(referCode);
+        }
+
+        public async Task<IEnumerable<PrivateDiscountDetailsDto>> UserPrivateCodeWithLimiteTime(int userId)
+        {
+            var codes = await _unitOfWork.Discounts.GetPrivateDiscountCodesWithLessThanOneWeekLeft(userId);
+
+            var discountDetails = codes.Select(code => new PrivateDiscountDetailsDto
+            {
+                code = code.code
+            }).ToList();
+
+            return discountDetails;
+        }
+
+        public async Task<GiftDiscountDetailDto> UserGiftedCodeCount(int userId)
+        {
+            var giftCodes = await _unitOfWork.Discounts.GetGiftedDiscountCodesCount(userId);
+
+            return new GiftDiscountDetailDto
+            {
+                gifted_code = giftCodes
+            };
+        }
+
+        public async Task<DiscountSummaryDto> UserDiscountsSummary(IEnumerable<PrivateDiscountDetailsDto> privateCodes, GiftDiscountDetailDto giftCodes)
+        {
+            return new DiscountSummaryDto
+            {
+                discounts = privateCodes,
+                gifts = giftCodes
+            };
+        }
+        
+        public async Task<ShoppingCartsDetailsDto> UserRecentPurchases(int userId)
+        {
+            var shoppingCarts = await _unitOfWork.ShoppingCarts.UserRecentPurchasesAsync(userId);
+
+            var recentCart = shoppingCarts.OrderByDescending(cart => cart.cart_number).FirstOrDefault();
+
+            if (recentCart == null)
+            {
+                return new ShoppingCartsDetailsDto
+                {
+                    cart_number      = 0,
+                    cart_status      = "No Cart",
+                    total_items      = 0,
+                    total_quantity   = 0,
+                    total_cart_price = 0
+                };
+            }
+
+            return new ShoppingCartsDetailsDto
+            {
+                cart_number      = recentCart.cart_number,
+                cart_status      = recentCart.cart_status,
+                total_items      = recentCart.total_items,
+                total_quantity   = recentCart.total_quantity,
+                total_cart_price = recentCart.total_cart_price
+            };
+        }
+
+        public async Task<IEnumerable<CartDetailsDto>> UserCartsStatus(int userId)
+        {
+            var carts = await _unitOfWork.ShoppingCarts.UserCartsStatus(userId);
+
+            var cartDetailsList = carts.Select(cart => new CartDetailsDto
+            {
+                cart_number = cart.cart_number,
+                cart_status = cart.cart_status,
+                total_items = cart.total_items
+            }).ToList();
+
+            return cartDetailsList;
+        }
+
+        public async Task<UserProfitDto> VIPUserProfit(int userId)
+        {
+            var profit =  await _unitOfWork.Transactions.GetUserProfitForVIPClients(userId);
+
+            return new UserProfitDto
+            {
+                user_profit = profit.user_profit,
+            };
         }
     }
 }

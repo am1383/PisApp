@@ -17,7 +17,7 @@ namespace MRH.Backend.Customers.Persistence
                     Scheme        = "Bearer",
                     BearerFormat  = "JWT",
                     In            = ParameterLocation.Header,
-                    Description   = "Please enter your Bearer token"
+                    Description   = "Please Enter Your Bearer token"
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement

@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PisApp.API.DbContextes;
-using PisApp.API.Interface;
-using PisApp.API.Interface.UnitOfWork;
+using PisApp.API.Interfaces;
+using PisApp.API.Interfaces.UnitOfWork;
 using PisApp.API.Repositories.UnitOfWork;
 using PisApp.API.Services;
 
