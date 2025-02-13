@@ -7,6 +7,7 @@ using System.Text;
 public class JwtService
 {
     private readonly string _key;
+
     private readonly string _issuer;
 
     public JwtService(string key, string issuer)
@@ -37,7 +38,8 @@ public class JwtService
 
     public ClaimsPrincipal? ValidateToken(string token)
     {
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
+        var key          = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
+
         var tokenHandler = new JwtSecurityTokenHandler();
 
         try
@@ -80,8 +82,8 @@ public class JwtService
     {
         var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
 
-        var userId = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value
-                    ?? throw new InvalidOperationException("User ID claim not found.");
+        var userId   = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value
+                            ?? throw new InvalidOperationException("User ID claim not found.");
 
         if (!int.TryParse(userId, out int clientId))
             throw new ArgumentException("Invalid userId format");
