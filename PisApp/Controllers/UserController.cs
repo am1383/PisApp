@@ -31,11 +31,11 @@ namespace PisApp.API.Controllers
 
                 var token       = _jwtService.GenerateToken(userId);
 
-                return new ResponseDto<string>(true, token, null, null);  
+                return new ResponseDto<string>(true, token);  
             } 
             catch (Exception e)
             {
-                return new ResponseDto<string>(false, null, $"Exception : {e.Message}", null);
+                return new ResponseDto<string>(false, null, $"Exception : {e.Message}");
             }
         }
 
@@ -55,11 +55,11 @@ namespace PisApp.API.Controllers
 
                 var userDetail      = await _userService.Details(user, isUserVip, countUserReffer);
 
-                return new ResponseDto<UserDetailDto>(true, userDetail, null, null);
+                return new ResponseDto<UserDetailDto>(true, userDetail);
             }
             catch (Exception e)
             {
-                return new ResponseDto<UserDetailDto>(false, null, $"Exception : {e.Message}", null);
+                return new ResponseDto<UserDetailDto>(false, null, $"Exception : {e.Message}");
             }
         }
 
@@ -73,11 +73,11 @@ namespace PisApp.API.Controllers
 
                 var addresses = await _userService.GetUserAddressesById(userId);
 
-                return new ResponseDto<IEnumerable<AddressDetailDto>>(true, addresses, null, null);
+                return new ResponseDto<IEnumerable<AddressDetailDto>>(true, addresses);
             }
             catch (Exception e)
             {
-                return new ResponseDto<IEnumerable<AddressDetailDto>>(false, null, $"Exception : {e.Message}", null);
+                return new ResponseDto<IEnumerable<AddressDetailDto>>(false, null, $"Exception : {e.Message}");
             }
         }
 
@@ -95,11 +95,11 @@ namespace PisApp.API.Controllers
 
                 var discountsSummary = await _userService.UserDiscountsSummary(privateCode, giftedCode);
 
-                return new ResponseDto<DiscountSummaryDto>(true, discountsSummary, null, null);
+                return new ResponseDto<DiscountSummaryDto>(true, discountsSummary);
             }
             catch (Exception e)
             {
-                return new ResponseDto<DiscountSummaryDto>(false, null, $"Exception : {e.Message}", null);
+                return new ResponseDto<DiscountSummaryDto>(false, null, $"Exception : {e.Message}");
             }
         }
 
@@ -113,11 +113,11 @@ namespace PisApp.API.Controllers
 
                 var shoppingCarts = await _userService.UserRecentPurchases(userId);
 
-                return new ResponseDto<ShoppingCartsDetailsDto>(true, shoppingCarts, null, null);
+                return new ResponseDto<ShoppingCartsDetailsDto>(true, shoppingCarts);
             }
             catch (Exception e)
             {
-                return new ResponseDto<ShoppingCartsDetailsDto>(false, null, $"Exception : {e.Message}", null);
+                return new ResponseDto<ShoppingCartsDetailsDto>(false, null, $"Exception : {e.Message}");
             }
         }
 
@@ -131,12 +131,12 @@ namespace PisApp.API.Controllers
 
                 var carts  = await _userService.UserCartsStatus(userId);
 
-                return new ResponseDto<IEnumerable<CartDetailsDto>>(true, carts, null, null);
+                return new ResponseDto<IEnumerable<CartDetailsDto>>(true, carts);
 
             }
             catch (Exception e)
             {
-                return new ResponseDto<IEnumerable<CartDetailsDto>>(false, null, $"Exception : {e.Message}", null);
+                return new ResponseDto<IEnumerable<CartDetailsDto>>(false, null, $"Exception : {e.Message}");
             }
         }
 
@@ -150,11 +150,11 @@ namespace PisApp.API.Controllers
 
                 var profit = await _userService.VIPUserProfit(userId);
 
-                return new ResponseDto<UserProfitDto>(true, profit, null, null);
+                return new ResponseDto<UserProfitDto>(true, profit);
             }
             catch (Exception e)
             {
-                return new ResponseDto<UserProfitDto>(false, null, $"Exception : {e.Message}", null);
+                return new ResponseDto<UserProfitDto>(false, null, $"Exception : {e.Message}");
             }
         }
     }
