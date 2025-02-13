@@ -1,4 +1,4 @@
-namespace PisApp.API.DTOs
+namespace PisApp.API.Dtos
 {
     public class GiftDiscountDetailDto
     {

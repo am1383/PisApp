@@ -36,11 +36,9 @@ namespace PisApp.API.Repositories
                         LIMIT 5;
                 ";
 
-            var result = await _context.Set<ShoppingCart>()
+            return await _context.Set<ShoppingCart>()
                                         .FromSqlRaw(query, userId)
                                         .ToListAsync();
-
-            return result;
         }
 
         public async Task<List<Cart>> UserCartsStatus(int userId)
@@ -60,10 +58,9 @@ namespace PisApp.API.Repositories
                     s.cart_number, s.cart_status;
                 ";
 
-            var result = await _context.Set<Cart>()
-                                        .FromSqlRaw(query, userId)
-                                        .ToListAsync();
-            return result;
+            return await _context.Set<Cart>()
+                                .FromSqlRaw(query, userId)
+                                .ToListAsync();
         }
     }
 }

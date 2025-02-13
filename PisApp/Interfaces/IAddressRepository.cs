@@ -1,9 +1,10 @@
-using PisApp.API.DTOs;
+using PisApp.API.Dtos;
+using PisApp.API.Entities;
 
 namespace PisApp.API.Interfaces
 {
     public interface IAddressRepository
     {
-        public Task<IEnumerable<AddressDetailDto>> GetAllAddressesById(int userId);
+        public Task<List<Address>> GetAllAddressesById(int userId);
     }
 }

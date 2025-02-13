@@ -1,7 +1,7 @@
 using FluentValidation;
-using PisApp.API.DTOs.LoginDto;
+using PisApp.API.Dtos.LoginDto;
 
-namespace MRH.Backend.Customers.Services.DTOs.Validators
+namespace MRH.Backend.Customers.Services.Dtos.Validators
 {
     public class AddScoreValidation : AbstractValidator<LoginDto>
     {

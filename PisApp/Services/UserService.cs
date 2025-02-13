@@ -1,5 +1,5 @@
 using PisApp.API.Exceptions;
-using PisApp.API.DTOs;
+using PisApp.API.Dtos;
 using PisApp.API.Interfaces;
 using PisApp.API.Interfaces.UnitOfWork;
 using PisApp.API.Entities;
@@ -69,8 +69,15 @@ namespace PisApp.API.Services
 
         public async Task<IEnumerable<AddressDetailDto>> GetUserAddressesById(int userId)
         {
-            return await _unitOfWork.Addresses.GetAllAddressesById(userId);
+            var addresses = await _unitOfWork.Addresses.GetAllAddressesById(userId);
+
+            return addresses.Select(a => new AddressDetailDto
+            {
+                province = a.province,
+                remain_address = a.remain_address,
+            });
         }
+
 
         public async Task<int> CountUserRefferer(string referCode)
         {

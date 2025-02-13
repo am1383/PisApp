@@ -1,4 +1,4 @@
-using PisApp.API.DTOs;
+using PisApp.API.Dtos;
 using PisApp.API.Entities;
 
 namespace PisApp.API.Interfaces

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PisApp.API.DbContextes;
-using PisApp.API.DTOs;
+using PisApp.API.Dtos;
 using PisApp.API.Entities;
 using PisApp.API.Interfaces;
 
@@ -15,18 +15,13 @@ namespace PisApp.API.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<AddressDetailDto>> GetAllAddressesById(int userId)
+        public async Task<List<Address>> GetAllAddressesById(int userId)
         {
             var query = "SELECT province, remain_address FROM address_of_client WHERE client_id = @p0";
 
             return await _context.Set<Address>()
-                .FromSqlRaw(query, userId)
-                .Select(a => new AddressDetailDto
-                {
-                    province = a.province,      
-                    remain_address = a.remain_address 
-                })
-                .ToListAsync();
+                    .FromSqlRaw(query, userId)
+                    .ToListAsync();
         }
     }
 }

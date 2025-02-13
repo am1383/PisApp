@@ -1,4 +1,4 @@
-namespace PisApp.API.DTOs.Common
+namespace PisApp.API.Dtos.Common
 {
     public class CommonDto
     {

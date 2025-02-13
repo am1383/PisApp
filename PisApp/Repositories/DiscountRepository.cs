@@ -21,14 +21,12 @@ namespace PisApp.API.Repositories
                 FROM private_code pc
                 JOIN discount_code dc ON pc.code = dc.code
                 WHERE pc.client_id = @p0
-                AND dc.expiration_time <= NOW() + INTERVAL '7 days'
+                    AND dc.expiration_time <= NOW() + INTERVAL '7 days'
             ";
 
-            var result = await _context.Set<PrivateDiscount>()
+            return await _context.Set<PrivateDiscount>()
                                         .FromSqlRaw(query, userId) 
                                         .ToListAsync();
-
-            return result;
         }
 
         public async Task<int> GetGiftedDiscountCodesCount(int userId)
@@ -38,8 +36,8 @@ namespace PisApp.API.Repositories
                 FROM private_code pc
                 JOIN discount_code dc ON pc.code = dc.code
                 WHERE pc.client_id = @p0
-                AND dc.code_type = 'private'
-                AND dc.expiration_time > NOW()";
+                    AND dc.code_type = 'private'
+                    AND dc.expiration_time > NOW()";
 
             var result = await _context.Set<Discount>()
                                         .FromSqlRaw(query, userId)

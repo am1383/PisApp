@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using PisApp.API.DTOs.LoginDto;
+using PisApp.API.Dtos.LoginDto;
 using PisApp.API.Interfaces;
-using PisApp.API.DTOs;
+using PisApp.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 
 namespace PisApp.API.Controllers
@@ -57,7 +57,7 @@ namespace PisApp.API.Controllers
 
                 return new ResponseDto<UserDetailDto>(true, userDetail, null, null);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return new ResponseDto<UserDetailDto>(false, null, $"Exception : {e.Message}", null);
             }

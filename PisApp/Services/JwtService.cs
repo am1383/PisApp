@@ -78,6 +78,18 @@ public class JwtService
         return GetUserIdFromToken(token);
     }
 
+    private string ExtractTokenFromRequest(HttpRequest request)
+    {
+        var authHeader = request?.Headers["Authorization"].FirstOrDefault();
+        
+        if (AuthenticationHeaderValue.TryParse(authHeader, out var headerValue) && headerValue.Scheme.Equals("Bearer", StringComparison.OrdinalIgnoreCase))
+        {
+            return headerValue.Parameter;
+        }
+
+        throw new InvalidOperationException("Invalid or missing Authorization header.");
+    }
+
     private int GetUserIdFromToken(string token)
     {
         var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
@@ -89,17 +101,5 @@ public class JwtService
             throw new ArgumentException("Invalid userId format");
 
         return clientId;
-    }
-
-    private string ExtractTokenFromRequest(HttpRequest request)
-    {
-        var authHeader = request?.Headers["Authorization"].FirstOrDefault();
-        
-        if (AuthenticationHeaderValue.TryParse(authHeader, out var headerValue) && headerValue.Scheme.Equals("Bearer", StringComparison.OrdinalIgnoreCase))
-        {
-            return headerValue.Parameter;
-        }
-
-        throw new InvalidOperationException("Invalid or missing Authorization header.");
     }
 }

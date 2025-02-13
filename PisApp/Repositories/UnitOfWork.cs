@@ -7,12 +7,13 @@ namespace PisApp.API.Repositories.UnitOfWork
     public class UnitOfWork(PisAppDbContext context) : IUnitOfWork
     {
         private readonly PisAppDbContext _context = context;
-        private IUserRepository? _usersRepository;
-        private IAddressRepository? _addressRepository;
-        private ITransactionRepository? _transactionRespository;
-        private IReferRepository? _referRepository;
+        
+        private IUserRepository?         _usersRepository;
+        private IAddressRepository?      _addressRepository;
+        private ITransactionRepository?  _transactionRespository;
+        private IReferRepository?        _referRepository;
         private IShoppingCartRepository? _shoppingCartRepository;
-        private IDiscountRepository? _discountRepository;
+        private IDiscountRepository?     _discountRepository;
 
         public IUserRepository Users => _usersRepository ??= new UserRepository(_context);
         public IDiscountRepository Discounts => _discountRepository ??= new DiscountRepository(_context);

@@ -22,7 +22,7 @@ namespace PisApp.API.Repositories
                     JOIN transaction AS t 
                         ON ifr.tracking_code = t.tracking_code
                     JOIN added_to AS at 
-                        ON at.client_id     = ifr.client_id
+                        ON at.client_id      = ifr.client_id
                         AND at.cart_number   = ifr.cart_number
                         AND at.locked_number = ifr.locked_number
                     WHERE t.time_stamp >= date_trunc('month', CURRENT_DATE)
