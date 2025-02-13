@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PisApp.API.DbContextes;
 using PisApp.API.DTOs;
 using PisApp.API.Entities;
-using PisApp.API.Interface;
+using PisApp.API.Interfaces;
 
 namespace PisApp.API.Repositories
 {
@@ -17,7 +17,7 @@ namespace PisApp.API.Repositories
 
         public async Task<IEnumerable<AddressDetailDto>> GetAllAddressesById(int userId)
         {
-            var query = "SELECT province, remain_address FROM address_of_client WHERE client_id = {0}";
+            var query = "SELECT province, remain_address FROM address_of_client WHERE client_id = @p0";
 
             return await _context.Set<Address>()
                 .FromSqlRaw(query, userId)
