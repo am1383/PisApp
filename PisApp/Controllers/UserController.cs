@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PisApp.API.DTOs.LoginDto;
-using PisApp.API.Interface;
+using PisApp.API.Interfaces;
 using PisApp.API.DTOs;
 using Microsoft.AspNetCore.Authorization;
 
@@ -21,15 +21,15 @@ namespace PisApp.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ResponseDto<string>> UserLogin(LoginDto loginDto)
+        public async Task<ResponseDto<string>> Login(LoginDto loginDto)
         {
             try 
             {
                 var phoneNumber = loginDto.phone_number;
 
-                var userId = await _userService.FindUserIdByPhoneNumber(phoneNumber);
+                var userId      = await _userService.FindUserIdByPhoneNumber(phoneNumber);
 
-                var token  = _jwtService.GenerateToken(userId);
+                var token       = _jwtService.GenerateToken(userId);
 
                 return new ResponseDto<string>(true, token, null, null);  
             } 
@@ -41,24 +41,19 @@ namespace PisApp.API.Controllers
 
         [Authorize]
         [HttpGet("user")]
-        public async Task<ResponseDto<UserDetailDto>> UserDetails()
+        public async Task<ResponseDto<UserDetailDto>> Show()
         {
             try
             {
-                var userId = _jwtService.GetUserId(Request);
+                var userId          = _jwtService.GetUserId(Request);
 
-                var user   = await _userService.GetUserDetailsById(userId);
+                var user            = await _userService.GetUserDetailsById(userId);
 
-                var isVip  = await _userService.GetRemainingTimeForVIP(userId);
+                var isUserVip       = await _userService.GetRemainingTimeForVIP(userId);
 
-                var userDetail = new UserDetailDto {
-                    first_name = user.first_name,
-                    last_name = user.last_name, 
-                    wallet_balance = user.wallet_balance,
-                    referral_code = user.referral_code,
-                    time_stamp = user.time_stamp,
-                    vip_detail = isVip,
-                };
+                var countUserReffer = await _userService.CountUserRefferer(user.referral_code);
+
+                var userDetail      = await _userService.Details(user, isUserVip, countUserReffer);
 
                 return new ResponseDto<UserDetailDto>(true, userDetail, null, null);
             }
@@ -70,13 +65,97 @@ namespace PisApp.API.Controllers
 
         [Authorize]
         [HttpGet("addresses")]
-        public async Task<ResponseDto<IEnumerable<AddressDetailDto>>> UserAddresses()
+        public async Task<ResponseDto<IEnumerable<AddressDetailDto>>> Addresses()
         {
-            var userId = _jwtService.GetUserId(Request);
+            try
+            {
+                var userId    = _jwtService.GetUserId(Request);
 
-            var addresses = await _userService.GetUserAddressesById(userId);
+                var addresses = await _userService.GetUserAddressesById(userId);
 
-            return new ResponseDto<IEnumerable<AddressDetailDto>>(true, addresses, null, null);
+                return new ResponseDto<IEnumerable<AddressDetailDto>>(true, addresses, null, null);
+            }
+            catch (Exception e)
+            {
+                return new ResponseDto<IEnumerable<AddressDetailDto>>(false, null, $"Exception : {e.Message}", null);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("code")]
+        public async Task<ResponseDto<DiscountSummaryDto>> DiscountCodeStatus()
+        {
+            try
+            {
+                var userId           = _jwtService.GetUserId(Request);
+
+                var privateCode      = await _userService.UserPrivateCodeWithLimiteTime(userId);
+
+                var giftedCode       = await _userService.UserGiftedCodeCount(userId);
+
+                var discountsSummary = await _userService.UserDiscountsSummary(privateCode, giftedCode);
+
+                return new ResponseDto<DiscountSummaryDto>(true, discountsSummary, null, null);
+            }
+            catch (Exception e)
+            {
+                return new ResponseDto<DiscountSummaryDto>(false, null, $"Exception : {e.Message}", null);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("purchases")]
+        public async Task<ResponseDto<ShoppingCartsDetailsDto>> RecentPurchases()
+        {
+            try
+            {
+                var userId        = _jwtService.GetUserId(Request);
+
+                var shoppingCarts = await _userService.UserRecentPurchases(userId);
+
+                return new ResponseDto<ShoppingCartsDetailsDto>(true, shoppingCarts, null, null);
+            }
+            catch (Exception e)
+            {
+                return new ResponseDto<ShoppingCartsDetailsDto>(false, null, $"Exception : {e.Message}", null);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("carts/status")]
+        public async Task<ResponseDto<IEnumerable<CartDetailsDto>>> CartsStatus()
+        {
+            try
+            {
+                var userId = _jwtService.GetUserId(Request);
+
+                var carts  = await _userService.UserCartsStatus(userId);
+
+                return new ResponseDto<IEnumerable<CartDetailsDto>>(true, carts, null, null);
+
+            }
+            catch (Exception e)
+            {
+                return new ResponseDto<IEnumerable<CartDetailsDto>>(false, null, $"Exception : {e.Message}", null);
+            }
+        }
+
+        [Authorize]
+        [HttpGet("profit")]
+        public async Task<ResponseDto<UserProfitDto>> VIPUserProfit()
+        {
+            try
+            {
+                var userId = _jwtService.GetUserId(Request);
+
+                var profit = await _userService.VIPUserProfit(userId);
+
+                return new ResponseDto<UserProfitDto>(true, profit, null, null);
+            }
+            catch (Exception e)
+            {
+                return new ResponseDto<UserProfitDto>(false, null, $"Exception : {e.Message}", null);
+            }
         }
     }
 }
