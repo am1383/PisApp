@@ -62,7 +62,7 @@ namespace PisApp.API.Services
 
             return new VIPUserDetailDto
             {
-                is_VIP = true, 
+                is_VIP         = true, 
                 remaining_time = remainingDays, 
             };
         }

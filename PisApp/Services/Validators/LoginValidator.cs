@@ -1,11 +1,11 @@
 using FluentValidation;
 using PisApp.API.Dtos.LoginDto;
 
-namespace MRH.Backend.Customers.Services.Dtos.Validators
+namespace PisApp.API.Services.Dtos.Validators
 {
-    public class AddScoreValidation : AbstractValidator<LoginDto>
+    public class LoginValidation : AbstractValidator<LoginDto>
     {
-        public AddScoreValidation()
+        public LoginValidation()
         {
             RuleFor(p => p.phone_number)
                 .NotNull()

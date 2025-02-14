@@ -132,7 +132,6 @@ namespace PisApp.API.Controllers
                 var carts  = await _userService.UserCartsStatus(userId);
 
                 return new ResponseDto<IEnumerable<CartDetailsDto>>(true, carts);
-
             }
             catch (Exception e)
             {
