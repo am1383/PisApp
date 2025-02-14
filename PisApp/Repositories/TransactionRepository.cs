@@ -25,9 +25,9 @@ namespace PisApp.API.Repositories
                         ON at.client_id      = ifr.client_id
                         AND at.cart_number   = ifr.cart_number
                         AND at.locked_number = ifr.locked_number
-                    WHERE t.time_stamp >= date_trunc('month', CURRENT_DATE)
-                    AND t.time_stamp <  date_trunc('month', CURRENT_DATE + INTERVAL '1 month')
-                    AND ifr.client_id = @p0";
+                    WHERE t.time_stamp      >= date_trunc('month', CURRENT_DATE)
+                        AND t.time_stamp    <  date_trunc('month', CURRENT_DATE + INTERVAL '1 month')
+                        AND ifr.client_id    = @p0";
 
             var result = await _context.Set<UserProfit>()
                                         .FromSqlRaw(query, userId)

@@ -29,6 +29,7 @@ namespace PisApp.API.Services
                 repo => repo.GetAllMotherboardAsync(),
                 m => new MotherboardDetailsDto
                 {
+                    product_id = m.product_id,
                     wattage = m.wattage,
                     chipset_name = m.chipset_name,
                     num_memory_slots = m.num_memory_slots,
@@ -45,6 +46,7 @@ namespace PisApp.API.Services
                 repo => repo.GetAllCpuAsync(),
                 c => new CpuDetailsDto
                 {
+                    product_id = c.product_id,
                     max_memory_limit = c.max_memory_limit,
                     wattage = c.wattage,
                     generation = c.generation,
@@ -62,6 +64,7 @@ namespace PisApp.API.Services
                 repo => repo.GetAllRamAsync(),
                 r => new RamDetailDto
                 {
+                    product_id = r.product_id,
                     wattage = r.wattage,
                     generation = r.generation,
                     capacity = r.capacity,
@@ -78,6 +81,7 @@ namespace PisApp.API.Services
                 repo => repo.GetAllGpuAsync(),
                 g => new GpuDetailsDto
                 {
+                    product_id = g.product_id,
                     ram_size = g.ram_size,
                     wattage = g.wattage,
                     num_fans = g.num_fans,
@@ -94,6 +98,7 @@ namespace PisApp.API.Services
                 repo => repo.GetAllSsdAsync(),
                 s => new SsdDetailDto
                 {
+                    product_id = s.product_id,
                     wattage = s.wattage,
                     capacity = s.capacity,
                 });
@@ -105,6 +110,7 @@ namespace PisApp.API.Services
                 repo => repo.GetAllPowerSupplyAsync(),
                 p => new PowerSupplyDetailsDto
                 {
+                    product_id = p.product_id,
                     supported_wattage = p.supported_wattage,
                     depth = p.depth,
                     height = p.height,
@@ -118,6 +124,7 @@ namespace PisApp.API.Services
                 repo => repo.GetAllCoolerAsync(),
                 co => new CoolerDetailsDto
                 {
+                    product_id = co.product_id,
                     cooling_method = co.cooling_method,
                     fan_size = co.fan_size,
                     max_rotational_speed = co.max_rotational_speed,

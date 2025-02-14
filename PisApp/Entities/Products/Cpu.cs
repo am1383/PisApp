@@ -1,6 +1,8 @@
+using PisApp.API.Products.Entities.Common;
+
 namespace PisApp.API.Products.Entities
 {
-    public class Cpu
+    public class Cpu : CommonProductsEntity
     {
         public required int max_memory_limit { get; set; }        
         public required int  wattage { get; set; }   

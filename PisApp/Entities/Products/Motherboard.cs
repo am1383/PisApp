@@ -1,6 +1,8 @@
+using PisApp.API.Products.Entities.Common;
+
 namespace PisApp.API.Products.Entities
 {
-    public class Motherboard
+    public class Motherboard : CommonProductsEntity
     {
         public required int wattage { get; set; }
         public required string chipset_name { get; set; }

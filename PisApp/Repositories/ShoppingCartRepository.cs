@@ -37,8 +37,8 @@ namespace PisApp.API.Repositories
                 ";
 
             return await _context.Set<ShoppingCart>()
-                                        .FromSqlRaw(query, userId)
-                                        .ToListAsync();
+                                 .FromSqlRaw(query, userId)
+                                 .ToListAsync();
         }
 
         public async Task<List<Cart>> UserCartsStatus(int userId)

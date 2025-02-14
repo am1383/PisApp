@@ -19,8 +19,8 @@ namespace PisApp.API.Repositories
             var query = @"SELECT COUNT(*) FROM refers WHERE referrer_id = {0}";
                 
             var result = await _context.Set<Refer>()
-                                    .FromSqlRaw(query, referCode)
-                                    .FirstOrDefaultAsync();
+                                       .FromSqlRaw(query, referCode)
+                                       .FirstOrDefaultAsync();
 
             return result.count;
         }

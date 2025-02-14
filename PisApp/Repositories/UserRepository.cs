@@ -42,8 +42,8 @@ namespace PisApp.API.Repositories
                         "FROM client WHERE client_id = @p0";  
 
             return await _context.Set<UserDetail>()
-                .FromSqlRaw(query, userId) 
-                .FirstOrDefaultAsync();
+                                 .FromSqlRaw(query, userId) 
+                                 .FirstOrDefaultAsync();
         }
 
         public async Task<DateTime> VIPChecker(int userId)

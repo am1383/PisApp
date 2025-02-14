@@ -61,7 +61,7 @@ namespace PisApp.API.Repositories
 
         public async Task<IEnumerable<Cooler>> GetAllCoolerAsync()
         {
-            var query = @"SELCET * FROM cooler";
+            var query = @"SELECT * FROM cooler";
 
             return await _context.Set<Cooler>()
                                  .FromSqlRaw(query)

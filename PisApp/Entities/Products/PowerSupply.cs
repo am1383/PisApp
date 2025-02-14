@@ -1,6 +1,8 @@
+using PisApp.API.Products.Entities.Common;
+
 namespace PisApp.API.Products.Entities
 {
-    public class PowerSupply
+    public class PowerSupply : CommonProductsEntity
     {
         public required int supported_wattage { get; set; }
         public required decimal depth { get; set; }

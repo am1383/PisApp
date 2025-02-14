@@ -1,6 +1,8 @@
+using PisApp.API.Products.Entities.Common;
+
 namespace PisApp.API.Products.Entities
 {
-    public class Cooler
+    public class Cooler : CommonProductsEntity
     {
         public required string cooling_method { get; set; }
         public required int fan_size { get; set; }             

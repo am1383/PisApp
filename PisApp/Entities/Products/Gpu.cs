@@ -1,6 +1,8 @@
+using PisApp.API.Products.Entities.Common;
+
 namespace PisApp.API.Products.Entities
 {
-    public class Gpu 
+    public class Gpu : CommonProductsEntity
     {
         public required int ram_size { get; set; }     
         public required int wattage  { get; set; }

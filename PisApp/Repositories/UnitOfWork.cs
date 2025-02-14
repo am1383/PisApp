@@ -17,17 +17,17 @@ namespace PisApp.API.Repositories.UnitOfWork
         private IDiscountRepository?     _discountRepository;
 
         public IUserRepository Users
-                => _usersRepository ??= new UserRepository(_context);
+                => _usersRepository      ??= new UserRepository(_context);
         public IDiscountRepository Discounts 
-                => _discountRepository ??= new DiscountRepository(_context);
+                => _discountRepository   ??= new DiscountRepository(_context);
         public IProductRepository Products 
-                => _productRepository ??= new ProductRepository(_context);
+                => _productRepository    ??= new ProductRepository(_context);
         public IShoppingCartRepository ShoppingCarts 
                 => _shoppingCartRepository ??= new ShoppingCartRepository(_context);
         public IReferRepository Refers              
-                => _referRepository ??= new ReferRepository(_context);
+                => _referRepository      ??= new ReferRepository(_context);
         public IAddressRepository Addresses 
-                => _addressRepository ??= new AddressRepository(_context);
+                => _addressRepository    ??= new AddressRepository(_context);
         public ITransactionRepository Transactions
                 => _transactionRespository ??= new TransactionRepository(_context);
 
