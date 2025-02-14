@@ -1,8 +1,9 @@
+using PisApp.API.Products.Dtos.Common;
+
 namespace PisApp.API.Products.Dtos
 {
-    public class SsdDetailDto
+    public class SsdDetailDto : CommonProductsDto
     {
-        public required int wattage { get; set; }
         public required decimal capacity { get; set; }   
     }
 }

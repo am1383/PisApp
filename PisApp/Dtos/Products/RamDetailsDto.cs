@@ -1,8 +1,9 @@
+using PisApp.API.Products.Dtos.Common;
+
 namespace PisApp.API.Products.Dtos
 {
-    public class RamDetailDto
+    public class RamDetailDto : CommonProductsDto
     {
-        public required int  wattage { get; set; }
         public required string generation { get; set; }
         public required decimal capacity { get; set; }  
         public required decimal frequency { get; set; } 

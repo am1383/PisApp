@@ -1,9 +1,10 @@
+using PisApp.API.Products.Dtos.Common;
+
 namespace PisApp.API.Products.Dtos
 {
-    public class CpuDetailsDto
+    public class CpuDetailsDto : CommonProductsDto
     {
         public required int max_memory_limit { get; set; }        
-        public required int  wattage { get; set; }   
         public required string generation { get; set; }
         public required string microarchitecture { get; set; }
         public required int num_cores { get; set; }

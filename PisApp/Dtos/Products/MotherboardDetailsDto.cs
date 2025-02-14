@@ -1,8 +1,9 @@
+using PisApp.API.Products.Dtos.Common;
+
 namespace PisApp.API.Dtos
 {
-    public class MotherboardDetailsDto
+    public class MotherboardDetailsDto : CommonProductsDto
     {
-        public required int wattage { get; set; }
         public required string chipset_name { get; set; }
         public required int num_memory_slots { get; set; }
         public required decimal memory_speed_range { get; set; }
