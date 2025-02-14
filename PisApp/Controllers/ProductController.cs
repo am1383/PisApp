@@ -24,9 +24,9 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var motherboard = await _productService.GetAllMotherboard();
+                var motherboardList = await _productService.GetAllMotherboard();
 
-                return new ResponseDto<IEnumerable<MotherboardDetailsDto>>(true, motherboard);
+                return new ResponseDto<IEnumerable<MotherboardDetailsDto>>(true, motherboardList);
             }
             catch(Exception e)
             {
@@ -39,9 +39,9 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var ram = await _productService.GetAllRam();
+                var ramList = await _productService.GetAllRam();
 
-                return new ResponseDto<IEnumerable<RamDetailDto>>(true, ram);
+                return new ResponseDto<IEnumerable<RamDetailDto>>(true, ramList);
                 
             }
             catch(Exception e)
@@ -55,9 +55,9 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var cooler = await _productService.GetAllCooler();
+                var coolerList = await _productService.GetAllCooler();
 
-                return new ResponseDto<IEnumerable<CoolerDetailsDto>>(true, cooler);
+                return new ResponseDto<IEnumerable<CoolerDetailsDto>>(true, coolerList);
             }
             catch(Exception e)
             {
@@ -70,9 +70,9 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var cpu = await _productService.GetAllCpu();
+                var cpuList = await _productService.GetAllCpu();
 
-                return new ResponseDto<IEnumerable<CpuDetailsDto>>(true, cpu);
+                return new ResponseDto<IEnumerable<CpuDetailsDto>>(true, cpuList);
             }
             catch(Exception e)
             {
@@ -85,9 +85,9 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var gpu = await _productService.GetAllGpu();
+                var gpuList = await _productService.GetAllGpu();
 
-                return new ResponseDto<IEnumerable<GpuDetailsDto>>(true, gpu);
+                return new ResponseDto<IEnumerable<GpuDetailsDto>>(true, gpuList);
             }
             catch(Exception e)
             {
@@ -100,9 +100,9 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var powerSupply = await _productService.GetAllPowerSupply();
+                var powerSupplyList = await _productService.GetAllPowerSupply();
 
-                return new ResponseDto<IEnumerable<PowerSupplyDetailsDto>>(true, powerSupply);
+                return new ResponseDto<IEnumerable<PowerSupplyDetailsDto>>(true, powerSupplyList);
             }
             catch(Exception e)
             {
@@ -115,9 +115,9 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var ssd = await _productService.GetAllSsd();
+                var ssdList = await _productService.GetAllSsd();
 
-                return new ResponseDto<IEnumerable<SsdDetailDto>>(true, ssd);
+                return new ResponseDto<IEnumerable<SsdDetailDto>>(true, ssdList);
             }
             catch(Exception e)
             {

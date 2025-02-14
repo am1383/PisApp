@@ -16,10 +16,7 @@ namespace PisApp.API.Repositories
 
         public async Task<int> CountUserReferrerByCode(string referCode)
         {
-            var query = @"
-                SELECT COUNT(*)
-                FROM refers p
-                WHERE p.referrer_id = {0}";
+            var query = @"SELECT COUNT(*) FROM refers WHERE referrer_id = {0}";
                 
             var result = await _context.Set<Refer>()
                                     .FromSqlRaw(query, referCode)

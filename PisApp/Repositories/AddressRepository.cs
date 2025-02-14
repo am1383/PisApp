@@ -19,8 +19,8 @@ namespace PisApp.API.Repositories
             var query = "SELECT province, remain_address FROM address_of_client WHERE client_id = @p0";
 
             return await _context.Set<Address>()
-                    .FromSqlRaw(query, userId)
-                    .ToListAsync();
+                                 .FromSqlRaw(query, userId)
+                                 .ToListAsync();
         }
     }
 }

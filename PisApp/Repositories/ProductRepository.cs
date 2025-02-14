@@ -64,8 +64,8 @@ namespace PisApp.API.Repositories
             var query = @"SELCET * FROM cooler";
 
             return await _context.Set<Cooler>()
-                                .FromSqlRaw(query)
-                                .ToListAsync();
+                                 .FromSqlRaw(query)
+                                 .ToListAsync();
         }
 
         public async Task<IEnumerable<PowerSupply>> GetAllPowerSupplyAsync()
