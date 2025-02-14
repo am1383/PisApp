@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PisApp.API.Entities;
 using PisApp.API.Entities.Common;
+using PisApp.API.Products.Entities;
 
 namespace PisApp.API.DbContextes
 {
@@ -13,6 +14,13 @@ namespace PisApp.API.DbContextes
         }
 
         public DbSet<BaseEntity> baseEntities { get; set; } 
+        public DbSet<Cooler> coolers { get; set; }
+        public DbSet<Gpu> gpus { get; set; }
+        public DbSet<Cpu> cpus { get; set; }
+        public DbSet<Motherboard> motherboards { get; set; }
+        public DbSet<PowerSupply> powerSupplies { get; set; }
+        public DbSet<Ram> rams  { get; set; }
+        public DbSet<Ssd> ssds { get; set; }
         public DbSet<VIPUser> vIPUsers { get; set; }
         public DbSet<Discount> discounts { get; set; }
         public DbSet<Refer> refers { get; set; }
@@ -27,6 +35,13 @@ namespace PisApp.API.DbContextes
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<VIPUser>      ().HasNoKey();
+            modelBuilder.Entity<Cooler>       ().HasNoKey();
+            modelBuilder.Entity<Cpu>          ().HasNoKey();
+            modelBuilder.Entity<Gpu>          ().HasNoKey();
+            modelBuilder.Entity<Ram>          ().HasNoKey();
+            modelBuilder.Entity<PowerSupply>  ().HasNoKey();
+            modelBuilder.Entity<Motherboard>  ().HasNoKey();
+            modelBuilder.Entity<Ssd>          ().HasNoKey();
             modelBuilder.Entity<BaseEntity>   ().HasNoKey();
             modelBuilder.Entity<User>         ().HasNoKey();
             modelBuilder.Entity<Cart>         ().HasNoKey();
@@ -36,7 +51,7 @@ namespace PisApp.API.DbContextes
             modelBuilder.Entity<Refer>        ().HasNoKey();
             modelBuilder.Entity<UserDetail>   ().HasNoKey();
             modelBuilder.Entity<PrivateDiscount>().HasNoKey();
-            modelBuilder.Entity<UserProfit>()     .HasNoKey();
+            modelBuilder.Entity<UserProfit>     ().HasNoKey();
         }
     }
 }
