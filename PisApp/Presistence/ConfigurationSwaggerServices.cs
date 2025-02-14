@@ -1,6 +1,6 @@
 using Microsoft.OpenApi.Models;
 
-namespace MRH.Backend.Customers.Persistence
+namespace PisApp.API.Persistence
 {
     public static class ConfigurationSwaggerServicesRegistration
     {

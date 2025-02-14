@@ -1,7 +1,7 @@
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace MRH.Backend.Customers.Persistence
+namespace PisApp.API.Persistence
 {
     public static class AuthenticationServiceRegistration
     {

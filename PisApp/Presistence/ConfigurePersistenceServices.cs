@@ -5,7 +5,7 @@ using PisApp.API.Interfaces.UnitOfWork;
 using PisApp.API.Repositories.UnitOfWork;
 using PisApp.API.Services;
 
-namespace MRH.Backend.Customers.Persistence
+namespace PisApp.API.Persistence
 {
     public static class PersistenceServicesRegistration
     {
@@ -13,6 +13,7 @@ namespace MRH.Backend.Customers.Persistence
         {
             services.AddControllers();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         
             services.AddDbContext<PisAppDbContext>(options =>
