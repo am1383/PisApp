@@ -1,6 +1,6 @@
 namespace PisApp.API.Compatibles.Dtos
 {
-    public class CompatibleCCSocketRequest
+    public class CompatibleCCSocketRequestDto
     {
         public required int cooler_id { get; set; }
 

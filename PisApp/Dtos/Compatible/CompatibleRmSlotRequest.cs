@@ -1,6 +1,6 @@
 namespace PisApp.API.Compatibles.Dtos
 {
-    public class ComapatibleRmSlotRequest
+    public class ComapatibleRmSlotRequestDto
     {
         public int ram_id { get; set; }
 

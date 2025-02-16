@@ -1,6 +1,6 @@
 namespace PisApp.API.Compatibles.Dtos
 {
-    public class CompatibleSmSlotRequest
+    public class CompatibleSmSlotRequestDto
     {
         public required int motherboard_id { get; set; }
         

@@ -19,7 +19,7 @@ namespace PisApp.API.Controllers
         }
 
         [HttpPost("compatible/ccSocket")]
-        public async Task<ResponseDto<CompatibleResultDto>> CompatibleCCSocket(CompatibleCCSocketRequest dto)
+        public async Task<ResponseDto<CompatibleResultDto>> CompatibleCCSocket(CompatibleCCSocketRequestDto dto)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace PisApp.API.Controllers
         }
 
         [HttpPost("compatible/rmSlot")]
-        public async Task<ResponseDto<CompatibleResultDto>> CompatibleRmSlot(ComapatibleRmSlotRequest dto)
+        public async Task<ResponseDto<CompatibleResultDto>> CompatibleRmSlot(ComapatibleRmSlotRequestDto dto)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace PisApp.API.Controllers
         }
 
         [HttpPost("compatible/gmSlot")]
-        public async Task<ResponseDto<CompatibleResultDto>> CompatibleGmSlot(CompatibleGmSlotRequest dto)
+        public async Task<ResponseDto<CompatibleResultDto>> CompatibleGmSlot(CompatibleGmSlotRequestDto dto)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace PisApp.API.Controllers
         }
 
         [HttpPost("compatible/mcSocket")]
-        public async Task<ResponseDto<CompatibleResultDto>> CompatibleMcSocket(CompatibleMcSocketRequest dto)
+        public async Task<ResponseDto<CompatibleResultDto>> CompatibleMcSocket(CompatibleMcSocketRequestDto dto)
         {
             try
             {
@@ -91,7 +91,7 @@ namespace PisApp.API.Controllers
         }
 
         [HttpPost("compatible/smSlot")]
-        public async Task<ResponseDto<CompatibleResultDto>> CompatibleSmSlot(CompatibleSmSlotRequest dto)
+        public async Task<ResponseDto<CompatibleResultDto>> CompatibleSmSlot(CompatibleSmSlotRequestDto dto)
         {
             try
             {    
@@ -109,7 +109,7 @@ namespace PisApp.API.Controllers
         }
 
         [HttpPost("compatible/gpConnect")]
-        public async Task<ResponseDto<CompatibleResultDto>> CompatibleGpConnect(CompatibleGpConnectRequest dto)
+        public async Task<ResponseDto<CompatibleResultDto>> CompatibleGpConnect(CompatibleGpConnectRequestDto dto)
         {
             try
             {
