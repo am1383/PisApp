@@ -26,7 +26,7 @@ namespace PisApp.API.Controllers
         {
             try 
             {
-                var phoneNumber =  PhoneNumberHelper.Normalize(loginDto.phone_number);
+                var phoneNumber = PhoneNumberHelper.Normalize(loginDto.phone_number);
 
                 var userId      = await _userService.FindUserIdByPhoneNumber(phoneNumber);
 
