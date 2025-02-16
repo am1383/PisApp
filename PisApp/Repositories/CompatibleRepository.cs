@@ -22,7 +22,7 @@ namespace PisApp.API.Repositories
                                        .FromSqlRaw(query, cpuId, coolerId) 
                                        .FirstOrDefaultAsync();
 
-            return result == null;
+            return result.exists;
         }
 
         public async Task<bool> CompatibleGpConnectChecker(int gpuId, int powerSupplyId)
@@ -32,7 +32,7 @@ namespace PisApp.API.Repositories
             var result = await _context.Set<Compatible>()
                                        .FromSqlRaw(query, gpuId, powerSupplyId)
                                        .FirstOrDefaultAsync();
-            return result == null;
+            return result.exists;
         }
 
         public async Task<bool> CompatibleMcSocketChecker(int cpuId, int motherboardId)
@@ -42,7 +42,7 @@ namespace PisApp.API.Repositories
             var result = await _context.Set<Compatible>()
                                        .FromSqlRaw(query, cpuId, motherboardId)
                                        .FirstOrDefaultAsync();
-            return result == null;
+            return result.exists;
         }
 
         public async Task<bool> CompatibleRmSlotChecker(int ramId, int motherboardId)
@@ -52,7 +52,7 @@ namespace PisApp.API.Repositories
             var result = await _context.Set<Compatible>()
                                        .FromSqlRaw(query, ramId, motherboardId)
                                        .FirstOrDefaultAsync();
-            return result == null;
+            return result.exists;
         }
 
         public async Task<bool> CompatibleGmSlotChecker(int gpuId, int motherboardId)
@@ -62,7 +62,7 @@ namespace PisApp.API.Repositories
             var result = await _context.Set<Compatible>()
                                        .FromSqlRaw(query, gpuId, motherboardId)
                                        .FirstOrDefaultAsync();
-            return result == null;
+            return result.exists;
         }
 
         public async Task<bool> CompatibleSmSlotChecker(int ssdId, int motherboardId)
@@ -72,7 +72,7 @@ namespace PisApp.API.Repositories
             var result = await _context.Set<Compatible>()
                                        .FromSqlRaw(query, ssdId, motherboardId)
                                        .FirstOrDefaultAsync();
-            return result == null;
+            return result.exists;
         }
     }
 }
