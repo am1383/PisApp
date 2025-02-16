@@ -53,7 +53,7 @@ namespace PisApp.API.Controllers
 
                 var countUserReffer = await _userService.CountUserRefferer(user.referral_code);
 
-                var userDetail      = await _userService.Details(user, isUserVip, countUserReffer);
+                var userDetail      = _userService.Details(user, isUserVip, countUserReffer);
 
                 return new ResponseDto<UserDetailDto>(true, userDetail);
             }
@@ -93,7 +93,7 @@ namespace PisApp.API.Controllers
 
                 var giftedCode       = await _userService.UserGiftedCodeCount(userId);
 
-                var discountsSummary = await _userService.UserDiscountsSummary(privateCode, giftedCode);
+                var discountsSummary = _userService.UserDiscountsSummary(privateCode, giftedCode);
 
                 return new ResponseDto<DiscountSummaryDto>(true, discountsSummary);
             }
