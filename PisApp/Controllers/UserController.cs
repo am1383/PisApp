@@ -3,6 +3,7 @@ using PisApp.API.Dtos.LoginDto;
 using PisApp.API.Interfaces;
 using PisApp.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using PisApp.API.Utils;
 
 namespace PisApp.API.Controllers
 {
@@ -25,11 +26,13 @@ namespace PisApp.API.Controllers
         {
             try 
             {
-                var phoneNumber = loginDto.phone_number;
+                var phoneNumber =  PhoneNumberHelper.Normalize(loginDto.phone_number);
 
                 var userId      = await _userService.FindUserIdByPhoneNumber(phoneNumber);
 
-                var token       = _jwtService.GenerateToken(userId);
+                var isUserVIP   = await _userService.isUserVIPChecker(userId);
+
+                var token       = _jwtService.GenerateToken(userId, isUserVIP);
 
                 return new ResponseDto<string>(true, token);  
             } 
