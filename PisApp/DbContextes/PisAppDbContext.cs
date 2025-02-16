@@ -29,13 +29,15 @@ namespace PisApp.API.DbContextes
         public DbSet<ShoppingCart> shoppingCarts { get; set; }
         public DbSet<UserProfit> userProfits     { get; set; }
         public DbSet<Cart> carts                 { get; set; }
-        public DbSet<UserDetail> userDetails     { get; set; }
+        public DbSet<VIPCheckResult> vipCheckResults { get; set; }
+        public DbSet<UserDetail> userDetails         { get; set; }
         public DbSet<PrivateDiscount> privateDiscounts { get; set; }
         public DbSet<User> users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<VIPUser>        ().HasNoKey();
+            modelBuilder.Entity<VIPCheckResult> ().HasNoKey();
             modelBuilder.Entity<Compatible>     ().HasNoKey();
             modelBuilder.Entity<Cooler>         ().HasNoKey();
             modelBuilder.Entity<Cpu>            ().HasNoKey();

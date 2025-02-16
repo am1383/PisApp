@@ -11,5 +11,7 @@ namespace PisApp.API.Entities
         public required string referral_code { get; set; }
         
         public required DateTime time_stamp { get; set; }
+
+        public string FormattedTimeStamp => time_stamp.ToString("yyyy-MM-dd HH:mm:ss");
     }
 }

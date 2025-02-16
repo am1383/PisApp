@@ -12,7 +12,7 @@ namespace PisApp.API.Dtos
 
         public required int countUserReffer { get; set; }
         
-        public required DateTime time_stamp { get; set; }
+        public required string time_stamp { get; set; }
         
         public VIPUserDetailDto? vip_detail { get; set; }
     }

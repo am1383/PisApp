@@ -30,8 +30,9 @@ namespace PisApp.API.Repositories
         {
             var query = "SELECT client_id FROM client WHERE phone_number = @p0";
 
-            var userId = await _context.Set<User>().FromSqlRaw(query, phoneNumber)
-                                                   .FirstOrDefaultAsync();
+            var userId = await _context.Set<User>()
+                                       .FromSqlRaw(query, phoneNumber)
+                                       .FirstOrDefaultAsync();
 
             return userId.client_id;
         }
@@ -44,6 +45,17 @@ namespace PisApp.API.Repositories
             return await _context.Set<UserDetail>()
                                  .FromSqlRaw(query, userId) 
                                  .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> isUserVIP(int userId)
+        {
+            var query = "SELECT EXISTS(SELECT * FROM vip_client WHERE client_id = @p0)";
+
+            var result = await _context.Set<VIPCheckResult>()
+                                       .FromSqlRaw(query, userId)
+                                       .FirstOrDefaultAsync();
+
+            return result.exists;             
         }
 
         public async Task<DateTime> VIPChecker(int userId)
