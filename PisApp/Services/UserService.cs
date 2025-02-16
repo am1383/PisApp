@@ -15,7 +15,7 @@ namespace PisApp.API.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<UserDetailDto> Details(UserDetail user, VIPUserDetailDto isUserVIP, int countUserReffer)
+        public UserDetailDto Details(UserDetail user, VIPUserDetailDto isUserVIP, int countUserReffer)
         {
             return new UserDetailDto {
                 first_name      = user.first_name,
@@ -78,7 +78,6 @@ namespace PisApp.API.Services
             });
         }
 
-
         public async Task<int> CountUserRefferer(string referCode)
         {
             return await _unitOfWork.Refers.CountUserReferrerByCode(referCode);
@@ -106,7 +105,7 @@ namespace PisApp.API.Services
             };
         }
 
-        public async Task<DiscountSummaryDto> UserDiscountsSummary(IEnumerable<PrivateDiscountDetailsDto> privateCodes, GiftDiscountDetailDto giftCodes)
+        public DiscountSummaryDto UserDiscountsSummary(IEnumerable<PrivateDiscountDetailsDto> privateCodes, GiftDiscountDetailDto giftCodes)
         {
             return new DiscountSummaryDto
             {
