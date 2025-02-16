@@ -14,42 +14,44 @@ namespace PisApp.API.DbContextes
         }
 
         public DbSet<BaseEntity> baseEntities { get; set; } 
+        public DbSet<Compatible> compatibles  { get; set; }
         public DbSet<Cooler> coolers { get; set; }
-        public DbSet<Gpu> gpus { get; set; }
-        public DbSet<Cpu> cpus { get; set; }
-        public DbSet<Motherboard> motherboards { get; set; }
+        public DbSet<Gpu> gpus       { get; set; }
+        public DbSet<Cpu> cpus       { get; set; }
+        public DbSet<Motherboard> motherboards  { get; set; }
         public DbSet<PowerSupply> powerSupplies { get; set; }
         public DbSet<Ram> rams  { get; set; }
-        public DbSet<Ssd> ssds { get; set; }
-        public DbSet<VIPUser> vIPUsers { get; set; }
+        public DbSet<Ssd> ssds  { get; set; }
+        public DbSet<VIPUser> vIPUsers   { get; set; }
         public DbSet<Discount> discounts { get; set; }
-        public DbSet<Refer> refers { get; set; }
-        public DbSet<Address> addresses { get; set; }
+        public DbSet<Refer> refers       { get; set; }
+        public DbSet<Address> addresses  { get; set; }
         public DbSet<ShoppingCart> shoppingCarts { get; set; }
-        public DbSet<UserProfit> UserProfit { get; set; }
-        public DbSet<Cart> carts { get; set; }
-        public DbSet<UserDetail> userDetails { get; set; }
+        public DbSet<UserProfit> UserProfit      { get; set; }
+        public DbSet<Cart> carts                 { get; set; }
+        public DbSet<UserDetail> userDetails     { get; set; }
         public DbSet<PrivateDiscount> privateDiscounts { get; set; }
         public DbSet<User> users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<VIPUser>      ().HasNoKey();
-            modelBuilder.Entity<Cooler>       ().HasNoKey();
-            modelBuilder.Entity<Cpu>          ().HasNoKey();
-            modelBuilder.Entity<Gpu>          ().HasNoKey();
-            modelBuilder.Entity<Ram>          ().HasNoKey();
-            modelBuilder.Entity<PowerSupply>  ().HasNoKey();
-            modelBuilder.Entity<Motherboard>  ().HasNoKey();
-            modelBuilder.Entity<Ssd>          ().HasNoKey();
-            modelBuilder.Entity<BaseEntity>   ().HasNoKey();
-            modelBuilder.Entity<User>         ().HasNoKey();
-            modelBuilder.Entity<Cart>         ().HasNoKey();
-            modelBuilder.Entity<Discount>     ().HasNoKey();
-            modelBuilder.Entity<ShoppingCart> ().HasNoKey();
-            modelBuilder.Entity<Address>      ().HasNoKey();
-            modelBuilder.Entity<Refer>        ().HasNoKey();
-            modelBuilder.Entity<UserDetail>   ().HasNoKey();
+            modelBuilder.Entity<VIPUser>        ().HasNoKey();
+            modelBuilder.Entity<Compatible>     ().HasNoKey();
+            modelBuilder.Entity<Cooler>         ().HasNoKey();
+            modelBuilder.Entity<Cpu>            ().HasNoKey();
+            modelBuilder.Entity<Gpu>            ().HasNoKey();
+            modelBuilder.Entity<Ram>            ().HasNoKey();
+            modelBuilder.Entity<PowerSupply>    ().HasNoKey();
+            modelBuilder.Entity<Motherboard>    ().HasNoKey();
+            modelBuilder.Entity<Ssd>            ().HasNoKey();
+            modelBuilder.Entity<BaseEntity>     ().HasNoKey();
+            modelBuilder.Entity<User>           ().HasNoKey();
+            modelBuilder.Entity<Cart>           ().HasNoKey();
+            modelBuilder.Entity<Discount>       ().HasNoKey();
+            modelBuilder.Entity<ShoppingCart>   ().HasNoKey();
+            modelBuilder.Entity<Address>        ().HasNoKey();
+            modelBuilder.Entity<Refer>          ().HasNoKey();
+            modelBuilder.Entity<UserDetail>     ().HasNoKey();
             modelBuilder.Entity<PrivateDiscount>().HasNoKey();
             modelBuilder.Entity<UserProfit>     ().HasNoKey();
         }
