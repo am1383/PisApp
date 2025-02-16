@@ -23,7 +23,7 @@ namespace PisApp.API.Services
                 wallet_balance  = user.wallet_balance,
                 referral_code   = user.referral_code,
                 countUserReffer = countUserReffer,
-                time_stamp      = user.time_stamp,
+                time_stamp      = user.FormattedTimeStamp,
                 vip_detail      = isUserVIP,
             };
         }
@@ -160,6 +160,11 @@ namespace PisApp.API.Services
             {
                 user_profit = profit.user_profit,
             };
+        }
+
+        public async Task<bool> isUserVIPChecker(int userId)
+        {
+            return await _unitOfWork.Users.isUserVIP(userId);
         }
     }
 }

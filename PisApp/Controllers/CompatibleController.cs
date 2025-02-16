@@ -8,6 +8,7 @@ namespace PisApp.API.Controllers
 {
     [ApiController]
     [Authorize]
+    [Vip]
     [Route("api/v1")]
     public class CompatibleController : ControllerBase
     {
