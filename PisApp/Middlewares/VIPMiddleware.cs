@@ -1,39 +1,15 @@
-using PisApp.API.Interfaces.UnitOfWork;
-using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Filters;
+using PisApp.API.Exceptions;
 
-public class VipMiddleware
+public class VipAttribute : Attribute, IAuthorizationFilter
 {
-    private readonly RequestDelegate _next;
-    private readonly IUnitOfWork _unitOfWork;
-
-    public VipMiddleware(
-        RequestDelegate next, 
-        IUnitOfWork unitOfWork)
+    public void OnAuthorization(AuthorizationFilterContext context)
     {
-        _next = next;
-        _unitOfWork = unitOfWork;
-    }
+        var userVIPStatus = context.HttpContext.User.FindFirst("isUserVIP")?.Value;
 
-    public async Task InvokeAsync(HttpContext context)
-    {
-        var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        if (userIdClaim == null || !int.TryParse(userIdClaim, out int userId))
+        if (userVIPStatus == "False")
         {
-            context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            await context.Response.WriteAsync("Invalid User ID");
-            return;
+            throw new NotVIPException();
         }
-
-        var expirationTime = await _unitOfWork.Users.VIPChecker(userId);
-
-        if (expirationTime == DateTime.MinValue)
-        {
-            context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            await context.Response.WriteAsync("User Is Not VIP");
-            return;
-        }
-
-        await _next(context);
     }
 }
