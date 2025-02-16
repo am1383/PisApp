@@ -1,5 +1,5 @@
-using FluentValidation;
 using FluentValidation.AspNetCore;
+using FluentValidation;
 using PisApp.API.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);

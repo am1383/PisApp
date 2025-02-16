@@ -10,11 +10,11 @@ namespace PisApp.API.Interfaces
             Func<IProductRepository, Task<IEnumerable<TEntity>>> getMethod,
             Func<TEntity, TDto> mapFunction);
         public Task<IEnumerable<MotherboardDetailsDto>> GetAllMotherboard();
-        public Task<IEnumerable<CpuDetailsDto>> GetAllCpu();
-        public Task<IEnumerable<RamDetailDto>> GetAllRam();
-        public Task<IEnumerable<GpuDetailsDto>> GetAllGpu();
-        public Task<IEnumerable<CoolerDetailsDto>> GetAllCooler();
-        public Task<IEnumerable<SsdDetailDto>> GetAllSsd();
         public Task<IEnumerable<PowerSupplyDetailsDto>> GetAllPowerSupply();
+        public Task<IEnumerable<CoolerDetailsDto>> GetAllCooler();
+        public Task<IEnumerable<CpuDetailsDto>> GetAllCpu();
+        public Task<IEnumerable<GpuDetailsDto>> GetAllGpu();
+        public Task<IEnumerable<RamDetailDto>> GetAllRam();
+        public Task<IEnumerable<SsdDetailDto>> GetAllSsd();
     }
 }
