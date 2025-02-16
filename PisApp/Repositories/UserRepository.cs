@@ -20,8 +20,8 @@ namespace PisApp.API.Repositories
             var query = "SELECT phone_number FROM client WHERE phone_number = @p0";
 
             var result = await _context.Set<BaseEntity>()
-                .FromSqlRaw(query, phoneNumber)
-                .FirstOrDefaultAsync();
+                                       .FromSqlRaw(query, phoneNumber)
+                                       .FirstOrDefaultAsync();
 
             return result != null; 
         }
@@ -31,7 +31,7 @@ namespace PisApp.API.Repositories
             var query = "SELECT client_id FROM client WHERE phone_number = @p0";
 
             var userId = await _context.Set<User>().FromSqlRaw(query, phoneNumber)
-                .FirstOrDefaultAsync();
+                                                   .FirstOrDefaultAsync();
 
             return userId.client_id;
         }

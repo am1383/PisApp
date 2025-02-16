@@ -27,7 +27,7 @@ namespace PisApp.API.DbContextes
         public DbSet<Refer> refers       { get; set; }
         public DbSet<Address> addresses  { get; set; }
         public DbSet<ShoppingCart> shoppingCarts { get; set; }
-        public DbSet<UserProfit> UserProfit      { get; set; }
+        public DbSet<UserProfit> userProfits     { get; set; }
         public DbSet<Cart> carts                 { get; set; }
         public DbSet<UserDetail> userDetails     { get; set; }
         public DbSet<PrivateDiscount> privateDiscounts { get; set; }

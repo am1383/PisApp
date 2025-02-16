@@ -87,12 +87,10 @@ namespace PisApp.API.Services
         {
             var codes = await _unitOfWork.Discounts.GetPrivateDiscountCodesWithLessThanOneWeekLeft(userId);
 
-            var discountDetails = codes.Select(code => new PrivateDiscountDetailsDto
+            return codes.Select(code => new PrivateDiscountDetailsDto
             {
                 code = code.code
             }).ToList();
-
-            return discountDetails;
         }
 
         public async Task<GiftDiscountDetailDto> UserGiftedCodeCount(int userId)
@@ -118,7 +116,7 @@ namespace PisApp.API.Services
         {
             var shoppingCarts = await _unitOfWork.ShoppingCarts.UserRecentPurchasesAsync(userId);
 
-            var recentCart = shoppingCarts.OrderByDescending(cart => cart.cart_number).FirstOrDefault();
+            var recentCart    = shoppingCarts.FirstOrDefault();
 
             if (recentCart == null)
             {
@@ -146,19 +144,17 @@ namespace PisApp.API.Services
         {
             var carts = await _unitOfWork.ShoppingCarts.UserCartsStatus(userId);
 
-            var cartDetailsList = carts.Select(cart => new CartDetailsDto
+            return carts.Select(cart => new CartDetailsDto
             {
                 cart_number = cart.cart_number,
                 cart_status = cart.cart_status,
                 total_items = cart.total_items
             }).ToList();
-
-            return cartDetailsList;
         }
 
         public async Task<UserProfitDto> VIPUserProfit(int userId)
         {
-            var profit =  await _unitOfWork.Transactions.GetUserProfitForVIPClients(userId);
+            var profit = await _unitOfWork.Transactions.GetUserProfitForVIPClients(userId);
 
             return new UserProfitDto
             {
