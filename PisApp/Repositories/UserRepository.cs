@@ -51,8 +51,8 @@ namespace PisApp.API.Repositories
             var query = "SELECT expiration_time FROM vip_client WHERE client_id = @p0";
 
             var result = await _context.Set<VIPUser>()
-                .FromSqlRaw(query, userId)
-                .FirstOrDefaultAsync();
+                                       .FromSqlRaw(query, userId)
+                                       .FirstOrDefaultAsync();
 
             return result?.expiration_time ?? DateTime.MinValue;
         }

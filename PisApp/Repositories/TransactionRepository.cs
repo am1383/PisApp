@@ -29,11 +29,9 @@ namespace PisApp.API.Repositories
                         AND t.time_stamp    <  date_trunc('month', CURRENT_DATE + INTERVAL '1 month')
                         AND ifr.client_id    = @p0";
 
-            var result = await _context.Set<UserProfit>()
-                                        .FromSqlRaw(query, userId)
-                                        .FirstOrDefaultAsync();
-                                        
-            return result;
+            return await _context.Set<UserProfit>()
+                                 .FromSqlRaw(query, userId)
+                                 .FirstOrDefaultAsync();
         }
     }
 }

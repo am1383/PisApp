@@ -24,6 +24,7 @@ namespace PisApp.API.Controllers
             try
             {
                 var coolerId = dto.cooler_id;
+                
                 var cpuId = dto.cpu_id;
 
                 var compatibleResult = await _compatibleService.GetCompatibleCCSocket(coolerId, cpuId);
@@ -42,6 +43,7 @@ namespace PisApp.API.Controllers
             try
             {
                 var ramId = dto.ram_id;
+
                 var motherboardId = dto.motherboard_id;
                 
                 var compatibleResult = await _compatibleService.GetCompatibleRmSlot(ramId, motherboardId);
@@ -60,6 +62,7 @@ namespace PisApp.API.Controllers
             try
             {
                 var gpuId = dto.gpu_id;
+
                 var motherboardId = dto.motherboard_id;
 
                 var compatibleResult = await _compatibleService.GetCompatibleGmSlot(gpuId, motherboardId);
@@ -78,6 +81,7 @@ namespace PisApp.API.Controllers
             try
             {
                 var cpuId = dto.cpu_id;
+
                 var motherboardId = dto.motherboard_id;
 
                 var compatibleResult = await _compatibleService.GetCompatibleMcSocket(cpuId, motherboardId);
@@ -96,6 +100,7 @@ namespace PisApp.API.Controllers
             try
             {    
                 var ssdId = dto.ssd_id;
+
                 var motherboardId = dto.motherboard_id;
 
                 var compatibleResult = await _compatibleService.GetCompatibleSmSlot(ssdId, motherboardId);
@@ -114,6 +119,7 @@ namespace PisApp.API.Controllers
             try
             {
                 var gpuId = dto.gpu_id;
+
                 var powerSupplyId = dto.power_supply_id;
 
                 var compatibleResult = await _compatibleService.GetCompatibleGpConnect(gpuId, powerSupplyId);

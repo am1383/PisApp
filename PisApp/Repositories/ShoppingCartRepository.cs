@@ -59,8 +59,8 @@ namespace PisApp.API.Repositories
                 ";
 
             return await _context.Set<Cart>()
-                                .FromSqlRaw(query, userId)
-                                .ToListAsync();
+                                 .FromSqlRaw(query, userId)
+                                 .ToListAsync();
         }
     }
 }
