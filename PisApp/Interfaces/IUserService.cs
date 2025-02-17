@@ -11,7 +11,7 @@ namespace PisApp.API.Interfaces
         public Task<IEnumerable<CartDetailsDto>> UserCartsStatus(int userId);
         public Task<int> CountUserRefferer(string referCode);
         public Task<IEnumerable<PrivateDiscountDetailsDto>> UserPrivateCodeWithLimiteTime(int userId);
-        public Task<ShoppingCartsDetailsDto> UserRecentPurchases(int userId);
+        public Task<IEnumerable<ShoppingCartsDetailsDto>> UserRecentPurchases(int userId);
         public Task<VIPUserDetailDto> GetRemainingTimeForVIP(int userId);
         public Task<GiftDiscountDetailDto> UserGiftedCodeCount(int userId);
         public UserDetailDto Details(UserDetail user, VIPUserDetailDto isUserVIP, int countUserReffer);

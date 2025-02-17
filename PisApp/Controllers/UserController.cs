@@ -39,7 +39,7 @@ namespace PisApp.API.Controllers
             } 
             catch (Exception e)
             {
-                return new ResponseDto<string>(false, null, $"{e.Message}");
+                return new ResponseDto<string>(false, default!, $"{e.Message}");
             }
         }
 
@@ -63,7 +63,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<UserDetailDto>(false, null, $"{e.Message}");
+                return new ResponseDto<UserDetailDto>(false, default!, $"{e.Message}");
             }
         }
 
@@ -81,7 +81,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<IEnumerable<AddressDetailDto>>(false, null, $"Exception : {e.Message}");
+                return new ResponseDto<IEnumerable<AddressDetailDto>>(false, default!, $"Exception : {e.Message}");
             }
         }
 
@@ -103,13 +103,13 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<DiscountSummaryDto>(false, null, $"{e.Message}");
+                return new ResponseDto<DiscountSummaryDto>(false, default!, $"{e.Message}");
             }
         }
 
         [Authorize]
         [HttpGet("purchases")]
-        public async Task<ResponseDto<ShoppingCartsDetailsDto>> RecentPurchases(AuthorizationFilterContext context)
+        public async Task<ResponseDto<IEnumerable<ShoppingCartsDetailsDto>>> RecentPurchases(AuthorizationFilterContext context)
         {
             try
             {
@@ -117,11 +117,11 @@ namespace PisApp.API.Controllers
 
                 var shoppingCarts = await _userService.UserRecentPurchases(userId);
 
-                return new ResponseDto<ShoppingCartsDetailsDto>(true, shoppingCarts);
+                return new ResponseDto<IEnumerable<ShoppingCartsDetailsDto>>(true, shoppingCarts);
             }
             catch (Exception e)
             {
-                return new ResponseDto<ShoppingCartsDetailsDto>(false, null, $"{e.Message}");
+                return new ResponseDto<IEnumerable<ShoppingCartsDetailsDto>>(false, default!, $"{e.Message}");
             }
         }
 
@@ -139,7 +139,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<IEnumerable<CartDetailsDto>>(false, null, $"{e.Message}");
+                return new ResponseDto<IEnumerable<CartDetailsDto>>(false, default!, $"{e.Message}");
             }
         }
 
@@ -157,7 +157,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<UserProfitDto>(false, null, $"{e.Message}");
+                return new ResponseDto<UserProfitDto>(false, default!, $"{e.Message}");
             }
         }
     }

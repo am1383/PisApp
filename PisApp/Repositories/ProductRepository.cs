@@ -16,7 +16,7 @@ namespace PisApp.API.Repositories
 
         public async Task<IEnumerable<Motherboard>> GetAllMotherboardAsync()
         {
-            var query = @"SELECT * FROM motherboard";
+            var query = "SELECT * FROM motherboard";
  
             return await _context.Set<Motherboard>()
                                  .FromSqlRaw(query) 
@@ -25,7 +25,7 @@ namespace PisApp.API.Repositories
 
         public async Task<IEnumerable<Cpu>> GetAllCpuAsync()
         {
-            var query = @"SELECT * FROM cpu";
+            var query = "SELECT * FROM cpu";
  
             return await _context.Set<Cpu>()
                                  .FromSqlRaw(query) 
@@ -34,7 +34,7 @@ namespace PisApp.API.Repositories
 
         public async Task<IEnumerable<Ram>> GetAllRamAsync()
         {
-            var query = @"SELECT * FROM ram_stick";
+            var query = "SELECT * FROM ram_stick";
  
             return await _context.Set<Ram>()
                                  .FromSqlRaw(query) 
@@ -43,7 +43,7 @@ namespace PisApp.API.Repositories
 
         public async Task<IEnumerable<Gpu>> GetAllGpuAsync()
         {
-            var query = @"SELECT * FROM gpu";
+            var query = "SELECT * FROM gpu";
  
             return await _context.Set<Gpu>()
                                  .FromSqlRaw(query) 
@@ -52,7 +52,7 @@ namespace PisApp.API.Repositories
 
         public async Task<IEnumerable<Ssd>> GetAllSsdAsync()
         {
-            var query = @"SELECT * FROM ssd";
+            var query = "SELECT * FROM ssd";
  
             return await _context.Set<Ssd>()
                                  .FromSqlRaw(query) 
@@ -61,7 +61,7 @@ namespace PisApp.API.Repositories
 
         public async Task<IEnumerable<Cooler>> GetAllCoolerAsync()
         {
-            var query = @"SELECT * FROM cooler";
+            var query = "SELECT * FROM cooler";
 
             return await _context.Set<Cooler>()
                                  .FromSqlRaw(query)
@@ -70,7 +70,7 @@ namespace PisApp.API.Repositories
 
         public async Task<IEnumerable<PowerSupply>> GetAllPowerSupplyAsync()
         {
-            var query = @"SELECT * FROM power_supply";
+            var query = "SELECT * FROM power_supply";
  
             return await _context.Set<PowerSupply>()
                                  .FromSqlRaw(query) 

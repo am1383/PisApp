@@ -112,33 +112,35 @@ namespace PisApp.API.Services
             };
         }
         
-        public async Task<ShoppingCartsDetailsDto> UserRecentPurchases(int userId)
+        public async Task<IEnumerable<ShoppingCartsDetailsDto>> UserRecentPurchases(int userId)
         {
             var shoppingCarts = await _unitOfWork.ShoppingCarts.UserRecentPurchasesAsync(userId);
 
-            var recentCart    = shoppingCarts.FirstOrDefault();
-
-            if (recentCart == null)
+            if (!shoppingCarts.Any())
             {
-                return new ShoppingCartsDetailsDto
+                return new List<ShoppingCartsDetailsDto>
                 {
-                    cart_number      = 0,
-                    cart_status      = "No Cart",
-                    total_items      = 0,
-                    total_quantity   = 0,
-                    total_cart_price = 0
+                    new ShoppingCartsDetailsDto
+                    {
+                        cart_number      = 0,
+                        cart_status      = "No Cart",
+                        total_items      = 0,
+                        total_quantity   = 0,
+                        total_cart_price = 0
+                    }
                 };
             }
 
-            return new ShoppingCartsDetailsDto
+            return shoppingCarts.Select(cart => new ShoppingCartsDetailsDto
             {
-                cart_number      = recentCart.cart_number,
-                cart_status      = recentCart.cart_status,
-                total_items      = recentCart.total_items,
-                total_quantity   = recentCart.total_quantity,
-                total_cart_price = recentCart.total_cart_price
-            };
+                cart_number      = cart.cart_number,
+                cart_status      = cart.cart_status,
+                total_items      = cart.total_items,
+                total_quantity   = cart.total_quantity,
+                total_cart_price = cart.total_cart_price
+            }).ToList();
         }
+
 
         public async Task<IEnumerable<CartDetailsDto>> UserCartsStatus(int userId)
         {
