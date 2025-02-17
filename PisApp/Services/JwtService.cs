@@ -1,8 +1,8 @@
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Net.Http.Headers;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 public class JwtService
 {
@@ -72,31 +72,9 @@ public class JwtService
         }
     }
 
-    public int GetUserId(HttpRequest request)
+    public int GetUserId(HttpContext httpContext)
     {
-        var token = ExtractTokenFromRequest(request);
-
-        return GetUserIdFromToken(token);
-    }
-
-    private string ExtractTokenFromRequest(HttpRequest request)
-    {
-        var authHeader = request?.Headers["Authorization"].FirstOrDefault();
-        
-        if (AuthenticationHeaderValue.TryParse(authHeader, out var headerValue) && headerValue.Scheme.Equals("Bearer", StringComparison.OrdinalIgnoreCase))
-        {
-            return headerValue.Parameter;
-        }
-
-        throw new InvalidOperationException("Invalid or missing Authorization header.");
-    }
-
-    private int GetUserIdFromToken(string token)
-    {
-        var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
-
-        var userId   = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value
-                            ?? throw new InvalidOperationException("User ID claim not found.");
+        var userId = httpContext.User.FindFirst("userId")?.Value;
 
         if (!int.TryParse(userId, out int clientId))
             throw new ArgumentException("Invalid userId format");

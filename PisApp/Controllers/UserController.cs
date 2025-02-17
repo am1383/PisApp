@@ -4,6 +4,7 @@ using PisApp.API.Interfaces;
 using PisApp.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using PisApp.API.Utils;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace PisApp.API.Controllers
 {
@@ -48,7 +49,7 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var userId          = _jwtService.GetUserId(Request);
+                var userId          = _jwtService.GetUserId(HttpContext);
 
                 var user            = await _userService.GetUserDetailsById(userId);
 
@@ -68,11 +69,11 @@ namespace PisApp.API.Controllers
 
         [Authorize]
         [HttpGet("addresses")]
-        public async Task<ResponseDto<IEnumerable<AddressDetailDto>>> Addresses()
+        public async Task<ResponseDto<IEnumerable<AddressDetailDto>>> Addresses(AuthorizationFilterContext context)
         {
             try
             {
-                var userId    = _jwtService.GetUserId(Request);
+                var userId    = _jwtService.GetUserId(HttpContext);
 
                 var addresses = await _userService.GetUserAddressesById(userId);
 
@@ -86,11 +87,11 @@ namespace PisApp.API.Controllers
 
         [Authorize]
         [HttpGet("code")]
-        public async Task<ResponseDto<DiscountSummaryDto>> DiscountCodeStatus()
+        public async Task<ResponseDto<DiscountSummaryDto>> DiscountCodeStatus(AuthorizationFilterContext context)
         {
             try
             {
-                var userId           = _jwtService.GetUserId(Request);
+                var userId           = _jwtService.GetUserId(HttpContext);
 
                 var privateCode      = await _userService.UserPrivateCodeWithLimiteTime(userId);
 
@@ -108,11 +109,11 @@ namespace PisApp.API.Controllers
 
         [Authorize]
         [HttpGet("purchases")]
-        public async Task<ResponseDto<ShoppingCartsDetailsDto>> RecentPurchases()
+        public async Task<ResponseDto<ShoppingCartsDetailsDto>> RecentPurchases(AuthorizationFilterContext context)
         {
             try
             {
-                var userId        = _jwtService.GetUserId(Request);
+                var userId        = _jwtService.GetUserId(HttpContext);
 
                 var shoppingCarts = await _userService.UserRecentPurchases(userId);
 
@@ -126,11 +127,11 @@ namespace PisApp.API.Controllers
 
         [Authorize]
         [HttpGet("carts/status")]
-        public async Task<ResponseDto<IEnumerable<CartDetailsDto>>> CartsStatus()
+        public async Task<ResponseDto<IEnumerable<CartDetailsDto>>> CartsStatus(AuthorizationFilterContext context)
         {
             try
             {
-                var userId = _jwtService.GetUserId(Request);
+                var userId = _jwtService.GetUserId(HttpContext);
 
                 var carts  = await _userService.UserCartsStatus(userId);
 
@@ -144,11 +145,11 @@ namespace PisApp.API.Controllers
 
         [Authorize]
         [HttpGet("profit")]
-        public async Task<ResponseDto<UserProfitDto>> VIPUserProfit()
+        public async Task<ResponseDto<UserProfitDto>> VIPUserProfit(AuthorizationFilterContext context)
         {
             try
             {
-                var userId = _jwtService.GetUserId(Request);
+                var userId = _jwtService.GetUserId(HttpContext);
 
                 var profit = await _userService.VIPUserProfit(userId);
 
