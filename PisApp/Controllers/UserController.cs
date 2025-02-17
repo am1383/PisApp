@@ -38,7 +38,7 @@ namespace PisApp.API.Controllers
             } 
             catch (Exception e)
             {
-                return new ResponseDto<string>(false, null, $"Exception : {e.Message}");
+                return new ResponseDto<string>(false, null, $"{e.Message}");
             }
         }
 
@@ -62,7 +62,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<UserDetailDto>(false, null, $"Exception : {e.Message}");
+                return new ResponseDto<UserDetailDto>(false, null, $"{e.Message}");
             }
         }
 
@@ -102,7 +102,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<DiscountSummaryDto>(false, null, $"Exception : {e.Message}");
+                return new ResponseDto<DiscountSummaryDto>(false, null, $"{e.Message}");
             }
         }
 
@@ -120,7 +120,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<ShoppingCartsDetailsDto>(false, null, $"Exception : {e.Message}");
+                return new ResponseDto<ShoppingCartsDetailsDto>(false, null, $"{e.Message}");
             }
         }
 
@@ -138,7 +138,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<IEnumerable<CartDetailsDto>>(false, null, $"Exception : {e.Message}");
+                return new ResponseDto<IEnumerable<CartDetailsDto>>(false, null, $"{e.Message}");
             }
         }
 
@@ -156,7 +156,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<UserProfitDto>(false, null, $"Exception : {e.Message}");
+                return new ResponseDto<UserProfitDto>(false, null, $"{e.Message}");
             }
         }
     }

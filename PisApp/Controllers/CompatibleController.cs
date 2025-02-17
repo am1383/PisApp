@@ -34,7 +34,7 @@ namespace PisApp.API.Controllers
             }
             catch(Exception e)
             {
-                return new ResponseDto<CompatibleResultDto>(false, null, $"Exception : {e.Message}");
+                return new ResponseDto<CompatibleResultDto>(false, null, $"{e.Message}");
             }
         }
 
@@ -53,7 +53,7 @@ namespace PisApp.API.Controllers
             }
             catch(Exception e)
             {
-                return new ResponseDto<CompatibleResultDto>(false, null, $"Exception : {e.Message}");
+                return new ResponseDto<CompatibleResultDto>(false, null, $"{e.Message}");
             }
         }
 
@@ -72,7 +72,7 @@ namespace PisApp.API.Controllers
             }
             catch(Exception e)
             {
-                return new ResponseDto<CompatibleResultDto>(false, null, $"Exception : {e.Message}");
+                return new ResponseDto<CompatibleResultDto>(false, null, $"{e.Message}");
             }
         }
 
@@ -91,7 +91,7 @@ namespace PisApp.API.Controllers
             }
             catch(Exception e)
             {
-                return new ResponseDto<CompatibleResultDto>(false, null, $"Exception : {e.Message}");
+                return new ResponseDto<CompatibleResultDto>(false, null, $"{e.Message}");
             }
         }
 
@@ -110,7 +110,7 @@ namespace PisApp.API.Controllers
             }
             catch(Exception e)
             {
-                return new ResponseDto<CompatibleResultDto>(false, null, $"Exception : {e.Message}");
+                return new ResponseDto<CompatibleResultDto>(false, null, $"{e.Message}");
             }
         }
 
@@ -129,7 +129,7 @@ namespace PisApp.API.Controllers
             }
             catch(Exception e)
             {
-                return new ResponseDto<CompatibleResultDto>(false, null, $"Exception : {e.Message}");
+                return new ResponseDto<CompatibleResultDto>(false, null, $"{e.Message}");
             }
         }
     }
