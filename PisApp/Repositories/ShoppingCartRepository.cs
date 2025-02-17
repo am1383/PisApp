@@ -45,9 +45,9 @@ namespace PisApp.API.Repositories
         {
             var query = @"
                 SELECT
-                s.cart_number,
-                s.cart_status,
-                COUNT(a.product_id) AS total_items
+                    s.cart_number,
+                    s.cart_status,
+                    COUNT(a.product_id) AS total_items
                 FROM
                     shopping_cart s
                 LEFT JOIN

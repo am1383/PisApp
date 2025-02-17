@@ -4,6 +4,6 @@ namespace PisApp.API.Compatibles.Dtos
     {
         public required int motherboard_id { get; set; }
 
-        public required int gpu_id { get; set; }
+        public required int gpu_id         { get; set; }
     }
 }

@@ -4,7 +4,6 @@ using PisApp.API.Interfaces;
 using PisApp.API.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using PisApp.API.Utils;
-using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace PisApp.API.Controllers
 {
@@ -69,7 +68,7 @@ namespace PisApp.API.Controllers
 
         [Authorize]
         [HttpGet("addresses")]
-        public async Task<ResponseDto<IEnumerable<AddressDetailDto>>> Addresses(AuthorizationFilterContext context)
+        public async Task<ResponseDto<IEnumerable<AddressDetailDto>>> Addresses()
         {
             try
             {
@@ -87,7 +86,7 @@ namespace PisApp.API.Controllers
 
         [Authorize]
         [HttpGet("code")]
-        public async Task<ResponseDto<DiscountSummaryDto>> DiscountCodeStatus(AuthorizationFilterContext context)
+        public async Task<ResponseDto<DiscountSummaryDto>> DiscountCodeStatus()
         {
             try
             {
@@ -109,7 +108,7 @@ namespace PisApp.API.Controllers
 
         [Authorize]
         [HttpGet("purchases")]
-        public async Task<ResponseDto<IEnumerable<ShoppingCartsDetailsDto>>> RecentPurchases(AuthorizationFilterContext context)
+        public async Task<ResponseDto<IEnumerable<ShoppingCartsDetailsDto>>> RecentPurchases()
         {
             try
             {
@@ -127,7 +126,7 @@ namespace PisApp.API.Controllers
 
         [Authorize]
         [HttpGet("carts/status")]
-        public async Task<ResponseDto<IEnumerable<CartDetailsDto>>> CartsStatus(AuthorizationFilterContext context)
+        public async Task<ResponseDto<IEnumerable<CartDetailsDto>>> CartsStatus()
         {
             try
             {
@@ -145,7 +144,7 @@ namespace PisApp.API.Controllers
 
         [Authorize]
         [HttpGet("profit")]
-        public async Task<ResponseDto<UserProfitDto>> VIPUserProfit(AuthorizationFilterContext context)
+        public async Task<ResponseDto<UserProfitDto>> VIPUserProfit()
         {
             try
             {

@@ -17,7 +17,7 @@ namespace PisApp.API.Persistence
                     Scheme        = "Bearer",
                     BearerFormat  = "JWT",
                     In            = ParameterLocation.Header,
-                    Description   = "Please Enter Your Bearer token"
+                    Description   = "Please Enter Your Bearer Token"
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement

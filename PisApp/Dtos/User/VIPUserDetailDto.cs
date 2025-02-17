@@ -4,6 +4,6 @@ namespace PisApp.API.Dtos
     {   
         public required bool is_VIP { get; set; }
         
-        public int? remaining_time { get; set; }
+        public int? remaining_time  { get; set; }
     }
 }

@@ -35,7 +35,7 @@ namespace PisApp.API.Services
                 return await _unitOfWork.Users.GetUserId(phoneNumber);
             } else {
 
-                throw new NotFoundExceptions();
+                throw new UserNotFoundExceptions();
             }
         }
 

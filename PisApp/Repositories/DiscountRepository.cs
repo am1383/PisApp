@@ -17,10 +17,14 @@ namespace PisApp.API.Repositories
         public async Task<List<PrivateDiscount>> GetPrivateDiscountCodesWithLessThanOneWeekLeft(int userId)
         {
             var query = @"
-                SELECT pc.code  
-                FROM private_code pc
-                JOIN discount_code dc ON pc.code = dc.code
-                WHERE pc.client_id = @p0
+                SELECT 
+                    pc.code  
+                FROM 
+                    private_code pc
+                JOIN 
+                    discount_code dc ON pc.code = dc.code
+                WHERE 
+                    pc.client_id = @p0
                     AND dc.expiration_time <= NOW() + INTERVAL '7 days'
             ";
 
@@ -32,10 +36,14 @@ namespace PisApp.API.Repositories
         public async Task<int> GetGiftedDiscountCodesCount(int userId)
         {
             var query = @"
-                SELECT COUNT(*) 
-                FROM private_code pc
-                JOIN discount_code dc ON pc.code = dc.code
-                WHERE pc.client_id = @p0
+                SELECT 
+                    COUNT(*) 
+                FROM 
+                    private_code pc
+                JOIN 
+                    discount_code dc ON pc.code = dc.code
+                WHERE
+                    pc.client_id = @p0
                     AND dc.code_type = 'private'
                     AND dc.expiration_time > NOW()";
 

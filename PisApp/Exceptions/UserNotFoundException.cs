@@ -1,8 +1,8 @@
 namespace PisApp.API.Exceptions
 {
-    public class NotFoundExceptions : ApplicationException
+    public class UserNotFoundExceptions : ApplicationException
     {
-        public NotFoundExceptions()
+        public UserNotFoundExceptions()
             :base("User Was Not Found")
         {
             //
