@@ -33,10 +33,9 @@ namespace PisApp.API.Services
             if (await _unitOfWork.Users.GetUserByPhoneNumberAsync(phoneNumber))
             {   
                 return await _unitOfWork.Users.GetUserId(phoneNumber);
-            } else {
-
-                throw new UserNotFoundExceptions();
-            }
+            } 
+            
+            throw new UserNotFoundExceptions();
         }
 
         public async Task<UserDetail> GetUserDetailsById(int userId)
