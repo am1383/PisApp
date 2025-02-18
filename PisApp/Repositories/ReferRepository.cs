@@ -2,25 +2,26 @@ using Microsoft.EntityFrameworkCore;
 using PisApp.API.DbContextes;
 using PisApp.API.Entities;
 using PisApp.API.Interfaces;
+using PisApp.API.Interfaces.UnitOfWork;
 
 namespace PisApp.API.Repositories
 {
     public class ReferRepository : IReferRepository
     {
-        private readonly PisAppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ReferRepository(PisAppDbContext context)
+        public ReferRepository(IUnitOfWork unitOfWork)
         {   
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<int> CountUserReferrerByCode(string referCode)
         {
             var query = "SELECT COUNT(*) FROM refers WHERE referrer_id = @p0";
                 
-            var result = await _context.Set<Refer>()
-                                       .FromSqlRaw(query, referCode)
-                                       .FirstOrDefaultAsync();
+            var result = await _unitOfWork.Context.Set<Refer>()
+                                                  .FromSqlRaw(query, referCode)
+                                                  .FirstOrDefaultAsync();
 
             return result.count;
         }

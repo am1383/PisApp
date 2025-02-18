@@ -57,6 +57,7 @@ namespace PisApp.API.Services
             }
 
             var remainingTime = vipExpiryDate - DateTime.UtcNow;
+            
             var remainingDays = remainingTime.TotalDays < 0 ? 0 : (int)remainingTime.TotalDays;
 
             return new VIPUserDetailDto

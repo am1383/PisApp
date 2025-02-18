@@ -1,17 +1,17 @@
 using Microsoft.EntityFrameworkCore;
-using PisApp.API.DbContextes;
 using PisApp.API.Entities;
 using PisApp.API.Interfaces;
+using PisApp.API.Interfaces.UnitOfWork;
 
 namespace PisApp.API.Repositories
 {
     public class DiscountRepository : IDiscountRepository
     {
-        private readonly PisAppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DiscountRepository(PisAppDbContext context)
+        public DiscountRepository(IUnitOfWork unitOfWork)
         {   
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<List<PrivateDiscount>> GetPrivateDiscountCodesWithLessThanOneWeekLeft(int userId)
@@ -28,7 +28,7 @@ namespace PisApp.API.Repositories
                     AND dc.expiration_time <= NOW() + INTERVAL '7 days'
             ";
 
-            return await _context.Set<PrivateDiscount>()
+            return await _unitOfWork.Context.Set<PrivateDiscount>()
                                  .FromSqlRaw(query, userId) 
                                  .ToListAsync();
         }
@@ -47,7 +47,7 @@ namespace PisApp.API.Repositories
                     AND dc.code_type = 'private'
                     AND dc.expiration_time > NOW()";
 
-            var result = await _context.Set<Discount>()
+            var result = await _unitOfWork.Context.Set<Discount>()
                                        .FromSqlRaw(query, userId)
                                        .FirstOrDefaultAsync();
 

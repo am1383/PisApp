@@ -67,7 +67,7 @@ public class JwtService
         }
         catch
         {
-            return null;
+            return default;
         }
     }
 

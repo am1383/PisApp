@@ -110,7 +110,7 @@ namespace PisApp.API.Services
                 repo => repo.GetAllPowerSupplyAsync(),
                 p => new PowerSupplyDetailsDto
                 {
-                    product_id = p.product_id,
+                    product_id        = p.product_id,
                     supported_wattage = p.supported_wattage,
                     depth  = p.depth,
                     height = p.height,

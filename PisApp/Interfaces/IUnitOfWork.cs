@@ -1,10 +1,13 @@
+using PisApp.API.DbContextes;
+
 namespace PisApp.API.Interfaces.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
         IUserRepository         Users       { get; }
-        IProductRepository      Products    { get; }
+        PisAppDbContext         Context     { get; }
         IAddressRepository      Addresses   { get; }
+        IProductRepository      Products    { get; }
         ICompatibleRepository   Compatibles { get; }
         IDiscountRepository     Discounts   { get; }
         IShoppingCartRepository ShoppingCarts { get; }

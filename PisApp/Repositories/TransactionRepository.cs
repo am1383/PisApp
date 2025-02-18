@@ -1,17 +1,17 @@
 using Microsoft.EntityFrameworkCore;
-using PisApp.API.DbContextes;
 using PisApp.API.Entities;
 using PisApp.API.Interfaces;
+using PisApp.API.Interfaces.UnitOfWork;
 
 namespace PisApp.API.Repositories
 {
     public class TransactionRepository : ITransactionRepository
     {
-        private readonly PisAppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public TransactionRepository(PisAppDbContext context)
+        public TransactionRepository(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<UserProfit> GetUserProfitForVIPClients(int userId)
@@ -29,9 +29,9 @@ namespace PisApp.API.Repositories
                         AND t.time_stamp    <  date_trunc('month', CURRENT_DATE + INTERVAL '1 month')
                         AND ifr.client_id    = @p0";
 
-            return await _context.Set<UserProfit>()
-                                 .FromSqlRaw(query, userId)
-                                 .FirstOrDefaultAsync();
+            return await _unitOfWork.Context.Set<UserProfit>()
+                                            .FromSqlRaw(query, userId)
+                                            .FirstOrDefaultAsync();
         }
     }
 }

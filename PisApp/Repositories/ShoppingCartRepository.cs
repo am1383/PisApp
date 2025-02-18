@@ -1,17 +1,17 @@
 using Microsoft.EntityFrameworkCore;
-using PisApp.API.DbContextes;
 using PisApp.API.Entities;
 using PisApp.API.Interfaces;
+using PisApp.API.Interfaces.UnitOfWork;
 
 namespace PisApp.API.Repositories
 {
     public class ShoppingCartRepository : IShoppingCartRepository
     {
-        private readonly PisAppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ShoppingCartRepository(PisAppDbContext context)
+        public ShoppingCartRepository(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<List<ShoppingCart>> UserRecentPurchasesAsync(int userId)
@@ -36,9 +36,9 @@ namespace PisApp.API.Repositories
                         LIMIT 5;
                 ";
 
-            return await _context.Set<ShoppingCart>()
-                                 .FromSqlRaw(query, userId)
-                                 .ToListAsync();
+            return await _unitOfWork.Context.Set<ShoppingCart>()
+                                            .FromSqlRaw(query, userId)
+                                            .ToListAsync();
         }
 
         public async Task<List<Cart>> UserCartsStatus(int userId)
@@ -58,9 +58,9 @@ namespace PisApp.API.Repositories
                     s.cart_number, s.cart_status;
                 ";
 
-            return await _context.Set<Cart>()
-                                 .FromSqlRaw(query, userId)
-                                 .ToListAsync();
+            return await _unitOfWork.Context.Set<Cart>()
+                                            .FromSqlRaw(query, userId)
+                                            .ToListAsync();
         }
     }
 }

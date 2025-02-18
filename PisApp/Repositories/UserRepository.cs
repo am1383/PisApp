@@ -1,27 +1,27 @@
 using Microsoft.EntityFrameworkCore;
-using PisApp.API.DbContextes;
 using PisApp.API.Interfaces;
 using PisApp.API.Entities.Common;
 using PisApp.API.Entities;
+using PisApp.API.Interfaces.UnitOfWork;
 
 namespace PisApp.API.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly PisAppDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserRepository(PisAppDbContext context)
+        public UserRepository(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<bool> GetUserByPhoneNumberAsync(string phoneNumber)
         {
             var query = "SELECT phone_number FROM client WHERE phone_number = @p0";
 
-            var result = await _context.Set<BaseEntity>()
-                                       .FromSqlRaw(query, phoneNumber)
-                                       .FirstOrDefaultAsync();
+            var result = await _unitOfWork.Context.Set<BaseEntity>()
+                                                  .FromSqlRaw(query, phoneNumber)
+                                                  .FirstOrDefaultAsync();
 
             return result != null; 
         }
@@ -30,9 +30,9 @@ namespace PisApp.API.Repositories
         {
             var query = "SELECT client_id FROM client WHERE phone_number = @p0";
 
-            var userId = await _context.Set<User>()
-                                       .FromSqlRaw(query, phoneNumber)
-                                       .FirstOrDefaultAsync();
+            var userId = await _unitOfWork.Context.Set<User>()
+                                                  .FromSqlRaw(query, phoneNumber)
+                                                  .FirstOrDefaultAsync();
 
             return userId.client_id;
         }
@@ -42,18 +42,18 @@ namespace PisApp.API.Repositories
             var query = "SELECT first_name, last_name, wallet_balance, time_stamp, referral_code " +
                         "FROM client WHERE client_id = @p0";  
 
-            return await _context.Set<UserDetail>()
-                                 .FromSqlRaw(query, userId) 
-                                 .FirstOrDefaultAsync();
+            return await _unitOfWork.Context.Set<UserDetail>()
+                                            .FromSqlRaw(query, userId) 
+                                            .FirstOrDefaultAsync();
         }
 
         public async Task<bool> isUserVIP(int userId)
         {
             var query = "SELECT EXISTS(SELECT * FROM vip_client WHERE client_id = @p0)";
 
-            var result = await _context.Set<VIPCheckResult>()
-                                       .FromSqlRaw(query, userId)
-                                       .FirstOrDefaultAsync();
+            var result = await _unitOfWork.Context.Set<VIPCheckResult>()
+                                                  .FromSqlRaw(query, userId)
+                                                  .FirstOrDefaultAsync();
 
             return result.exists;             
         }
@@ -62,9 +62,9 @@ namespace PisApp.API.Repositories
         {
             var query = "SELECT expiration_time FROM vip_client WHERE client_id = @p0";
 
-            var result = await _context.Set<VIPUser>()
-                                       .FromSqlRaw(query, userId)
-                                       .FirstOrDefaultAsync();
+            var result = await _unitOfWork.Context.Set<VIPUser>()
+                                                  .FromSqlRaw(query, userId)
+                                                  .FirstOrDefaultAsync();
 
             return result?.expiration_time ?? DateTime.MinValue;
         }
