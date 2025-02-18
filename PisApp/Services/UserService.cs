@@ -47,7 +47,7 @@ namespace PisApp.API.Services
         {
             var vipExpiryDate = await _unitOfWork.Users.VIPChecker(userId);
             
-            if (vipExpiryDate == DateTime.MinValue)
+            if (vipExpiryDate < DateTime.UtcNow)
             {
                 return new VIPUserDetailDto
                 {
@@ -72,7 +72,7 @@ namespace PisApp.API.Services
 
             return addresses.Select(a => new AddressDetailDto
             {
-                province = a.province,
+                province       = a.province,
                 remain_address = a.remain_address,
             });
         }
@@ -107,7 +107,7 @@ namespace PisApp.API.Services
             return new DiscountSummaryDto
             {
                 discounts = privateCodes,
-                gifts = giftCodes
+                gifts     = giftCodes
             };
         }
         
@@ -139,7 +139,6 @@ namespace PisApp.API.Services
                 total_cart_price = cart.total_cart_price
             }).ToList();
         }
-
 
         public async Task<IEnumerable<CartDetailsDto>> UserCartsStatus(int userId)
         {
