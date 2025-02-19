@@ -126,7 +126,7 @@ namespace PisApp.API.Controllers
 
         [Authorize]
         [HttpGet("carts/status")]
-        public async Task<ResponseDto<IEnumerable<CartDetailsDto>>> CartsStatus()
+        public async Task<ResponseDto<CartResponseDto>> CartsStatus()
         {
             try
             {
@@ -134,11 +134,11 @@ namespace PisApp.API.Controllers
 
                 var carts  = await _userService.UserCartsStatus(userId);
 
-                return new ResponseDto<IEnumerable<CartDetailsDto>>(true, carts);
+                return new ResponseDto<CartResponseDto>(true, carts);
             }
             catch (Exception e)
             {
-                return new ResponseDto<IEnumerable<CartDetailsDto>>(false, default!, $"{e.Message}");
+                return new ResponseDto<CartResponseDto>(false, default!, $"{e.Message}");
             }
         }
 

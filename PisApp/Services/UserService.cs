@@ -141,16 +141,22 @@ namespace PisApp.API.Services
             }).ToList();
         }
 
-        public async Task<IEnumerable<CartDetailsDto>> UserCartsStatus(int userId)
+        public async Task<CartResponseDto> UserCartsStatus(int userId)
         {
             var carts = await _unitOfWork.ShoppingCarts.UserCartsStatus(userId);
 
-            return carts.Select(cart => new CartDetailsDto
+            var availableCarts = await _unitOfWork.ShoppingCarts.AvailabeUserCarts(userId);
+
+            return new CartResponseDto
             {
-                cart_number = cart.cart_number,
-                cart_status = cart.cart_status,
-                total_items = cart.total_items
-            }).ToList();
+                carts = carts.Select(cart => new CartDetailsDto
+                {
+                    cart_number = cart.cart_number,
+                    cart_status = cart.cart_status,
+                    total_items = cart.total_items
+                }).ToList(),
+                available_carts = availableCarts
+            };
         }
 
         public async Task<UserProfitDto> VIPUserProfit(int userId)

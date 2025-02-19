@@ -6,5 +6,6 @@ namespace PisApp.API.Interfaces
     {
         public Task<List<ShoppingCart>> UserRecentPurchasesAsync(int userId);
         public Task<List<Cart>> UserCartsStatus(int userId);
+        public Task<int> AvailabeUserCarts(int userId);
     }
 }

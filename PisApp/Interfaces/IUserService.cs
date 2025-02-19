@@ -8,7 +8,7 @@ namespace PisApp.API.Interfaces
         public Task<int> FindUserIdByPhoneNumber(string phoneNumber);
         public DiscountSummaryDto UserDiscountsSummary(IEnumerable<PrivateDiscountDetailsDto> privateCodes, GiftDiscountDetailDto giftCodes);
         public Task<UserDetail> GetUserDetailsById(int userId);
-        public Task<IEnumerable<CartDetailsDto>> UserCartsStatus(int userId);
+        public Task<CartResponseDto> UserCartsStatus(int userId);
         public Task<int> CountUserRefferer(string referCode);
         public Task<IEnumerable<PrivateDiscountDetailsDto>> UserPrivateCodeWithLimiteTime(int userId);
         public Task<IEnumerable<ShoppingCartsDetailsDto>> UserRecentPurchases(int userId);

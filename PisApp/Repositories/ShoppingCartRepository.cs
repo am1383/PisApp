@@ -62,5 +62,20 @@ namespace PisApp.API.Repositories
                                             .FromSqlRaw(query, userId)
                                             .ToListAsync();
         }
+
+        public async Task<int> AvailabeUserCarts(int userId)
+        {
+            var query = @"
+                        SELECT COUNT(*)
+                        FROM shopping_cart
+                        WHERE client_id = @p0 
+                        AND cart_status IN ('active', 'locked')
+                    ";
+
+            var result = await _unitOfWork.Context.Set<Refer>()
+                                                  .FromSqlRaw(query, userId)
+                                                  .FirstOrDefaultAsync();
+            return result.count;
+        }
     }
 }
