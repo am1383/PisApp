@@ -8,9 +8,9 @@ namespace PisApp.API.Services
     {
         public async Task<IEnumerable<ProductDetailsDto>> GetCompatibleParts(List<int> selectedPartIds, string type)
         {
-            var selectedPartsTable = string.Join(",", selectedPartIds);
+            var selectedParts   = selectedPartIds.ToArray();
 
-            var compatibleParts = await unitOfWork.Compatibles.GetCompatiblePartsAsync(selectedPartsTable, type);
+            var compatibleParts = await unitOfWork.Compatibles.GetCompatiblePartsAsync(selectedParts, type);
 
             return compatibleParts.Select(p => new ProductDetailsDto
             {

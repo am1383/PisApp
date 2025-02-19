@@ -8,11 +8,11 @@ namespace PisApp.API.Repositories
 {
     public class CompatibleRepository(IUnitOfWork unitOfWork) : ICompatibleRepository
     {
-        public async Task<List<Product>> GetCompatiblePartsAsync(string selectedPartIds, string partType)
+        public async Task<List<Product>> GetCompatiblePartsAsync(int[] selectedPartIds, string partType)
         {
             var query = @"
                 WITH SelectedParts AS (
-                    SELECT unnest(ARRAY[1, 2, 3]) AS product_id
+                    SELECT unnest(@selectedPartIds) AS product_id
                 ),
                 CompatibleParts AS (
                     SELECT motherboard_id AS product_id, 'motherboard' AS type 
@@ -55,14 +55,20 @@ namespace PisApp.API.Repositories
                 WHERE (@p0 IS NULL OR @p0 = '' OR cp.type = @p0);
             ";
 
-            var partTypeParam = new NpgsqlParameter("@p0", NpgsqlTypes.NpgsqlDbType.Text) 
+            var selectedPartIdsParam = new NpgsqlParameter("@selectedPartIds", NpgsqlTypes.NpgsqlDbType.Array | NpgsqlTypes.NpgsqlDbType.Integer)
+            {
+                Value = selectedPartIds
+            };
+
+            var partTypeParam = new NpgsqlParameter("@p0", NpgsqlTypes.NpgsqlDbType.Text)
             {
                 Value = string.IsNullOrEmpty(partType) ? (object)DBNull.Value : partType
             };
 
             return await unitOfWork.Context.Set<Product>()
-                                           .FromSqlRaw(query, partTypeParam)
+                                           .FromSqlRaw(query, selectedPartIdsParam, partTypeParam)
                                            .ToListAsync();
         }
+
     }
 }
