@@ -1,9 +1,7 @@
-using PisApp.API.Dtos.Common;
-
 namespace PisApp.API.Dtos.LoginDto
 {
-    public class LoginDto : CommonDto
+    public class LoginDto
     {
-        
+        public required string phone_number { get; set; }
     }
 }
