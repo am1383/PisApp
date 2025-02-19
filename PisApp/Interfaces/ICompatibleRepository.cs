@@ -4,6 +4,6 @@ namespace PisApp.API.Interfaces
 {
     public interface ICompatibleRepository
     {
-        public Task<List<Product>> GetCompatiblePartsAsync(int[] selectedPartIds, string partType);
+        public Task<List<Product>> GetCompatiblePartsAsync(int[] selectedPartIds, string? partType);
     }
 }

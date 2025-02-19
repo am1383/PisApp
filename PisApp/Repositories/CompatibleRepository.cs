@@ -8,7 +8,7 @@ namespace PisApp.API.Repositories
 {
     public class CompatibleRepository(IUnitOfWork unitOfWork) : ICompatibleRepository
     {
-        public async Task<List<Product>> GetCompatiblePartsAsync(int[] selectedPartIds, string partType)
+        public async Task<List<Product>> GetCompatiblePartsAsync(int[] selectedPartIds, string? partType)
         {
             var query = @"
                 WITH SelectedParts AS (
@@ -69,6 +69,5 @@ namespace PisApp.API.Repositories
                                            .FromSqlRaw(query, selectedPartIdsParam, partTypeParam)
                                            .ToListAsync();
         }
-
     }
 }

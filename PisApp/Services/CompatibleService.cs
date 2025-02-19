@@ -6,7 +6,7 @@ namespace PisApp.API.Services
 {
     public class CompatibleService(IUnitOfWork unitOfWork) : ICompatibleService
     {
-        public async Task<IEnumerable<ProductDetailsDto>> GetCompatibleParts(List<int> selectedPartIds, string type)
+        public async Task<IEnumerable<ProductDetailsDto>> GetCompatibleParts(List<int> selectedPartIds, string? type)
         {
             var selectedParts   = selectedPartIds.ToArray();
 

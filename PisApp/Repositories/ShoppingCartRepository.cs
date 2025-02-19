@@ -59,11 +59,14 @@ namespace PisApp.API.Repositories
         public async Task<int> AvailabeUserCarts(int userId)
         {
             var query = @"
-                        SELECT COUNT(*)
-                        FROM shopping_cart
-                        WHERE client_id = @p0 
-                        AND cart_status IN ('active', 'locked')
-                    ";
+                        SELECT
+                            COUNT(*)
+                        FROM 
+                            shopping_cart
+                        WHERE 
+                            client_id = @p0 
+                            AND cart_status IN ('active', 'locked')
+                        ";
 
             var result = await unitOfWork.Context.Set<Refer>()
                                                  .FromSqlRaw(query, userId)
