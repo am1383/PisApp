@@ -21,7 +21,7 @@ namespace PisApp.API.Persistence
                 options.UseNpgsql(configuration.GetConnectionString("MainDB")));
             
             services.Configure<JwtService>(configuration.GetSection("JwtSettings"));
-                    services.AddSingleton(provider =>
+                services.AddSingleton(provider =>
                 {
                     var secret = configuration["JwtSettings:Secret"];
                     var issuer = configuration["JwtSettings:Issuer"];

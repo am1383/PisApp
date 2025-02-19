@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PisApp.API.Dtos.LoginDto;
 using PisApp.API.Interfaces;
 using PisApp.API.Dtos;
-using Microsoft.AspNetCore.Authorization;
 using PisApp.API.Utils;
 
 namespace PisApp.API.Controllers

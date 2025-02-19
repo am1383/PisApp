@@ -11,16 +11,16 @@ namespace PisApp.API.Services.Dtos.Validators
                 .NotNull()
                 .WithMessage("{PropertyName} نمی‌تواند خالی باشد.")
                 .Must(HaveCorrectSize)
-                .WithMessage("{PropertyName} باید حداقل دو مقدار داشته باشد.")
+                .WithMessage("{PropertyName} باید حداقل یک مقدار داشته باشد.")
                 .NotEmpty()
                 .WithMessage("{PropertyName} را وارد کنید.");
         }
 
         private bool HaveCorrectSize(List<int> productsId)
         {
-            var minSize = 2;
+            var minCount = 1;
 
-            return productsId != null && productsId.Count >= minSize;
+            return productsId.Count >= minCount;
         }
     }
 }

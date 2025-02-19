@@ -3,7 +3,7 @@ namespace PisApp.API.Exceptions
     public class UserNotFoundExceptions : ApplicationException
     {
         public UserNotFoundExceptions()
-            :base("کاربر مورد نظر ویژه نمیباشد")
+            :base("کاربر مورد نظر یافت نشد")
         {
             //
         }
