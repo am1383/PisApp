@@ -12,8 +12,8 @@ namespace PisApp.API.Repositories
             var query = "SELECT * FROM motherboard JOIN product ON product_id = id";
  
             return await unitOfWork.Context.Set<Motherboard>()
-                                            .FromSqlRaw(query) 
-                                            .ToListAsync();
+                                           .FromSqlRaw(query) 
+                                           .ToListAsync();
         }
 
         public async Task<IEnumerable<Cpu>> GetAllCpuAsync()
@@ -21,8 +21,8 @@ namespace PisApp.API.Repositories
             var query = "SELECT * FROM cpu JOIN product ON product_id = id";
  
             return await unitOfWork.Context.Set<Cpu>()
-                                            .FromSqlRaw(query) 
-                                            .ToListAsync();
+                                           .FromSqlRaw(query) 
+                                           .ToListAsync();
         }
 
         public async Task<IEnumerable<Ram>> GetAllRamAsync()
@@ -30,8 +30,8 @@ namespace PisApp.API.Repositories
             var query = "SELECT * FROM ram_stick JOIN product ON product_id = id";
  
             return await unitOfWork.Context.Set<Ram>()
-                                            .FromSqlRaw(query) 
-                                            .ToListAsync();
+                                           .FromSqlRaw(query) 
+                                           .ToListAsync();
         }
 
         public async Task<IEnumerable<Gpu>> GetAllGpuAsync()
@@ -39,8 +39,8 @@ namespace PisApp.API.Repositories
             var query = "SELECT * FROM gpu JOIN product ON product_id = id";
  
             return await unitOfWork.Context.Set<Gpu>()
-                                            .FromSqlRaw(query) 
-                                            .ToListAsync();
+                                           .FromSqlRaw(query) 
+                                           .ToListAsync();
         }
 
         public async Task<IEnumerable<Ssd>> GetAllSsdAsync()
@@ -48,8 +48,8 @@ namespace PisApp.API.Repositories
             var query = "SELECT * FROM ssd JOIN product ON product_id = id";
  
             return await unitOfWork.Context.Set<Ssd>()
-                                            .FromSqlRaw(query) 
-                                            .ToListAsync();
+                                           .FromSqlRaw(query) 
+                                           .ToListAsync();
         }
 
         public async Task<IEnumerable<Cooler>> GetAllCoolerAsync()
@@ -57,8 +57,8 @@ namespace PisApp.API.Repositories
             var query = "SELECT * FROM cooler JOIN product ON product_id = id";
 
             return await unitOfWork.Context.Set<Cooler>()
-                                            .FromSqlRaw(query)
-                                            .ToListAsync();
+                                           .FromSqlRaw(query)
+                                           .ToListAsync();
         }
 
         public async Task<IEnumerable<PowerSupply>> GetAllPowerSupplyAsync()
@@ -66,8 +66,8 @@ namespace PisApp.API.Repositories
             var query = "SELECT * FROM power_supply JOIN product ON product_id = id";
  
             return await unitOfWork.Context.Set<PowerSupply>()
-                                            .FromSqlRaw(query) 
-                                            .ToListAsync();
+                                           .FromSqlRaw(query) 
+                                           .ToListAsync();
         }
     }   
 }
