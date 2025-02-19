@@ -20,11 +20,11 @@ namespace PisApp.API.Controllers
             {
                 var motherboardList = await productService.GetAllMotherboard();
 
-                return new ResponseDto<IEnumerable<MotherboardDetailsDto>>(true, motherboardList);
+                return new ResponseDto<IEnumerable<MotherboardDetailsDto>>(motherboardList);
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<MotherboardDetailsDto>>(false, default!, $"{e.Message}");
+                return new ResponseDto<IEnumerable<MotherboardDetailsDto>>(default!, false, $"{e.Message}");
             }
         }
 
@@ -35,12 +35,12 @@ namespace PisApp.API.Controllers
             {
                 var ramList = await productService.GetAllRam();
 
-                return new ResponseDto<IEnumerable<RamDetailDto>>(true, ramList);
+                return new ResponseDto<IEnumerable<RamDetailDto>>(ramList);
                 
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<RamDetailDto>>(false, default!, $"{e.Message}");
+                return new ResponseDto<IEnumerable<RamDetailDto>>(default!, false, $"{e.Message}");
             }
         }
 
@@ -51,11 +51,11 @@ namespace PisApp.API.Controllers
             {
                 var coolerList = await productService.GetAllCooler();
 
-                return new ResponseDto<IEnumerable<CoolerDetailsDto>>(true, coolerList);
+                return new ResponseDto<IEnumerable<CoolerDetailsDto>>( coolerList);
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<CoolerDetailsDto>>(false, default!, $"{e.Message}");
+                return new ResponseDto<IEnumerable<CoolerDetailsDto>>(default!, false, $"{e.Message}");
             }
         }
 
@@ -66,11 +66,11 @@ namespace PisApp.API.Controllers
             {
                 var cpuList = await productService.GetAllCpu();
 
-                return new ResponseDto<IEnumerable<CpuDetailsDto>>(true, cpuList);
+                return new ResponseDto<IEnumerable<CpuDetailsDto>>(cpuList);
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<CpuDetailsDto>>(false, default!, $"{e.Message}");
+                return new ResponseDto<IEnumerable<CpuDetailsDto>>(default!, false, $"{e.Message}");
             }
         }
 
@@ -81,11 +81,11 @@ namespace PisApp.API.Controllers
             {
                 var gpuList = await productService.GetAllGpu();
 
-                return new ResponseDto<IEnumerable<GpuDetailsDto>>(true, gpuList);
+                return new ResponseDto<IEnumerable<GpuDetailsDto>>(gpuList);
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<GpuDetailsDto>>(false, default!, $"{e.Message}");
+                return new ResponseDto<IEnumerable<GpuDetailsDto>>(default!, false, $"{e.Message}");
             }
         }
 
@@ -96,11 +96,11 @@ namespace PisApp.API.Controllers
             {
                 var powerSupplyList = await productService.GetAllPowerSupply();
 
-                return new ResponseDto<IEnumerable<PowerSupplyDetailsDto>>(true, powerSupplyList);
+                return new ResponseDto<IEnumerable<PowerSupplyDetailsDto>>(powerSupplyList);
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<PowerSupplyDetailsDto>>(false, default!, $"{e.Message}");
+                return new ResponseDto<IEnumerable<PowerSupplyDetailsDto>>(default!, false, $"{e.Message}");
             }
         }
 
@@ -111,11 +111,11 @@ namespace PisApp.API.Controllers
             {
                 var ssdList = await productService.GetAllSsd();
 
-                return new ResponseDto<IEnumerable<SsdDetailDto>>(true, ssdList);
+                return new ResponseDto<IEnumerable<SsdDetailDto>>(ssdList);
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<SsdDetailDto>>(false, default!, $"{e.Message}");
+                return new ResponseDto<IEnumerable<SsdDetailDto>>(default!, false, $"{e.Message}");
             }
         }
     }

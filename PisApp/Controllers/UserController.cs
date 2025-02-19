@@ -25,11 +25,11 @@ namespace PisApp.API.Controllers
 
                 var token       = jwtService.GenerateToken(userId, isUserVIP);
 
-                return new ResponseDto<string>(true, token);  
+                return new ResponseDto<string>(token);  
             } 
             catch (Exception e)
             {
-                return new ResponseDto<string>(false, default!, $"{e.Message}");
+                return new ResponseDto<string>(default!, false, $"{e.Message}");
             }
         }
 
@@ -49,11 +49,11 @@ namespace PisApp.API.Controllers
 
                 var userDetail      = userService.Details(user, isUserVip, countUserReffer);
 
-                return new ResponseDto<UserDetailDto>(true, userDetail);
+                return new ResponseDto<UserDetailDto>(userDetail);
             }
             catch (Exception e)
             {
-                return new ResponseDto<UserDetailDto>(false, default!, $"{e.Message}");
+                return new ResponseDto<UserDetailDto>(default!, false, $"{e.Message}");
             }
         }
 
@@ -67,11 +67,11 @@ namespace PisApp.API.Controllers
 
                 var addresses = await userService.GetUserAddressesById(userId);
 
-                return new ResponseDto<IEnumerable<AddressDetailDto>>(true, addresses);
+                return new ResponseDto<IEnumerable<AddressDetailDto>>(addresses);
             }
             catch (Exception e)
             {
-                return new ResponseDto<IEnumerable<AddressDetailDto>>(false, default!, $"Exception : {e.Message}");
+                return new ResponseDto<IEnumerable<AddressDetailDto>>(default!, false, $"Exception : {e.Message}");
             }
         }
 
@@ -89,11 +89,11 @@ namespace PisApp.API.Controllers
 
                 var discountsSummary = userService.UserDiscountsSummary(privateCode, giftedCode);
 
-                return new ResponseDto<DiscountSummaryDto>(true, discountsSummary);
+                return new ResponseDto<DiscountSummaryDto>(discountsSummary);
             }
             catch (Exception e)
             {
-                return new ResponseDto<DiscountSummaryDto>(false, default!, $"{e.Message}");
+                return new ResponseDto<DiscountSummaryDto>(default!, false, $"{e.Message}");
             }
         }
 
@@ -107,11 +107,11 @@ namespace PisApp.API.Controllers
 
                 var shoppingCarts = await userService.UserRecentPurchases(userId);
 
-                return new ResponseDto<IEnumerable<ShoppingCartsDetailsDto>>(true, shoppingCarts);
+                return new ResponseDto<IEnumerable<ShoppingCartsDetailsDto>>(shoppingCarts);
             }
             catch (Exception e)
             {
-                return new ResponseDto<IEnumerable<ShoppingCartsDetailsDto>>(false, default!, $"{e.Message}");
+                return new ResponseDto<IEnumerable<ShoppingCartsDetailsDto>>(default!, false, $"{e.Message}");
             }
         }
 
@@ -125,11 +125,11 @@ namespace PisApp.API.Controllers
 
                 var carts  = await userService.UserCartsStatus(userId);
 
-                return new ResponseDto<CartResponseDto>(true, carts);
+                return new ResponseDto<CartResponseDto>(carts);
             }
             catch (Exception e)
             {
-                return new ResponseDto<CartResponseDto>(false, default!, $"{e.Message}");
+                return new ResponseDto<CartResponseDto>(default!, false, $"{e.Message}");
             }
         }
 
@@ -143,11 +143,11 @@ namespace PisApp.API.Controllers
 
                 var profit = await userService.VIPUserProfit(userId);
 
-                return new ResponseDto<UserProfitDto>(true, profit);
+                return new ResponseDto<UserProfitDto>(profit);
             }
             catch (Exception e)
             {
-                return new ResponseDto<UserProfitDto>(false, default!, $"{e.Message}");
+                return new ResponseDto<UserProfitDto>(default!, false, $"{e.Message}");
             }
         }
     }

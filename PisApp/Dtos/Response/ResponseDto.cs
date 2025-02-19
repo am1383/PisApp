@@ -8,8 +8,8 @@ namespace PisApp.API.Dtos
 
         public T Data          { get; set; }
 
-        public ResponseDto(bool isSuccess, T data, string? message = "") 
-        { 
+        public ResponseDto(T data, bool isSuccess = true, string? message = "") 
+        {  
             IsSuccess = isSuccess;
             Message = message;
             Data = data;
