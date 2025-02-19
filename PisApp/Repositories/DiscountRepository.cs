@@ -29,8 +29,8 @@ namespace PisApp.API.Repositories
             ";
 
             return await _unitOfWork.Context.Set<PrivateDiscount>()
-                                 .FromSqlRaw(query, userId) 
-                                 .ToListAsync();
+                                            .FromSqlRaw(query, userId) 
+                                            .ToListAsync();
         }
 
         public async Task<int> GetGiftedDiscountCodesCount(int userId)
@@ -48,8 +48,8 @@ namespace PisApp.API.Repositories
                     AND dc.expiration_time > NOW()";
 
             var result = await _unitOfWork.Context.Set<Discount>()
-                                       .FromSqlRaw(query, userId)
-                                       .FirstOrDefaultAsync();
+                                                  .FromSqlRaw(query, userId)
+                                                  .FirstOrDefaultAsync();
 
             return result.count;
         }
