@@ -1,65 +1,25 @@
-using PisApp.API.Compatibles.Dtos;
 using PisApp.API.Interfaces;
 using PisApp.API.Interfaces.UnitOfWork;
+using PisApp.API.Products.Entities;
 
 namespace PisApp.API.Services
 {
     public class CompatibleService(IUnitOfWork unitOfWork) : ICompatibleService
     {
-        public CompatibleResultDto CompatibleResult(bool compatibleResult)
+        public async Task<IEnumerable<ProductDetailsDto>> GetCompatibleParts(List<int> selectedPartIds, string type)
         {
-            return new CompatibleResultDto
+            var selectedPartsTable = string.Join(",", selectedPartIds);
+
+            var compatibleParts = await unitOfWork.Compatibles.GetCompatiblePartsAsync(selectedPartsTable, type);
+
+            return compatibleParts.Select(p => new ProductDetailsDto
             {
-                result = compatibleResult
-            };
-        }
-
-        public async Task<CompatibleResultDto> GetCompatibleCCSocket(int coolerId, int cpuId)
-        {
-            var result = await unitOfWork.Compatibles
-                                         .CompatibleCCSocketChecker(coolerId, cpuId);
-
-            return CompatibleResult(result);
-        }
-
-        public async Task<CompatibleResultDto> GetCompatibleGpConnect(int gpuId, int powerSupplyId)
-        {
-            var result = await unitOfWork.Compatibles
-                                         .CompatibleGpConnectChecker(gpuId, powerSupplyId);
-
-            return CompatibleResult(result);
-        }
-
-        public async Task<CompatibleResultDto> GetCompatibleMcSocket(int cpuId, int motherboardId)
-        {
-            var result = await unitOfWork.Compatibles
-                                         .CompatibleMcSocketChecker(cpuId, motherboardId);
-
-            return CompatibleResult(result);
-        }
-
-        public async Task <CompatibleResultDto> GetCompatibleRmSlot(int ramId, int motherboardId)
-        {
-            var result = await unitOfWork.Compatibles
-                                         .CompatibleRmSlotChecker(ramId, motherboardId);
-            
-            return CompatibleResult(result);
-        }
-
-        public async Task <CompatibleResultDto> GetCompatibleGmSlot(int gpuId, int motherboardId)
-        {
-            var result = await unitOfWork.Compatibles
-                                         .CompatibleGmSlotChecker(gpuId, motherboardId);
-
-            return CompatibleResult(result);
-        } 
-
-        public async Task<CompatibleResultDto> GetCompatibleSmSlot(int ssdId, int motherboardId)
-        {
-            var result = await unitOfWork.Compatibles
-                                         .CompatibleSmSlotChecker(ssdId, motherboardId);
-            
-            return CompatibleResult(result);
+                model         = p.model,
+                brand         = p.brand,
+                category      = p.category,
+                current_price = p.current_price,
+                stock_count   = p.stock_count
+            });
         }
     }
 }

@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PisApp.API.Entities;
 using PisApp.API.Entities.Common;
 using PisApp.API.Products.Entities;
+using PisApp.API.Products.Entities.Common;
 
 namespace PisApp.API.DbContextes
 {
@@ -14,6 +15,7 @@ namespace PisApp.API.DbContextes
         }
 
         public DbSet<BaseEntity> baseEntities { get; set; } 
+        public DbSet<Product> products { get; set; }
         public DbSet<Compatible> compatibles  { get; set; }
         public DbSet<Cooler> coolers { get; set; }
         public DbSet<Gpu> gpus       { get; set; }
@@ -37,6 +39,7 @@ namespace PisApp.API.DbContextes
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<VIPUser>        ().HasNoKey();
+            modelBuilder.Entity<Product>        ().HasNoKey();
             modelBuilder.Entity<VIPCheckResult> ().HasNoKey();
             modelBuilder.Entity<Compatible>     ().HasNoKey();
             modelBuilder.Entity<Cooler>         ().HasNoKey();

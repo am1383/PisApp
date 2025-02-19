@@ -1,71 +1,68 @@
 using Microsoft.EntityFrameworkCore;
-using PisApp.API.Entities;
 using PisApp.API.Interfaces;
 using PisApp.API.Interfaces.UnitOfWork;
+using PisApp.API.Products.Entities.Common;
+using Npgsql;
 
 namespace PisApp.API.Repositories
 {
     public class CompatibleRepository(IUnitOfWork unitOfWork) : ICompatibleRepository
     {
-        public async Task<bool> CompatibleCCSocketChecker(int coolerId, int cpuId)
+        public async Task<List<Product>> GetCompatiblePartsAsync(string selectedPartIds, string partType)
         {
-            var query = "SELECT EXISTS(SELECT * FROM compatible_cc_socket WHERE cpu_id = @p0 AND cooler_id = @p1)";
+            var query = @"
+                WITH SelectedParts AS (
+                    SELECT unnest(ARRAY[1, 2, 3]) AS product_id
+                ),
+                CompatibleParts AS (
+                    SELECT motherboard_id AS product_id, 'motherboard' AS type 
+                    FROM compatible_mc_socket
+                    WHERE cpu_id IN (SELECT product_id FROM SelectedParts)
+                    
+                    UNION ALL
+                    
+                    SELECT ram_id AS product_id, 'ram_stick' AS type 
+                    FROM compatible_rm_slot
+                    WHERE motherboard_id IN (SELECT product_id FROM SelectedParts)
+                    
+                    UNION ALL
+                    
+                    SELECT gpu_id AS product_id, 'gpu' AS type 
+                    FROM compatible_gm_slot
+                    WHERE motherboard_id IN (SELECT product_id FROM SelectedParts)
+                    
+                    UNION ALL
+                    
+                    SELECT ssd_id AS product_id, 'ssd' AS type 
+                    FROM compatible_sm_slot
+                    WHERE motherboard_id IN (SELECT product_id FROM SelectedParts)
+                    
+                    UNION ALL
+                    
+                    SELECT gpu_id AS product_id, 'gpu' AS type 
+                    FROM compatible_gp_connector
+                    WHERE power_supply_id IN (SELECT product_id FROM SelectedParts)
+                    
+                    UNION ALL
+                    
+                    SELECT cooler_id AS product_id, 'cooler' AS type 
+                    FROM compatible_cc_socket
+                    WHERE cpu_id IN (SELECT product_id FROM SelectedParts)
+                )
+                SELECT p.*, cp.type
+                FROM product p
+                JOIN CompatibleParts cp ON p.id = cp.product_id
+                WHERE (@p0 IS NULL OR @p0 = '' OR cp.type = @p0);
+            ";
 
-            var result = await unitOfWork.Context.Set<Compatible>()
-                                                 .FromSqlRaw(query, cpuId, coolerId) 
-                                                 .FirstOrDefaultAsync();
+            var partTypeParam = new NpgsqlParameter("@p0", NpgsqlTypes.NpgsqlDbType.Text) 
+            {
+                Value = string.IsNullOrEmpty(partType) ? (object)DBNull.Value : partType
+            };
 
-            return result.exists;
-        }
-
-        public async Task<bool> CompatibleGpConnectChecker(int gpuId, int powerSupplyId)
-        {
-            var query = "SELECT EXISTS(SELECT * FROM compatible_gp_connector WHERE gpu_id = @p0 AND power_supply_id = @p1)";
-
-            var result = await unitOfWork.Context.Set<Compatible>()
-                                                 .FromSqlRaw(query, gpuId, powerSupplyId)
-                                                 .FirstOrDefaultAsync();
-            return result.exists;
-        }
-
-        public async Task<bool> CompatibleMcSocketChecker(int cpuId, int motherboardId)
-        {
-            var query = "SELECT EXISTS(SELECT * FROM compatible_mc_socket WHERE cpu_id = @p0 AND motherboard_id = @p1)";
-
-            var result = await unitOfWork.Context.Set<Compatible>()
-                                                 .FromSqlRaw(query, cpuId, motherboardId)
-                                                 .FirstOrDefaultAsync();
-            return result.exists;
-        }
-
-        public async Task<bool> CompatibleRmSlotChecker(int ramId, int motherboardId)
-        {
-            var query = "SELECT EXISTS(SELECT * FROM compatible_rm_slot WHERE ram_id = @p0 AND motherboard_id = @P1)";
-
-            var result = await unitOfWork.Context.Set<Compatible>()
-                                                 .FromSqlRaw(query, ramId, motherboardId)
-                                                 .FirstOrDefaultAsync();
-            return result.exists;
-        }
-
-        public async Task<bool> CompatibleGmSlotChecker(int gpuId, int motherboardId)
-        {
-            var query = "SELECT EXISTS(SELECT * FROM compatible_gm_slot WHERE gpu_id = @p0 AND motherboard_id = @p1)";
-
-            var result = await unitOfWork.Context.Set<Compatible>()
-                                                 .FromSqlRaw(query, gpuId, motherboardId)
-                                                 .FirstOrDefaultAsync();
-            return result.exists;
-        }
-
-        public async Task<bool> CompatibleSmSlotChecker(int ssdId, int motherboardId)
-        {
-            var query = "SELECT EXISTS(SELECT * FROM compatible_sm_slot WHERE ssd_id = @p0 AND motherboard_id = @p1)";
-
-            var result = await unitOfWork.Context.Set<Compatible>()
-                                                 .FromSqlRaw(query, ssdId, motherboardId)
-                                                 .FirstOrDefaultAsync();
-            return result.exists;
+            return await unitOfWork.Context.Set<Product>()
+                                           .FromSqlRaw(query, partTypeParam)
+                                           .ToListAsync();
         }
     }
 }
