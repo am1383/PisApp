@@ -6,15 +6,8 @@ using PisApp.API.Entities;
 
 namespace PisApp.API.Services
 {
-    public class UserService : IUserService
+    public class UserService(IUnitOfWork unitOfWork) : IUserService
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public UserService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-
         public UserDetailDto Details(UserDetail user, VIPUserDetailDto isUserVIP, int countUserReffer)
         {
             return new UserDetailDto {
@@ -30,9 +23,9 @@ namespace PisApp.API.Services
         
         public async Task<int> FindUserIdByPhoneNumber(string phoneNumber)
         {
-            if (await _unitOfWork.Users.GetUserByPhoneNumberAsync(phoneNumber))
+            if (await unitOfWork.Users.GetUserByPhoneNumberAsync(phoneNumber))
             {   
-                return await _unitOfWork.Users.GetUserId(phoneNumber);
+                return await unitOfWork.Users.GetUserId(phoneNumber);
             } 
             
             throw new UserNotFoundExceptions();
@@ -40,12 +33,12 @@ namespace PisApp.API.Services
 
         public async Task<UserDetail> GetUserDetailsById(int userId)
         {
-            return await _unitOfWork.Users.GetUserDetailAsync(userId);
+            return await unitOfWork.Users.GetUserDetailAsync(userId);
         }
 
         public async Task<VIPUserDetailDto> GetRemainingTimeForVIP(int userId)
         {
-            var vipExpiryDate = await _unitOfWork.Users.VIPChecker(userId);
+            var vipExpiryDate = await unitOfWork.Users.VIPChecker(userId);
             
             if (vipExpiryDate < DateTime.UtcNow)
             {
@@ -69,7 +62,7 @@ namespace PisApp.API.Services
 
         public async Task<IEnumerable<AddressDetailDto>> GetUserAddressesById(int userId)
         {
-            var addresses = await _unitOfWork.Addresses.GetAllAddressesById(userId);
+            var addresses = await unitOfWork.Addresses.GetAllAddressesById(userId);
 
             return addresses.Select(a => new AddressDetailDto
             {
@@ -80,12 +73,12 @@ namespace PisApp.API.Services
 
         public async Task<int> CountUserRefferer(string referCode)
         {
-            return await _unitOfWork.Refers.CountUserReferrerByCode(referCode);
+            return await unitOfWork.Refers.CountUserReferrerByCode(referCode);
         }
 
         public async Task<IEnumerable<PrivateDiscountDetailsDto>> UserPrivateCodeWithLimiteTime(int userId)
         {
-            var codes = await _unitOfWork.Discounts.GetPrivateDiscountCodesWithLessThanOneWeekLeft(userId);
+            var codes = await unitOfWork.Discounts.GetPrivateDiscountCodesWithLessThanOneWeekLeft(userId);
 
             return codes.Select(code => new PrivateDiscountDetailsDto
             {
@@ -95,7 +88,7 @@ namespace PisApp.API.Services
 
         public async Task<GiftDiscountDetailDto> UserGiftedCodeCount(int userId)
         {
-            var giftCodes = await _unitOfWork.Discounts.GetGiftedDiscountCodesCount(userId);
+            var giftCodes = await unitOfWork.Discounts.GetGiftedDiscountCodesCount(userId);
 
             return new GiftDiscountDetailDto
             {
@@ -114,7 +107,7 @@ namespace PisApp.API.Services
         
         public async Task<IEnumerable<ShoppingCartsDetailsDto>> UserRecentPurchases(int userId)
         {
-            var shoppingCarts = await _unitOfWork.ShoppingCarts.UserRecentPurchasesAsync(userId);
+            var shoppingCarts = await unitOfWork.ShoppingCarts.UserRecentPurchasesAsync(userId);
 
             if (!shoppingCarts.Any())
             {
@@ -143,9 +136,9 @@ namespace PisApp.API.Services
 
         public async Task<CartResponseDto> UserCartsStatus(int userId)
         {
-            var carts = await _unitOfWork.ShoppingCarts.UserCartsStatus(userId);
+            var carts = await unitOfWork.ShoppingCarts.UserCartsStatus(userId);
 
-            var availableCarts = await _unitOfWork.ShoppingCarts.AvailabeUserCarts(userId);
+            var availableCarts = await unitOfWork.ShoppingCarts.AvailabeUserCarts(userId);
 
             return new CartResponseDto
             {
@@ -161,7 +154,7 @@ namespace PisApp.API.Services
 
         public async Task<UserProfitDto> VIPUserProfit(int userId)
         {
-            var profit = await _unitOfWork.Transactions.GetUserProfitForVIPClients(userId);
+            var profit = await unitOfWork.Transactions.GetUserProfitForVIPClients(userId);
 
             return new UserProfitDto
             {
@@ -171,7 +164,7 @@ namespace PisApp.API.Services
 
         public async Task<bool> isUserVIPChecker(int userId)
         {
-            return await _unitOfWork.Users.isUserVIP(userId);
+            return await unitOfWork.Users.isUserVIP(userId);
         }
     }
 }

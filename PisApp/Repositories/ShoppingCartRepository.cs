@@ -5,15 +5,8 @@ using PisApp.API.Interfaces.UnitOfWork;
 
 namespace PisApp.API.Repositories
 {
-    public class ShoppingCartRepository : IShoppingCartRepository
+    public class ShoppingCartRepository(IUnitOfWork unitOfWork) : IShoppingCartRepository
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public ShoppingCartRepository(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-
         public async Task<List<ShoppingCart>> UserRecentPurchasesAsync(int userId)
         {
             var query = @"
@@ -36,9 +29,9 @@ namespace PisApp.API.Repositories
                         LIMIT 5;
                 ";
 
-            return await _unitOfWork.Context.Set<ShoppingCart>()
-                                            .FromSqlRaw(query, userId)
-                                            .ToListAsync();
+            return await unitOfWork.Context.Set<ShoppingCart>()
+                                           .FromSqlRaw(query, userId)
+                                           .ToListAsync();
         }
 
         public async Task<List<Cart>> UserCartsStatus(int userId)
@@ -58,9 +51,9 @@ namespace PisApp.API.Repositories
                     s.cart_number, s.cart_status;
                 ";
 
-            return await _unitOfWork.Context.Set<Cart>()
-                                            .FromSqlRaw(query, userId)
-                                            .ToListAsync();
+            return await unitOfWork.Context.Set<Cart>()
+                                           .FromSqlRaw(query, userId)
+                                           .ToListAsync();
         }
 
         public async Task<int> AvailabeUserCarts(int userId)
@@ -72,9 +65,9 @@ namespace PisApp.API.Repositories
                         AND cart_status IN ('active', 'locked')
                     ";
 
-            var result = await _unitOfWork.Context.Set<Refer>()
-                                                  .FromSqlRaw(query, userId)
-                                                  .FirstOrDefaultAsync();
+            var result = await unitOfWork.Context.Set<Refer>()
+                                                 .FromSqlRaw(query, userId)
+                                                 .FirstOrDefaultAsync();
             return result.count;
         }
     }

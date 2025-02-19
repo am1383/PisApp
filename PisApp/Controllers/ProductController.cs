@@ -11,21 +11,14 @@ namespace PisApp.API.Controllers
     [Authorize]
     [Vip]
     [Route("api/v1")]
-    public class ProductController : ControllerBase
+    public class ProductController(IProductService productService) : ControllerBase
     {
-        private readonly IProductService _productService;
-
-        public ProductController(IProductService productService)
-        {
-            _productService = productService;
-        }
-
         [HttpGet("motherboard/list")]
         public async Task<ResponseDto<IEnumerable<MotherboardDetailsDto>>> MotherboardList()
         {
             try
             {
-                var motherboardList = await _productService.GetAllMotherboard();
+                var motherboardList = await productService.GetAllMotherboard();
 
                 return new ResponseDto<IEnumerable<MotherboardDetailsDto>>(true, motherboardList);
             }
@@ -40,7 +33,7 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var ramList = await _productService.GetAllRam();
+                var ramList = await productService.GetAllRam();
 
                 return new ResponseDto<IEnumerable<RamDetailDto>>(true, ramList);
                 
@@ -56,7 +49,7 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var coolerList = await _productService.GetAllCooler();
+                var coolerList = await productService.GetAllCooler();
 
                 return new ResponseDto<IEnumerable<CoolerDetailsDto>>(true, coolerList);
             }
@@ -71,7 +64,7 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var cpuList = await _productService.GetAllCpu();
+                var cpuList = await productService.GetAllCpu();
 
                 return new ResponseDto<IEnumerable<CpuDetailsDto>>(true, cpuList);
             }
@@ -86,7 +79,7 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var gpuList = await _productService.GetAllGpu();
+                var gpuList = await productService.GetAllGpu();
 
                 return new ResponseDto<IEnumerable<GpuDetailsDto>>(true, gpuList);
             }
@@ -101,7 +94,7 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var powerSupplyList = await _productService.GetAllPowerSupply();
+                var powerSupplyList = await productService.GetAllPowerSupply();
 
                 return new ResponseDto<IEnumerable<PowerSupplyDetailsDto>>(true, powerSupplyList);
             }
@@ -116,7 +109,7 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var ssdList = await _productService.GetAllSsd();
+                var ssdList = await productService.GetAllSsd();
 
                 return new ResponseDto<IEnumerable<SsdDetailDto>>(true, ssdList);
             }

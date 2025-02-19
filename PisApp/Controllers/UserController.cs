@@ -9,17 +9,8 @@ namespace PisApp.API.Controllers
 {
     [ApiController]
     [Route("api/v1")]
-    public class UserController : ControllerBase
+    public class UserController(IUserService userService, JwtService jwtService) : ControllerBase
     {
-        private readonly IUserService _userService;
-
-        private readonly JwtService _jwtService;
-
-        public UserController(IUserService userService, JwtService jwtService)
-        {
-            _userService = userService;
-            _jwtService  = jwtService;
-        }
 
         [HttpPost("login")]
         public async Task<ResponseDto<string>> Login(LoginDto loginDto)
@@ -28,11 +19,11 @@ namespace PisApp.API.Controllers
             {
                 var phoneNumber = PhoneNumberHelper.Normalize(loginDto.phone_number);
 
-                var userId      = await _userService.FindUserIdByPhoneNumber(phoneNumber);
+                var userId      = await userService.FindUserIdByPhoneNumber(phoneNumber);
 
-                var isUserVIP   = await _userService.isUserVIPChecker(userId);
+                var isUserVIP   = await userService.isUserVIPChecker(userId);
 
-                var token       = _jwtService.GenerateToken(userId, isUserVIP);
+                var token       = jwtService.GenerateToken(userId, isUserVIP);
 
                 return new ResponseDto<string>(true, token);  
             } 
@@ -48,15 +39,15 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var userId          = _jwtService.GetUserId(HttpContext);
+                var userId          = jwtService.GetUserId(HttpContext);
 
-                var user            = await _userService.GetUserDetailsById(userId);
+                var user            = await userService.GetUserDetailsById(userId);
 
-                var isUserVip       = await _userService.GetRemainingTimeForVIP(userId);
+                var isUserVip       = await userService.GetRemainingTimeForVIP(userId);
 
-                var countUserReffer = await _userService.CountUserRefferer(user.referral_code);
+                var countUserReffer = await userService.CountUserRefferer(user.referral_code);
 
-                var userDetail      = _userService.Details(user, isUserVip, countUserReffer);
+                var userDetail      = userService.Details(user, isUserVip, countUserReffer);
 
                 return new ResponseDto<UserDetailDto>(true, userDetail);
             }
@@ -72,9 +63,9 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var userId    = _jwtService.GetUserId(HttpContext);
+                var userId    = jwtService.GetUserId(HttpContext);
 
-                var addresses = await _userService.GetUserAddressesById(userId);
+                var addresses = await userService.GetUserAddressesById(userId);
 
                 return new ResponseDto<IEnumerable<AddressDetailDto>>(true, addresses);
             }
@@ -90,13 +81,13 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var userId           = _jwtService.GetUserId(HttpContext);
+                var userId           = jwtService.GetUserId(HttpContext);
 
-                var privateCode      = await _userService.UserPrivateCodeWithLimiteTime(userId);
+                var privateCode      = await userService.UserPrivateCodeWithLimiteTime(userId);
 
-                var giftedCode       = await _userService.UserGiftedCodeCount(userId);
+                var giftedCode       = await userService.UserGiftedCodeCount(userId);
 
-                var discountsSummary = _userService.UserDiscountsSummary(privateCode, giftedCode);
+                var discountsSummary = userService.UserDiscountsSummary(privateCode, giftedCode);
 
                 return new ResponseDto<DiscountSummaryDto>(true, discountsSummary);
             }
@@ -112,9 +103,9 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var userId        = _jwtService.GetUserId(HttpContext);
+                var userId        = jwtService.GetUserId(HttpContext);
 
-                var shoppingCarts = await _userService.UserRecentPurchases(userId);
+                var shoppingCarts = await userService.UserRecentPurchases(userId);
 
                 return new ResponseDto<IEnumerable<ShoppingCartsDetailsDto>>(true, shoppingCarts);
             }
@@ -130,9 +121,9 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var userId = _jwtService.GetUserId(HttpContext);
+                var userId = jwtService.GetUserId(HttpContext);
 
-                var carts  = await _userService.UserCartsStatus(userId);
+                var carts  = await userService.UserCartsStatus(userId);
 
                 return new ResponseDto<CartResponseDto>(true, carts);
             }
@@ -148,9 +139,9 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var userId = _jwtService.GetUserId(HttpContext);
+                var userId = jwtService.GetUserId(HttpContext);
 
-                var profit = await _userService.VIPUserProfit(userId);
+                var profit = await userService.VIPUserProfit(userId);
 
                 return new ResponseDto<UserProfitDto>(true, profit);
             }

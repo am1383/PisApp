@@ -6,20 +6,13 @@ using PisApp.API.Products.Entities;
 
 namespace PisApp.API.Services
 {
-    public class ProductService : IProductService
+    public class ProductService(IUnitOfWork unitOfWork) : IProductService
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public ProductService(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-
         public async Task<IEnumerable<TDto>> GetAllProducts<TEntity, TDto>(
             Func<IProductRepository, Task<IEnumerable<TEntity>>> getMethod,
             Func<TEntity, TDto> mapFunction)
         {
-            var entities = await getMethod(_unitOfWork.Products);
+            var entities = await getMethod(unitOfWork.Products);
             return entities.Select(mapFunction);
         }
 
@@ -36,7 +29,12 @@ namespace PisApp.API.Services
                     memory_speed_range = m.memory_speed_range,
                     depth  = m.depth,
                     height = m.height,
-                    width  = m.width
+                    width  = m.width,
+                    model  = m.model,
+                    brand  = m.brand,
+                    category = m.category,
+                    current_price = m.current_price,
+                    stock_count   = m.stock_count
                 });
         }
 
@@ -54,7 +52,12 @@ namespace PisApp.API.Services
                     num_cores       = c.num_cores,
                     num_threads     = c.num_threads,
                     base_frequency  = c.base_frequency,
-                    boost_frequency = c.boost_frequency
+                    boost_frequency = c.boost_frequency,
+                    model           = c.model,
+                    brand           = c.brand,
+                    category        = c.category,
+                    current_price   = c.current_price,
+                    stock_count     = c.stock_count
                 });
         }
 
@@ -71,7 +74,12 @@ namespace PisApp.API.Services
                     frequency  = r.frequency,
                     depth      = r.depth,
                     height     = r.height,
-                    width      = r.width
+                    width      = r.width,
+                    model      = r.model,
+                    brand      = r.brand,
+                    category   = r.category,
+                    current_price = r.current_price,
+                    stock_count   = r.stock_count
                 });
         }
 
@@ -88,7 +96,12 @@ namespace PisApp.API.Services
                     clock_speed = g.clock_speed,
                     depth  = g.depth,
                     height = g.height,
-                    width  = g.wattage
+                    width  = g.wattage,
+                    model  = g.model,
+                    brand  = g.brand,
+                    category = g.category,
+                    current_price = g.current_price,
+                    stock_count   = g.stock_count
                 });
         }
 
@@ -101,6 +114,11 @@ namespace PisApp.API.Services
                     product_id = s.product_id,
                     wattage    = s.wattage,
                     capacity   = s.capacity,
+                    model      = s.model,
+                    brand      = s.brand,
+                    category   = s.category,
+                    current_price = s.current_price,
+                    stock_count   = s.stock_count
                 });
         }
 
@@ -115,6 +133,11 @@ namespace PisApp.API.Services
                     depth  = p.depth,
                     height = p.height,
                     width  = p.width,
+                    model  = p.model,
+                    brand  = p.brand,
+                    category      = p.category,
+                    current_price = p.current_price,
+                    stock_count   = p.stock_count
                 });
         }
 
@@ -131,7 +154,12 @@ namespace PisApp.API.Services
                     wattage = co.wattage,
                     depth   = co.depth,
                     height  = co.height,
-                    width   = co.width,   
+                    width   = co.width, 
+                    model   = co.model,
+                    brand   = co.brand,
+                    category      = co.category,
+                    current_price = co.current_price,
+                    stock_count   = co.stock_count  
                 }
             );
         }

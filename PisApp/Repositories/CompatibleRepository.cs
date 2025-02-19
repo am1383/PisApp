@@ -5,22 +5,15 @@ using PisApp.API.Interfaces.UnitOfWork;
 
 namespace PisApp.API.Repositories
 {
-    public class CompatibleRepository : ICompatibleRepository
+    public class CompatibleRepository(IUnitOfWork unitOfWork) : ICompatibleRepository
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public CompatibleRepository(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-
         public async Task<bool> CompatibleCCSocketChecker(int coolerId, int cpuId)
         {
             var query = "SELECT EXISTS(SELECT * FROM compatible_cc_socket WHERE cpu_id = @p0 AND cooler_id = @p1)";
 
-            var result = await _unitOfWork.Context.Set<Compatible>()
-                                                  .FromSqlRaw(query, cpuId, coolerId) 
-                                                  .FirstOrDefaultAsync();
+            var result = await unitOfWork.Context.Set<Compatible>()
+                                                 .FromSqlRaw(query, cpuId, coolerId) 
+                                                 .FirstOrDefaultAsync();
 
             return result.exists;
         }
@@ -29,9 +22,9 @@ namespace PisApp.API.Repositories
         {
             var query = "SELECT EXISTS(SELECT * FROM compatible_gp_connector WHERE gpu_id = @p0 AND power_supply_id = @p1)";
 
-            var result = await _unitOfWork.Context.Set<Compatible>()
-                                                  .FromSqlRaw(query, gpuId, powerSupplyId)
-                                                  .FirstOrDefaultAsync();
+            var result = await unitOfWork.Context.Set<Compatible>()
+                                                 .FromSqlRaw(query, gpuId, powerSupplyId)
+                                                 .FirstOrDefaultAsync();
             return result.exists;
         }
 
@@ -39,9 +32,9 @@ namespace PisApp.API.Repositories
         {
             var query = "SELECT EXISTS(SELECT * FROM compatible_mc_socket WHERE cpu_id = @p0 AND motherboard_id = @p1)";
 
-            var result = await _unitOfWork.Context.Set<Compatible>()
-                                                  .FromSqlRaw(query, cpuId, motherboardId)
-                                                  .FirstOrDefaultAsync();
+            var result = await unitOfWork.Context.Set<Compatible>()
+                                                 .FromSqlRaw(query, cpuId, motherboardId)
+                                                 .FirstOrDefaultAsync();
             return result.exists;
         }
 
@@ -49,9 +42,9 @@ namespace PisApp.API.Repositories
         {
             var query = "SELECT EXISTS(SELECT * FROM compatible_rm_slot WHERE ram_id = @p0 AND motherboard_id = @P1)";
 
-            var result = await _unitOfWork.Context.Set<Compatible>()
-                                                  .FromSqlRaw(query, ramId, motherboardId)
-                                                  .FirstOrDefaultAsync();
+            var result = await unitOfWork.Context.Set<Compatible>()
+                                                 .FromSqlRaw(query, ramId, motherboardId)
+                                                 .FirstOrDefaultAsync();
             return result.exists;
         }
 
@@ -59,9 +52,9 @@ namespace PisApp.API.Repositories
         {
             var query = "SELECT EXISTS(SELECT * FROM compatible_gm_slot WHERE gpu_id = @p0 AND motherboard_id = @p1)";
 
-            var result = await _unitOfWork.Context.Set<Compatible>()
-                                                  .FromSqlRaw(query, gpuId, motherboardId)
-                                                  .FirstOrDefaultAsync();
+            var result = await unitOfWork.Context.Set<Compatible>()
+                                                 .FromSqlRaw(query, gpuId, motherboardId)
+                                                 .FirstOrDefaultAsync();
             return result.exists;
         }
 
@@ -69,9 +62,9 @@ namespace PisApp.API.Repositories
         {
             var query = "SELECT EXISTS(SELECT * FROM compatible_sm_slot WHERE ssd_id = @p0 AND motherboard_id = @p1)";
 
-            var result = await _unitOfWork.Context.Set<Compatible>()
-                                                  .FromSqlRaw(query, ssdId, motherboardId)
-                                                  .FirstOrDefaultAsync();
+            var result = await unitOfWork.Context.Set<Compatible>()
+                                                 .FromSqlRaw(query, ssdId, motherboardId)
+                                                 .FirstOrDefaultAsync();
             return result.exists;
         }
     }

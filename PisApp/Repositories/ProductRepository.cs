@@ -5,20 +5,13 @@ using PisApp.API.Products.Entities;
 
 namespace PisApp.API.Repositories
 {
-    public class ProductRepository : IProductRepository
+    public class ProductRepository(IUnitOfWork unitOfWork) : IProductRepository
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public ProductRepository(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-
         public async Task<IEnumerable<Motherboard>> GetAllMotherboardAsync()
         {
             var query = "SELECT * FROM motherboard";
  
-            return await _unitOfWork.Context.Set<Motherboard>()
+            return await unitOfWork.Context.Set<Motherboard>()
                                             .FromSqlRaw(query) 
                                             .ToListAsync();
         }
@@ -27,7 +20,7 @@ namespace PisApp.API.Repositories
         {
             var query = "SELECT * FROM cpu";
  
-            return await _unitOfWork.Context.Set<Cpu>()
+            return await unitOfWork.Context.Set<Cpu>()
                                             .FromSqlRaw(query) 
                                             .ToListAsync();
         }
@@ -36,7 +29,7 @@ namespace PisApp.API.Repositories
         {
             var query = "SELECT * FROM ram_stick";
  
-            return await _unitOfWork.Context.Set<Ram>()
+            return await unitOfWork.Context.Set<Ram>()
                                             .FromSqlRaw(query) 
                                             .ToListAsync();
         }
@@ -45,7 +38,7 @@ namespace PisApp.API.Repositories
         {
             var query = "SELECT * FROM gpu";
  
-            return await _unitOfWork.Context.Set<Gpu>()
+            return await unitOfWork.Context.Set<Gpu>()
                                             .FromSqlRaw(query) 
                                             .ToListAsync();
         }
@@ -54,16 +47,16 @@ namespace PisApp.API.Repositories
         {
             var query = "SELECT * FROM ssd";
  
-            return await _unitOfWork.Context.Set<Ssd>()
+            return await unitOfWork.Context.Set<Ssd>()
                                             .FromSqlRaw(query) 
                                             .ToListAsync();
         }
 
         public async Task<IEnumerable<Cooler>> GetAllCoolerAsync()
         {
-            var query = "SELECT * FROM cooler";
+            var query = "SELECT * FROM cooler JOIN product ON product_id = id";
 
-            return await _unitOfWork.Context.Set<Cooler>()
+            return await unitOfWork.Context.Set<Cooler>()
                                             .FromSqlRaw(query)
                                             .ToListAsync();
         }
@@ -72,7 +65,7 @@ namespace PisApp.API.Repositories
         {
             var query = "SELECT * FROM power_supply";
  
-            return await _unitOfWork.Context.Set<PowerSupply>()
+            return await unitOfWork.Context.Set<PowerSupply>()
                                             .FromSqlRaw(query) 
                                             .ToListAsync();
         }

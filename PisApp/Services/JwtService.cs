@@ -18,8 +18,8 @@ public class JwtService
     public string GenerateToken(int userId, bool isUserVIP, int expiryMinutes = 1440)
     {
         var claims = new List<Claim> {
-                new Claim("userId", userId.ToString()),
-                new Claim("isUserVIP", isUserVIP.ToString())
+            new Claim("userId", userId.ToString()),
+            new Claim("isUserVIP", isUserVIP.ToString())
         };
 
         var key   = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));

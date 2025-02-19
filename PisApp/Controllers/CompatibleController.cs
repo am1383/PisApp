@@ -10,15 +10,8 @@ namespace PisApp.API.Controllers
     [Authorize]
     [Vip]
     [Route("api/v1")]
-    public class CompatibleController : ControllerBase
+    public class CompatibleController(ICompatibleService compatibleService) : ControllerBase
     {
-        private readonly ICompatibleService _compatibleService;
-
-        public CompatibleController(ICompatibleService compatibleService)
-        {
-            _compatibleService = compatibleService;
-        }
-
         [HttpPost("compatible/ccSocket")]
         public async Task<ResponseDto<CompatibleResultDto>> CompatibleCCSocket(CompatibleCCSocketRequestDto dto)
         {
@@ -28,7 +21,7 @@ namespace PisApp.API.Controllers
                 
                 var cpuId            = dto.cpu_id;
 
-                var compatibleResult = await _compatibleService.GetCompatibleCCSocket(coolerId, cpuId);
+                var compatibleResult = await compatibleService.GetCompatibleCCSocket(coolerId, cpuId);
 
                 return new ResponseDto<CompatibleResultDto>(true, compatibleResult);
             }
@@ -47,7 +40,7 @@ namespace PisApp.API.Controllers
 
                 var motherboardId    = dto.motherboard_id;
                 
-                var compatibleResult = await _compatibleService.GetCompatibleRmSlot(ramId, motherboardId);
+                var compatibleResult = await compatibleService.GetCompatibleRmSlot(ramId, motherboardId);
 
                 return new ResponseDto<CompatibleResultDto>(true, compatibleResult);
             }
@@ -66,7 +59,7 @@ namespace PisApp.API.Controllers
 
                 var motherboardId    = dto.motherboard_id;
 
-                var compatibleResult = await _compatibleService.GetCompatibleGmSlot(gpuId, motherboardId);
+                var compatibleResult = await compatibleService.GetCompatibleGmSlot(gpuId, motherboardId);
 
                 return new ResponseDto<CompatibleResultDto>(true, compatibleResult);
             }
@@ -85,7 +78,7 @@ namespace PisApp.API.Controllers
 
                 var motherboardId    = dto.motherboard_id;
 
-                var compatibleResult = await _compatibleService.GetCompatibleMcSocket(cpuId, motherboardId);
+                var compatibleResult = await compatibleService.GetCompatibleMcSocket(cpuId, motherboardId);
 
                 return new ResponseDto<CompatibleResultDto>(true, compatibleResult);
             }
@@ -104,7 +97,7 @@ namespace PisApp.API.Controllers
 
                 var motherboardId    = dto.motherboard_id;
 
-                var compatibleResult = await _compatibleService.GetCompatibleSmSlot(ssdId, motherboardId);
+                var compatibleResult = await compatibleService.GetCompatibleSmSlot(ssdId, motherboardId);
 
                 return new ResponseDto<CompatibleResultDto>(true, compatibleResult);
             }
@@ -123,7 +116,7 @@ namespace PisApp.API.Controllers
 
                 var powerSupplyId    = dto.power_supply_id;
 
-                var compatibleResult = await _compatibleService.GetCompatibleGpConnect(gpuId, powerSupplyId);
+                var compatibleResult = await compatibleService.GetCompatibleGpConnect(gpuId, powerSupplyId);
 
                 return new ResponseDto<CompatibleResultDto>(true, compatibleResult);
             }

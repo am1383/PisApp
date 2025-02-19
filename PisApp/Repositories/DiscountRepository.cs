@@ -5,15 +5,8 @@ using PisApp.API.Interfaces.UnitOfWork;
 
 namespace PisApp.API.Repositories
 {
-    public class DiscountRepository : IDiscountRepository
+    public class DiscountRepository(IUnitOfWork unitOfWork) : IDiscountRepository
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public DiscountRepository(IUnitOfWork unitOfWork)
-        {   
-            _unitOfWork = unitOfWork;
-        }
-
         public async Task<List<PrivateDiscount>> GetPrivateDiscountCodesWithLessThanOneWeekLeft(int userId)
         {
             var query = @"
@@ -28,9 +21,9 @@ namespace PisApp.API.Repositories
                     AND dc.expiration_time <= NOW() + INTERVAL '7 days'
             ";
 
-            return await _unitOfWork.Context.Set<PrivateDiscount>()
-                                            .FromSqlRaw(query, userId) 
-                                            .ToListAsync();
+            return await unitOfWork.Context.Set<PrivateDiscount>()
+                                           .FromSqlRaw(query, userId) 
+                                           .ToListAsync();
         }
 
         public async Task<int> GetGiftedDiscountCodesCount(int userId)
@@ -47,9 +40,9 @@ namespace PisApp.API.Repositories
                     AND dc.code_type = 'private'
                     AND dc.expiration_time > NOW()";
 
-            var result = await _unitOfWork.Context.Set<Discount>()
-                                                  .FromSqlRaw(query, userId)
-                                                  .FirstOrDefaultAsync();
+            var result = await unitOfWork.Context.Set<Discount>()
+                                                 .FromSqlRaw(query, userId)
+                                                 .FirstOrDefaultAsync();
 
             return result.count;
         }

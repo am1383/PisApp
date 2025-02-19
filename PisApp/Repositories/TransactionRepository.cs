@@ -5,15 +5,8 @@ using PisApp.API.Interfaces.UnitOfWork;
 
 namespace PisApp.API.Repositories
 {
-    public class TransactionRepository : ITransactionRepository
+    public class TransactionRepository(IUnitOfWork unitOfWork) : ITransactionRepository
     {
-        private readonly IUnitOfWork _unitOfWork;
-
-        public TransactionRepository(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-
         public async Task<UserProfit> GetUserProfitForVIPClients(int userId)
         {
             var query = @"
@@ -29,9 +22,9 @@ namespace PisApp.API.Repositories
                         AND t.time_stamp    <  date_trunc('month', CURRENT_DATE + INTERVAL '1 month')
                         AND ifr.client_id    = @p0";
 
-            return await _unitOfWork.Context.Set<UserProfit>()
-                                            .FromSqlRaw(query, userId)
-                                            .FirstOrDefaultAsync();
+            return await unitOfWork.Context.Set<UserProfit>()
+                                           .FromSqlRaw(query, userId)
+                                           .FirstOrDefaultAsync();
         }
     }
 }
