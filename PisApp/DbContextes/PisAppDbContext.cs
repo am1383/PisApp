@@ -14,7 +14,7 @@ namespace PisApp.API.DbContextes
             //
         }
 
-        public DbSet<BaseEntity> baseEntities { get; set; } 
+        public DbSet<Login> baseEntities { get; set; } 
         public DbSet<Product> products { get; set; }
         public DbSet<Compatible> compatibles  { get; set; }
         public DbSet<Cooler> coolers { get; set; }
@@ -49,7 +49,7 @@ namespace PisApp.API.DbContextes
             modelBuilder.Entity<PowerSupply>    ().HasNoKey();
             modelBuilder.Entity<Motherboard>    ().HasNoKey();
             modelBuilder.Entity<Ssd>            ().HasNoKey();
-            modelBuilder.Entity<BaseEntity>     ().HasNoKey();
+            modelBuilder.Entity<Login>          ().HasNoKey();
             modelBuilder.Entity<User>           ().HasNoKey();
             modelBuilder.Entity<Cart>           ().HasNoKey();
             modelBuilder.Entity<Discount>       ().HasNoKey();

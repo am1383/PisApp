@@ -10,13 +10,13 @@ namespace PisApp.API.Repositories
     {
         public async Task<bool> GetUserByPhoneNumberAsync(string phoneNumber)
         {
-            var query = "SELECT phone_number FROM client WHERE phone_number = @p0";
+            var query  = "SELECT phone_number FROM client WHERE phone_number = @p0";
 
-            var result = await unitOfWork.Context.Set<BaseEntity>()
+            var result = await unitOfWork.Context.Set<Login>()
                                                  .FromSqlRaw(query, phoneNumber)
                                                  .FirstOrDefaultAsync();
 
-            return result != null; 
+            return result != default; 
         }
 
         public async Task<int> GetUserId(string phoneNumber)
@@ -42,7 +42,7 @@ namespace PisApp.API.Repositories
 
         public async Task<bool> isUserVIP(int userId)
         {
-            var query = "SELECT EXISTS(SELECT * FROM vip_client WHERE client_id = @p0)";
+            var query  = "SELECT EXISTS(SELECT * FROM vip_client WHERE client_id = @p0)";
 
             var result = await unitOfWork.Context.Set<VIPCheckResult>()
                                                  .FromSqlRaw(query, userId)
@@ -53,7 +53,7 @@ namespace PisApp.API.Repositories
 
         public async Task<DateTime> VIPChecker(int userId)
         {
-            var query = "SELECT expiration_time FROM vip_client WHERE client_id = @p0";
+            var query  = "SELECT expiration_time FROM vip_client WHERE client_id = @p0";
 
             var result = await unitOfWork.Context.Set<VIPUser>()
                                                  .FromSqlRaw(query, userId)

@@ -1,6 +1,6 @@
 namespace PisApp.API.Entities.Common
 {
-    public class BaseEntity
+    public class Login
     {
         public string? phone_number { get; set; }
     }
