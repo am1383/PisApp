@@ -7,9 +7,9 @@ namespace PisApp.API.Utils
             return phoneNumber.Length switch
             {
                 10 => $"+98{phoneNumber}",
-                11 => phoneNumber.StartsWith("0") ? $"+98{phoneNumber[1..]}" : phoneNumber,
-                12 => phoneNumber.StartsWith("98") ? $"+{phoneNumber}" : phoneNumber,
-                _ => string.Empty
+                11 => phoneNumber.StartsWith("0")  ? $"+98{phoneNumber[1..]}" : phoneNumber,
+                12 => phoneNumber.StartsWith("98") ? $"+{phoneNumber}"        : phoneNumber,
+                _  => string.Empty
             };
         }
     }
