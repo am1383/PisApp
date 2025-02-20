@@ -5,9 +5,9 @@ public class VipAttribute : Attribute, IAuthorizationFilter
 {
     public void OnAuthorization(AuthorizationFilterContext context)
     {
-        var userVIPStatus = context.HttpContext.User.FindFirst("isUserVIP")?.Value;
+        var userVIPClaim = context.HttpContext.User.FindFirst("isUserVIP")?.Value;
 
-        if (userVIPStatus == "False")
+        if (!bool.TryParse(userVIPClaim, out bool isVIP) || !isVIP)
         {
             throw new NotVIPException();
         }
