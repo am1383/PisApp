@@ -20,8 +20,9 @@ namespace PisApp.API.DbContextes
         public DbSet<Cooler> coolers { get; set; }
         public DbSet<Gpu> gpus       { get; set; }
         public DbSet<Cpu> cpus       { get; set; }
-        public DbSet<Motherboard> motherboards  { get; set; }
-        public DbSet<PowerSupply> powerSupplies { get; set; }
+        public DbSet<UserRefferCode> refferCodes { get; set; }
+        public DbSet<Motherboard> motherboards   { get; set; }
+        public DbSet<PowerSupply> powerSupplies  { get; set; }
         public DbSet<Ram> rams  { get; set; }
         public DbSet<Ssd> ssds  { get; set; }
         public DbSet<VIPUser> vIPUsers   { get; set; }
@@ -41,6 +42,7 @@ namespace PisApp.API.DbContextes
             modelBuilder.Entity<VIPUser>        ().HasNoKey();
             modelBuilder.Entity<Product>        ().HasNoKey();
             modelBuilder.Entity<VIPCheckResult> ().HasNoKey();
+            modelBuilder.Entity<UserRefferCode> ().HasNoKey();
             modelBuilder.Entity<Compatible>     ().HasNoKey();
             modelBuilder.Entity<Cooler>         ().HasNoKey();
             modelBuilder.Entity<Cpu>            ().HasNoKey();

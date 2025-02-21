@@ -10,7 +10,8 @@ namespace PisApp.API.Services
     {
         public UserDetailDto Details(UserDetail user, VIPUserDetailDto isUserVIP, int countUserReffer)
         {
-            return new UserDetailDto {
+            return new UserDetailDto 
+            {
                 first_name      = user.first_name,
                 last_name       = user.last_name, 
                 wallet_balance  = user.wallet_balance,
@@ -86,13 +87,13 @@ namespace PisApp.API.Services
             }).ToList();
         }
 
-        public async Task<GiftDiscountDetailDto> UserGiftedCodeCount(int userId)
+        public async Task<GiftDiscountDetailDto> UserGiftedCodeCount(string userRefferCode)
         {
-            var giftCodes = await unitOfWork.Discounts.GetGiftedDiscountCodesCount(userId);
+            var giftedCodes = await unitOfWork.Discounts.GetGiftedDiscountCodesCount(userRefferCode);
 
             return new GiftDiscountDetailDto
             {
-                gifted_code = giftCodes
+                gifted_code = giftedCodes
             };
         }
 
@@ -165,6 +166,11 @@ namespace PisApp.API.Services
         public async Task<bool> isUserVIPChecker(int userId)
         {
             return await unitOfWork.Users.isUserVIP(userId);
+        }
+
+        public async Task<string> userRefferCode(int userId)
+        {
+            return await unitOfWork.Users.GetUserRefferCode(userId);
         }
     }
 }
