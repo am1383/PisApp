@@ -85,7 +85,9 @@ namespace PisApp.API.Controllers
 
                 var privateCode      = await userService.UserPrivateCodeWithLimiteTime(userId);
 
-                var giftedCodeCount  = await userService.UserGiftedCodeCount(userId);
+                var userRefferCode   = await userService.userRefferCode(userId);
+
+                var giftedCodeCount  = await userService.UserGiftedCodeCount(userRefferCode);
 
                 var discountsSummary = userService.UserDiscountsSummary(privateCode, giftedCodeCount);
 

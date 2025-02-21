@@ -61,5 +61,16 @@ namespace PisApp.API.Repositories
 
             return result?.expiration_time ?? DateTime.MinValue;
         }
+
+        public async Task<string> GetUserRefferCode(int userId)
+        {
+            var query  = "SELECT referral_code FROM client WHERE client_id = @p0";
+
+            var result =  await unitOfWork.Context.Set<UserRefferCode>()
+                                                  .FromSqlRaw(query, userId)
+                                                  .FirstOrDefaultAsync();
+
+            return result.referral_code;
+        }
     }
 }
