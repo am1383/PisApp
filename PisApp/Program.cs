@@ -13,6 +13,18 @@ builder.Services.ConfigureAuthenticationServices(builder.Configuration);
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
+builder.Services.AddCors(options => options.AddPolicy("Cors", builder =>
+{
+    builder
+    .WithOrigins(
+        "http://localhost:4200"
+        )
+    .SetIsOriginAllowedToAllowWildcardSubdomains()
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials();
+}));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
