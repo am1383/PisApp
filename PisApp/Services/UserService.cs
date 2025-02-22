@@ -8,7 +8,7 @@ namespace PisApp.API.Services
 {
     public class UserService(IUnitOfWork unitOfWork) : IUserService
     {
-        public UserDetailDto Details(UserDetail user, VIPUserDetailDto isUserVIP, int countUserReffer)
+        public UserDetailDto MapUserDetails(UserDetail user, VIPUserDetailDto isUserVIP, int countUserReffer)
         {
             return new UserDetailDto 
             {

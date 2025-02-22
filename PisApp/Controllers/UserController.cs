@@ -47,7 +47,7 @@ namespace PisApp.API.Controllers
 
                 var countUserReffer = await userService.CountUserRefferer(user.referral_code);
 
-                var userDetail      = userService.Details(user, isUserVip, countUserReffer);
+                var userDetail      = userService.MapUserDetails(user, isUserVip, countUserReffer);
 
                 return new ResponseDto<UserDetailDto>(userDetail);
             }

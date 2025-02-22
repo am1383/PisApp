@@ -15,7 +15,7 @@ namespace PisApp.API.Interfaces
         public Task<VIPUserDetailDto> GetRemainingTimeForVIP(int userId);
         public Task<GiftDiscountDetailDto> UserGiftedCodeCount(string userRefferCode);
         public Task<string> userRefferCode(int userId);
-        public UserDetailDto Details(UserDetail user, VIPUserDetailDto isUserVIP, int countUserReffer);
+        public UserDetailDto MapUserDetails(UserDetail user, VIPUserDetailDto isUserVIP, int countUserReffer);
         public Task<UserProfitDto> VIPUserProfit(int userId);
         public Task<IEnumerable<AddressDetailDto>> GetUserAddressesById(int userId);
         public Task<bool> isUserVIPChecker(int userId);
