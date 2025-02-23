@@ -19,7 +19,7 @@ namespace PisApp.API.Repositories
                         AND at.cart_number   = ifr.cart_number
                         AND at.locked_number = ifr.locked_number
                     WHERE t.time_stamp      >= date_trunc('month', CURRENT_DATE)
-                        AND t.time_stamp    <  date_trunc('month', CURRENT_DATE + INTERVAL '1 month')
+                        AND t.time_stamp     < date_trunc('month', CURRENT_DATE + INTERVAL '1 month')
                         AND ifr.client_id    = @p0";
 
             return await unitOfWork.Context.Set<UserProfit>()

@@ -136,6 +136,7 @@ namespace PisApp.API.Controllers
         }
 
         [Authorize]
+        [Vip]
         [HttpGet("profit")]
         public async Task<ResponseDto<UserProfitDto>> VIPUserProfit()
         {
