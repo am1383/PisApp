@@ -71,7 +71,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<IEnumerable<AddressDetailDto>>(default!, false, $"Exception : {e.Message}");
+                return new ResponseDto<IEnumerable<AddressDetailDto>>(default!, false, $"{e.Message}");
             }
         }
 

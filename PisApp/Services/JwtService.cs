@@ -3,18 +3,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-public class JwtService
+public class JwtService(string _key, string _issuer)
 {
-    private readonly string _key;
-
-    private readonly string _issuer;
-
-    public JwtService(string key, string issuer)
-    {
-        _key = key;
-        _issuer = issuer;
-    }
-
     public string GenerateToken(int userId, bool isUserVIP, int expiryMinutes = 1440)
     {
         var claims = new List<Claim> {
@@ -76,7 +66,9 @@ public class JwtService
         var userId = httpContext.User.FindFirst("userId")?.Value;
 
         if (!int.TryParse(userId, out int clientId))
+        {
             throw new ArgumentException("Invalid userId format");
+        }
 
         return clientId;
     }
