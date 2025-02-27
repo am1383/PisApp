@@ -3,6 +3,8 @@ using PisApp.API.Dtos;
 using PisApp.API.Interfaces;
 using PisApp.API.Interfaces.UnitOfWork;
 using PisApp.API.Entities;
+using Microsoft.AspNetCore.Mvc.Razor;
+using PisApp.API.Utils;
 
 namespace PisApp.API.Services
 {
@@ -24,9 +26,11 @@ namespace PisApp.API.Services
         
         public async Task<int> FindUserIdByPhoneNumber(string phoneNumber)
         {
-            if (await unitOfWork.Users.GetUserByPhoneNumberAsync(phoneNumber))
+            var normalizePhoneNumber = PhoneNumberHelper.NormalizePhoneNumber(phoneNumber);
+
+            if (await unitOfWork.Users.GetUserByPhoneNumberAsync(normalizePhoneNumber))
             {   
-                return await unitOfWork.Users.GetUserId(phoneNumber);
+                return await unitOfWork.Users.GetUserIdByPhoneNumberAsync(normalizePhoneNumber);
             } 
             
             throw new UserNotFoundExceptions();

@@ -2,7 +2,7 @@ namespace PisApp.API.Utils
 {
     public static class PhoneNumberHelper
     {
-        public static string Normalize(string phoneNumber)
+        public static string NormalizePhoneNumber(string phoneNumber)
         {
             return phoneNumber.Length switch
             {

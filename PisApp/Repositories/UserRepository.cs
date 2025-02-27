@@ -19,7 +19,7 @@ namespace PisApp.API.Repositories
             return result != default; 
         }
 
-        public async Task<int> GetUserId(string phoneNumber)
+        public async Task<int> GetUserIdByPhoneNumberAsync(string phoneNumber)
         {
             var query = "SELECT client_id FROM client WHERE phone_number = @p0";
 

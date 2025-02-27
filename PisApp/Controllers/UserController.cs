@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using PisApp.API.Dtos.LoginDto;
 using PisApp.API.Interfaces;
 using PisApp.API.Dtos;
-using PisApp.API.Utils;
 
 namespace PisApp.API.Controllers
 {
@@ -17,9 +16,7 @@ namespace PisApp.API.Controllers
         {
             try 
             {
-                var phoneNumber = PhoneNumberHelper.Normalize(loginDto.phone_number);
-
-                var userId      = await userService.FindUserIdByPhoneNumber(phoneNumber);
+                var userId      = await userService.FindUserIdByPhoneNumber(loginDto.phone_number);
 
                 var isUserVIP   = await userService.isUserVIPChecker(userId);
 
