@@ -121,7 +121,6 @@ namespace PisApp.API.Services
                     new ShoppingCartsDetailsDto
                     {
                         cart_number      = 0,
-                        cart_status      = "No Cart",
                         total_items      = 0,
                         total_quantity   = 0,
                         total_cart_price = 0
@@ -132,7 +131,6 @@ namespace PisApp.API.Services
             return shoppingCarts.Select(cart => new ShoppingCartsDetailsDto
             {
                 cart_number      = cart.cart_number,
-                cart_status      = cart.cart_status,
                 total_items      = cart.total_items,
                 total_quantity   = cart.total_quantity,
                 total_cart_price = cart.total_cart_price
