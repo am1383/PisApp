@@ -89,10 +89,10 @@ namespace PisApp.API.Services
                 repo => repo.GetAllGpuAsync(),
                 g => new GpuDetailsDto
                 {
-                    product_id = g.product_id,
-                    ram_size   = g.ram_size,
-                    wattage    = g.wattage,
-                    num_fans   = g.num_fans,
+                    product_id  = g.product_id,
+                    ram_size    = g.ram_size,
+                    wattage     = g.wattage,
+                    num_fans    = g.num_fans,
                     clock_speed = g.clock_speed,
                     depth    = g.depth,
                     height   = g.height,

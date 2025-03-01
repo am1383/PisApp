@@ -7,7 +7,7 @@ namespace PisApp.API.Repositories
 {
     public class AddressRepository(IUnitOfWork unitOfWork) : IAddressRepository
     {
-        public async Task<List<Address>> GetAllAddressesById(int userId)
+        public async Task<List<Address>> GetUserAddressesAsync(int userId)
         {
             var query = "SELECT province, remain_address FROM address_of_client WHERE client_id = @p0";
 

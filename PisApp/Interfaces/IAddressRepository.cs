@@ -4,6 +4,6 @@ namespace PisApp.API.Interfaces
 {
     public interface IAddressRepository
     {
-        public Task<List<Address>> GetAllAddressesById(int userId);
+        public Task<List<Address>> GetUserAddressesAsync(int userId);
     }
 }

@@ -24,7 +24,7 @@ namespace PisApp.API.Controllers
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<MotherboardDetailsDto>>(default!, false, $"{e.Message}");
+                return new ResponseDto<IEnumerable<MotherboardDetailsDto>>(default!, $"{e.Message}");
             }
         }
 
@@ -40,7 +40,7 @@ namespace PisApp.API.Controllers
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<RamDetailDto>>(default!, false, $"{e.Message}");
+                return new ResponseDto<IEnumerable<RamDetailDto>>(default!, $"{e.Message}");
             }
         }
 
@@ -51,11 +51,11 @@ namespace PisApp.API.Controllers
             {
                 var coolerList = await productService.GetAllCooler();
 
-                return new ResponseDto<IEnumerable<CoolerDetailsDto>>( coolerList);
+                return new ResponseDto<IEnumerable<CoolerDetailsDto>>(coolerList);
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<CoolerDetailsDto>>(default!, false, $"{e.Message}");
+                return new ResponseDto<IEnumerable<CoolerDetailsDto>>(default!, $"{e.Message}");
             }
         }
 
@@ -70,7 +70,7 @@ namespace PisApp.API.Controllers
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<CpuDetailsDto>>(default!, false, $"{e.Message}");
+                return new ResponseDto<IEnumerable<CpuDetailsDto>>(default!, $"{e.Message}");
             }
         }
 
@@ -85,7 +85,7 @@ namespace PisApp.API.Controllers
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<GpuDetailsDto>>(default!, false, $"{e.Message}");
+                return new ResponseDto<IEnumerable<GpuDetailsDto>>(default!, $"{e.Message}");
             }
         }
 
@@ -100,7 +100,7 @@ namespace PisApp.API.Controllers
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<PowerSupplyDetailsDto>>(default!, false, $"{e.Message}");
+                return new ResponseDto<IEnumerable<PowerSupplyDetailsDto>>(default!, $"{e.Message}");
             }
         }
 
@@ -115,7 +115,7 @@ namespace PisApp.API.Controllers
             }
             catch(Exception e)
             {
-                return new ResponseDto<IEnumerable<SsdDetailDto>>(default!, false, $"{e.Message}");
+                return new ResponseDto<IEnumerable<SsdDetailDto>>(default!, $"{e.Message}");
             }
         }
     }

@@ -23,7 +23,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<IEnumerable<ProductDetailsDto>>(default!, false, $"{e.Message}");
+                return new ResponseDto<IEnumerable<ProductDetailsDto>>(default!, $"{e.Message}");
             }
         }
     }

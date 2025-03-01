@@ -50,14 +50,14 @@ public class JwtService(string _key, string _issuer)
             if (validatedToken is JwtSecurityToken jwtToken &&
                 !jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.OrdinalIgnoreCase))
             {
-                throw new SecurityTokenException("Invalid token algorithm.");
+                throw new SecurityTokenException("Invalid token algorithm");
             }
 
             return principal;
         }
         catch
         {
-            return default;
+            throw new SecurityTokenException("Token is not valid");
         }
     }
 

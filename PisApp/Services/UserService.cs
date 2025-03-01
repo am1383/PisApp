@@ -41,7 +41,7 @@ namespace PisApp.API.Services
             return await unitOfWork.Users.GetUserDetailAsync(userId);
         }
 
-        public async Task<VIPUserDetailDto> GetRemainingTimeForVIP(int userId)
+        public async Task<VIPUserDetailDto> GetVIPUserDetails(int userId)
         {
             var vipExpiryDate = await unitOfWork.Users.VIPChecker(userId);
             
@@ -50,24 +50,40 @@ namespace PisApp.API.Services
                 return new VIPUserDetailDto
                 {
                     is_VIP         = false, 
+                    profit         = 0,
                     remaining_time = 0, 
                 };
             }
 
-            var remainingTime = vipExpiryDate - DateTime.UtcNow;
-            
-            var remainingDays = remainingTime.TotalDays < 0 ? 0 : (int)remainingTime.TotalDays;
+            var remainingDays = VIPRemainingDaysCalculator(vipExpiryDate);
+            var profit        = await VIPUserProfit(userId);
 
             return new VIPUserDetailDto
             {
                 is_VIP         = true, 
+                profit         = profit,
                 remaining_time = remainingDays, 
             };
         }
 
+        private async Task<decimal> VIPUserProfit(int userId)
+        {
+            var profit = await unitOfWork.Transactions
+                                         .GetUserProfitForVIPClients(userId);
+
+            return profit.user_profit;
+        }
+
+        private int VIPRemainingDaysCalculator(DateTime vipExpireDate)
+        {
+            var remainingTime = vipExpireDate - DateTime.UtcNow;
+            
+            return remainingTime.TotalDays < 0 ? 0 : (int)remainingTime.TotalDays;
+        }
+
         public async Task<IEnumerable<AddressDetailDto>> GetUserAddressesById(int userId)
         {
-            var addresses = await unitOfWork.Addresses.GetAllAddressesById(userId);
+            var addresses = await unitOfWork.Addresses.GetUserAddressesAsync(userId);
 
             return addresses.Select(a => new AddressDetailDto
             {
@@ -152,16 +168,6 @@ namespace PisApp.API.Services
                 }).ToList(),
             
                 available_carts = availableCarts
-            };
-        }
-
-        public async Task<UserProfitDto> VIPUserProfit(int userId)
-        {
-            var profit = await unitOfWork.Transactions.GetUserProfitForVIPClients(userId);
-
-            return new UserProfitDto
-            {
-                user_profit = profit.user_profit,
             };
         }
 

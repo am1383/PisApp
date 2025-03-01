@@ -26,7 +26,7 @@ namespace PisApp.API.Controllers
             } 
             catch (Exception e)
             {
-                return new ResponseDto<string>(default!, false, $"{e.Message}");
+                return new ResponseDto<string>(default!, $"{e.Message}");
             }
         }
 
@@ -40,7 +40,7 @@ namespace PisApp.API.Controllers
 
                 var user            = await userService.GetUserDetailsById(userId);
 
-                var isUserVip       = await userService.GetRemainingTimeForVIP(userId);
+                var isUserVip       = await userService.GetVIPUserDetails(userId);
 
                 var countUserReffer = await userService.CountUserRefferer(user.referral_code);
 
@@ -50,7 +50,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<UserDetailDto>(default!, false, $"{e.Message}");
+                return new ResponseDto<UserDetailDto>(default!, $"{e.Message}");
             }
         }
 
@@ -68,7 +68,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<IEnumerable<AddressDetailDto>>(default!, false, $"{e.Message}");
+                return new ResponseDto<IEnumerable<AddressDetailDto>>(default!, $"{e.Message}");
             }
         }
 
@@ -92,7 +92,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<DiscountSummaryDto>(default!, false, $"{e.Message}");
+                return new ResponseDto<DiscountSummaryDto>(default!, $"{e.Message}");
             }
         }
 
@@ -110,7 +110,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<IEnumerable<ShoppingCartsDetailsDto>>(default!, false, $"{e.Message}");
+                return new ResponseDto<IEnumerable<ShoppingCartsDetailsDto>>(default!, $"{e.Message}");
             }
         }
 
@@ -128,26 +128,7 @@ namespace PisApp.API.Controllers
             }
             catch (Exception e)
             {
-                return new ResponseDto<CartResponseDto>(default!, false, $"{e.Message}");
-            }
-        }
-
-        [Authorize]
-        [Vip]
-        [HttpGet("profit")]
-        public async Task<ResponseDto<UserProfitDto>> VIPUserProfit()
-        {
-            try
-            {
-                var userId = jwtService.GetUserId(HttpContext);
-
-                var profit = await userService.VIPUserProfit(userId);
-
-                return new ResponseDto<UserProfitDto>(profit);
-            }
-            catch (Exception e)
-            {
-                return new ResponseDto<UserProfitDto>(default!, false, $"{e.Message}");
+                return new ResponseDto<CartResponseDto>(default!, $"{e.Message}");
             }
         }
     }

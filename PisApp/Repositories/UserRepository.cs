@@ -32,8 +32,14 @@ namespace PisApp.API.Repositories
 
         public async Task<UserDetail> GetUserDetailAsync(int userId)
         {
-            var query = "SELECT first_name, last_name, wallet_balance, time_stamp, referral_code " +
-                        "FROM client WHERE client_id = @p0";  
+            var query = @"
+                        SELECT 
+                            first_name, last_name, wallet_balance, time_stamp, referral_code 
+                        FROM 
+                            client
+                        WHERE 
+                            client_id = @p0
+                    ";  
 
             return await unitOfWork.Context.Set<UserDetail>()
                                            .FromSqlRaw(query, userId) 

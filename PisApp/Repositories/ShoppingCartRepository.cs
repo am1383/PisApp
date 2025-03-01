@@ -36,18 +36,18 @@ namespace PisApp.API.Repositories
         public async Task<List<Cart>> UserCartsStatus(int userId)
         {
             var query = @"
-                SELECT
-                    s.cart_number,
-                    s.cart_status
-                FROM
-                    shopping_cart s
-                LEFT JOIN
-                    added_to a ON s.cart_number = a.cart_number AND s.client_id = a.client_id
-                WHERE
-                    s.client_id = @p0 
-                GROUP BY
-                    s.cart_number, s.cart_status;
-                ";
+                        SELECT
+                            s.cart_number,
+                            s.cart_status
+                        FROM
+                            shopping_cart s
+                        LEFT JOIN
+                            added_to a ON s.cart_number = a.cart_number AND s.client_id = a.client_id
+                        WHERE
+                            s.client_id = @p0 
+                        GROUP BY
+                            s.cart_number, s.cart_status;
+                    ";
 
             return await unitOfWork.Context.Set<Cart>()
                                            .FromSqlRaw(query, userId)
@@ -64,7 +64,7 @@ namespace PisApp.API.Repositories
                         WHERE 
                             client_id = @p0 
                             AND cart_status IN ('active', 'locked')
-                        ";
+                    ";
 
             var result = await unitOfWork.Context.Set<Refer>()
                                                  .FromSqlRaw(query, userId)
