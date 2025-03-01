@@ -151,8 +151,8 @@ namespace PisApp.API.Services
                 {
                     cart_number = cart.cart_number,
                     cart_status = cart.cart_status,
-                    total_items = cart.total_items
                 }).ToList(),
+            
                 available_carts = availableCarts
             };
         }
