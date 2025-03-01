@@ -2,35 +2,30 @@ using Microsoft.EntityFrameworkCore;
 using PisApp.API.Entities;
 using PisApp.API.Interfaces;
 using PisApp.API.Interfaces.UnitOfWork;
+using PisApp.API.Products.Entities.Common;
 
 namespace PisApp.API.Repositories
 {
     public class ShoppingCartRepository(IUnitOfWork unitOfWork) : IShoppingCartRepository
     {
-        public async Task<List<ShoppingCart>> UserRecentPurchasesAsync(int userId)
+        public async Task<List<ShoppingCart>> GetRecentPurchasesNumberAsync(int userId)
         {
             var query = @"
-                        SELECT
-                            s.cart_number,
-                            COUNT(a.product_id) AS total_items,
-                            SUM(a.quantity) AS total_quantity,
-                            SUM(a.cart_price) AS total_cart_price
-                        FROM
-                            locked_shopping_cart s
-                        LEFT JOIN
-                            added_to a ON s.cart_number = a.cart_number AND s.client_id = a.client_id
-                        WHERE
-                            s.client_id = @p0
-                        GROUP BY
-                            s.cart_number
-                        ORDER BY
-                            s.cart_number DESC  
-                        LIMIT 5;
-                ";
+                    SELECT DISTINCT lsc.locked_number, lsc.time_stamp
+                    FROM issued_for i
+                    JOIN locked_shopping_cart lsc 
+                        ON i.client_id = lsc.client_id 
+                        AND i.cart_number = lsc.cart_number 
+                        AND i.locked_number = lsc.locked_number
+                    WHERE i.client_id = 8
+                    ORDER BY lsc.time_stamp DESC
+                    LIMIT 5;
+            ";
 
-            return await unitOfWork.Context.Set<ShoppingCart>()
+            var result = await unitOfWork.Context.Set<ShoppingCart>()
                                            .FromSqlRaw(query, userId)
                                            .ToListAsync();
+            return result;
         }
 
         public async Task<List<Cart>> UserCartsStatus(int userId)
@@ -70,6 +65,31 @@ namespace PisApp.API.Repositories
                                                  .FromSqlRaw(query, userId)
                                                  .FirstOrDefaultAsync();
             return result.count;
+        }
+
+        public async Task<decimal> GetCartItemTotalPrice(int lockedNumber)
+        {
+            var query  = @"
+                        SELECT lsc.locked_number, SUM(a.cart_price * a.quantity) AS total_price
+                        FROM issued_for i
+                        JOIN locked_shopping_cart lsc 
+                            ON i.client_id = lsc.client_id 
+                            AND i.cart_number = lsc.cart_number 
+                            AND i.locked_number = lsc.locked_number
+                        JOIN added_to a 
+                            ON lsc.client_id = a.client_id 
+                            AND lsc.cart_number = a.cart_number 
+                            AND lsc.locked_number = a.locked_number
+                        WHERE lsc.locked_number = @p0  
+                        GROUP BY lsc.locked_number, lsc.time_stamp
+                        ORDER BY lsc.time_stamp DESC
+                        LIMIT 5
+                    ";
+
+            var result = await unitOfWork.Context.Set<CartItem>()
+                                                 .FromSqlRaw(query, lockedNumber)
+                                                 .FirstOrDefaultAsync();
+            return result.total_price;
         }
     }
 }

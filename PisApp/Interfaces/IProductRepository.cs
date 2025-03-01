@@ -1,4 +1,5 @@
 using PisApp.API.Products.Entities;
+using PisApp.API.Products.Entities.Common;
 
 namespace PisApp.API.Interfaces
 {
@@ -11,5 +12,6 @@ namespace PisApp.API.Interfaces
         public Task<IEnumerable<Gpu>> GetAllGpuAsync();
         public Task<IEnumerable<Ram>> GetAllRamAsync();
         public Task<IEnumerable<Ssd>> GetAllSsdAsync();
+        public Task<List<Product>> GetCartItemProducts(int lockedNumber);
     }
 }

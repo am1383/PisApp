@@ -3,8 +3,8 @@ using PisApp.API.Dtos;
 using PisApp.API.Interfaces;
 using PisApp.API.Interfaces.UnitOfWork;
 using PisApp.API.Entities;
-using Microsoft.AspNetCore.Mvc.Razor;
 using PisApp.API.Utils;
+using PisApp.API.Products.Entities.Common;
 
 namespace PisApp.API.Services
 {
@@ -128,29 +128,36 @@ namespace PisApp.API.Services
         
         public async Task<IEnumerable<ShoppingCartsDetailsDto>> UserRecentPurchases(int userId)
         {
-            var shoppingCarts = await unitOfWork.ShoppingCarts.UserRecentPurchasesAsync(userId);
+            var lockedNumbers = await unitOfWork.ShoppingCarts.GetRecentPurchasesNumberAsync(userId);
 
-            if (!shoppingCarts.Any())
+            if (!lockedNumbers.Any())
             {
                 return new List<ShoppingCartsDetailsDto>
                 {
                     new ShoppingCartsDetailsDto
                     {
-                        cart_number      = 0,
-                        total_items      = 0,
-                        total_quantity   = 0,
-                        total_cart_price = 0
+                        products    = new List<Product>(),
+                        total_price = 0
                     }
                 };
             }
 
-            return shoppingCarts.Select(cart => new ShoppingCartsDetailsDto
+            var result = new List<ShoppingCartsDetailsDto>();
+
+            foreach (var lockedNumber in lockedNumbers)
             {
-                cart_number      = cart.cart_number,
-                total_items      = cart.total_items,
-                total_quantity   = cart.total_quantity,
-                total_cart_price = cart.total_cart_price
-            }).ToList();
+                var products   = await unitOfWork.Products.GetCartItemProducts(lockedNumber.locked_number);
+
+                var totalPrice = await unitOfWork.ShoppingCarts.GetCartItemTotalPrice(lockedNumber.locked_number);
+
+                result.Add(new ShoppingCartsDetailsDto
+                {
+                    products    = products,
+                    total_price = totalPrice
+                });
+            }
+
+            return result;
         }
 
         public async Task<CartResponseDto> UserCartsStatus(int userId)

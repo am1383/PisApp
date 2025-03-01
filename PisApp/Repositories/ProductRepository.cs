@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using PisApp.API.Interfaces;
 using PisApp.API.Interfaces.UnitOfWork;
 using PisApp.API.Products.Entities;
+using PisApp.API.Products.Entities.Common;
 
 namespace PisApp.API.Repositories
 {
@@ -67,6 +68,19 @@ namespace PisApp.API.Repositories
  
             return await unitOfWork.Context.Set<PowerSupply>()
                                            .FromSqlRaw(query) 
+                                           .ToListAsync();
+        }
+
+        public async Task<List<Product>> GetCartItemProducts(int lockedNumber)
+        {
+            var query = @"
+                    SELECT p.brand, p.model, p.category, p.current_price, p.stock_count
+                    FROM added_to a
+                    JOIN product p ON a.product_id = p.id
+                    WHERE a.locked_number = @p0";
+
+            return await unitOfWork.Context.Set<Product>()
+                                           .FromSqlRaw(query, lockedNumber)
                                            .ToListAsync();
         }
     }   
