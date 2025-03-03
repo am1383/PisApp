@@ -16,7 +16,7 @@ namespace PisApp.API.Repositories
                                                  .FromSqlRaw(query, phoneNumber)
                                                  .FirstOrDefaultAsync();
 
-            return result != default; 
+            return result is not null; 
         }
 
         public async Task<int> GetUserIdByPhoneNumberAsync(string phoneNumber)
