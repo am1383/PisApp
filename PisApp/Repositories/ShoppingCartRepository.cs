@@ -14,10 +14,10 @@ namespace PisApp.API.Repositories
                     SELECT DISTINCT lsc.locked_number, lsc.time_stamp
                     FROM issued_for i
                     JOIN locked_shopping_cart lsc 
-                        ON i.client_id = lsc.client_id 
-                        AND i.cart_number = lsc.cart_number 
+                        ON i.client_id      = lsc.client_id 
+                        AND i.cart_number   = lsc.cart_number 
                         AND i.locked_number = lsc.locked_number
-                    WHERE i.client_id = @p0
+                    WHERE i.client_id       = @p0
                     ORDER BY lsc.time_stamp DESC
                     LIMIT 5;
             ";
