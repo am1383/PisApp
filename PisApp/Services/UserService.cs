@@ -142,13 +142,14 @@ namespace PisApp.API.Services
                 };
             }
 
+            var uniqueLockerNumbers = lockedNumbers.Select(x => x.locked_number).Distinct().ToList();
+
             var result = new List<ShoppingCartsDetailsDto>();
 
-            foreach (var lockedNumber in lockedNumbers)
+            foreach (var lockedNumber in uniqueLockerNumbers)
             {
-                var products   = await unitOfWork.Products.GetCartItemProducts(lockedNumber.locked_number);
-
-                var totalPrice = await unitOfWork.ShoppingCarts.GetCartItemTotalPrice(lockedNumber.locked_number);
+                var products   = await unitOfWork.Products.GetCartItemProducts(lockedNumber);
+                var totalPrice = await unitOfWork.ShoppingCarts.GetCartItemTotalPrice(lockedNumber);
 
                 result.Add(new ShoppingCartsDetailsDto
                 {

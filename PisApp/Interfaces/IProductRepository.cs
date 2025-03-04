@@ -7,11 +7,11 @@ namespace PisApp.API.Interfaces
     {
         public Task<IEnumerable<Motherboard>> GetAllMotherboardAsync();
         public Task<IEnumerable<PowerSupply>> GetAllPowerSupplyAsync();
+        public Task<List<Product>> GetCartItemProducts(int lockedNumber);
         public Task<IEnumerable<Cooler>> GetAllCoolerAsync();
         public Task<IEnumerable<Cpu>> GetAllCpuAsync();
         public Task<IEnumerable<Gpu>> GetAllGpuAsync();
         public Task<IEnumerable<Ram>> GetAllRamAsync();
         public Task<IEnumerable<Ssd>> GetAllSsdAsync();
-        public Task<List<Product>> GetCartItemProducts(int lockedNumber);
     }
 }
