@@ -99,9 +99,9 @@ namespace PisApp.API.Services
 
         public async Task<IEnumerable<PrivateDiscountDetailsDto>> UserPrivateCodeWithLimiteTime(int userId)
         {
-            var codes = await unitOfWork.Discounts.GetPrivateDiscountCodesWithLessThanOneWeekLeft(userId);
+            var privateCodes = await unitOfWork.Discounts.GetPrivateDiscountCodesWithLessThanOneWeekLeft(userId);
 
-            return codes.Select(code => new PrivateDiscountDetailsDto
+            return privateCodes.Select(code => new PrivateDiscountDetailsDto
             {
                 code = code.code
             }).ToList();
@@ -109,11 +109,11 @@ namespace PisApp.API.Services
 
         public async Task<GiftDiscountDetailDto> UserGiftedCodeCount(string userRefferCode)
         {
-            var giftedCodes = await unitOfWork.Discounts.GetGiftedDiscountCodesCount(userRefferCode);
+            var giftedCodesCount = await unitOfWork.Discounts.GetGiftedDiscountCodesCount(userRefferCode);
 
             return new GiftDiscountDetailDto
             {
-                gifted_code = giftedCodes
+                gifted_code = giftedCodesCount
             };
         }
 
@@ -130,7 +130,7 @@ namespace PisApp.API.Services
         {
             var lockedNumbers = await unitOfWork.ShoppingCarts.GetRecentPurchasesNumberAsync(userId);
 
-            if (!lockedNumbers.Any())
+            if (lockedNumbers.Any() is false)
             {
                 return new List<ShoppingCartsDetailsDto>
                 {

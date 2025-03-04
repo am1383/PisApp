@@ -29,7 +29,6 @@ public class JwtService(string _key, string _issuer)
     public ClaimsPrincipal? ValidateToken(string token)
     {
         var key          = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
-
         var tokenHandler = new JwtSecurityTokenHandler();
 
         try
@@ -48,7 +47,8 @@ public class JwtService(string _key, string _issuer)
             var principal = tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
 
             if (validatedToken is JwtSecurityToken jwtToken &&
-                !jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.OrdinalIgnoreCase))
+                jwtToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.OrdinalIgnoreCase) 
+                is not false)
             {
                 throw new SecurityTokenException("Invalid token algorithm");
             }
@@ -91,7 +91,7 @@ public class JwtService(string _key, string _issuer)
 
     private bool ConvertUserVIPStatusToBool(string userVIPClaim)
     {
-        if (!bool.TryParse(userVIPClaim, out bool isVIP))
+        if (bool.TryParse(userVIPClaim, out bool isVIP) is false)
         {
             throw new ArgumentException("Invalid isVIP format");
         }
@@ -101,7 +101,7 @@ public class JwtService(string _key, string _issuer)
         
     private int ConvertUserIdToInt(string userIdClaim)
     {
-        if (!int.TryParse(userIdClaim, out int userId))
+        if (int.TryParse(userIdClaim, out int userId) is false)
         {
             throw new ArgumentException("Invalid userId format");
         }   
