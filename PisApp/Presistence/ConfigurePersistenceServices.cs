@@ -16,7 +16,7 @@ namespace PisApp.API.Persistence
             services.AddScoped<ICompatibleService, CompatibleService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-        
+            
             services.AddDbContext<PisAppDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("MainDB")));
             

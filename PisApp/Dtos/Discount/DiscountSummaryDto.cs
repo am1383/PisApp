@@ -4,6 +4,6 @@ namespace PisApp.API.Dtos
     {
         public IEnumerable<PrivateDiscountDetailsDto>? discounts { get; set; }
 
-        public GiftDiscountDetailDto? gifts                      { get; set; }
+        public GiftDiscountDetailDto? gifts { get; set; }
     }
 }

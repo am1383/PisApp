@@ -63,13 +63,49 @@ public class JwtService(string _key, string _issuer)
 
     public int GetUserId(HttpContext httpContext)
     {
-        var userId = httpContext.User.FindFirst("userId")?.Value;
+        var userIdClaim = httpContext.User.FindFirst("userId")?.Value;
 
-        if (!int.TryParse(userId, out int clientId))
+        if (userIdClaim is null)
         {
-            throw new ArgumentException("Invalid userId format");
+            throw new ArgumentNullException("userId not found");
         }
 
-        return clientId;
+        var userId = ConvertUserIdToInt(userIdClaim);
+
+        return userId;
+    }
+
+    public bool GetUserVIPStatus(HttpContext httpContext)
+    {
+        var userVIPClaim = httpContext.User.FindFirst("isUserVIP")?.Value;
+
+        if (userVIPClaim is null)
+        {
+            throw new ArgumentNullException("isVip not found");
+        }
+
+        var isUserVIP = ConvertUserVIPStatusToBool(userVIPClaim);
+
+        return isUserVIP;
+    }
+
+    private bool ConvertUserVIPStatusToBool(string userVIPClaim)
+    {
+        if (!bool.TryParse(userVIPClaim, out bool isVIP))
+        {
+            throw new ArgumentException("Invalid isVIP format");
+        }
+
+        return isVIP;
+    }
+        
+    private int ConvertUserIdToInt(string userIdClaim)
+    {
+        if (!int.TryParse(userIdClaim, out int userId))
+        {
+            throw new ArgumentException("Invalid userId format");
+        }   
+
+        return userId;
     }
 }
