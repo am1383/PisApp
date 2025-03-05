@@ -1,6 +1,6 @@
 namespace PisApp.API.Products.Entities.Common
 {
-    public class CommonProductsEntity
+    public class CommonProduct
     {
         public required int product_id { get; set; }   
         public required string brand   { get; set; }

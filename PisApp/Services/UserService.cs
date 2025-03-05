@@ -136,7 +136,7 @@ namespace PisApp.API.Services
                 {
                     new ShoppingCartsDetailsDto
                     {
-                        products    = new List<Product>(),
+                        products    = new List<CartItemProduct>(),
                         total_price = 0
                     }
                 };

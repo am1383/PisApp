@@ -73,14 +73,14 @@ namespace PisApp.API.Repositories
                         SELECT lsc.locked_number, SUM(a.cart_price * a.quantity) AS total_price
                         FROM issued_for i
                         JOIN locked_shopping_cart lsc 
-                            ON i.client_id = lsc.client_id 
-                            AND i.cart_number = lsc.cart_number 
+                            ON i.client_id      = lsc.client_id 
+                            AND i.cart_number   = lsc.cart_number 
                             AND i.locked_number = lsc.locked_number
                         JOIN added_to a 
-                            ON lsc.client_id = a.client_id 
-                            AND lsc.cart_number = a.cart_number 
+                            ON lsc.client_id      = a.client_id 
+                            AND lsc.cart_number   = a.cart_number 
                             AND lsc.locked_number = a.locked_number
-                        WHERE lsc.locked_number = @p0  
+                        WHERE lsc.locked_number   = @p0  
                         GROUP BY lsc.locked_number, lsc.time_stamp
                         ORDER BY lsc.time_stamp DESC
                         LIMIT 5

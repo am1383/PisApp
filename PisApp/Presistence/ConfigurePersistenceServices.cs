@@ -12,6 +12,7 @@ namespace PisApp.API.Persistence
         public static void ConfigurePersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddControllers();
+            
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICompatibleService, CompatibleService>();
             services.AddScoped<IProductService, ProductService>();

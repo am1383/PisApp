@@ -1,5 +1,5 @@
+using PisApp.API.Entities;
 using PisApp.API.Products.Entities;
-using PisApp.API.Products.Entities.Common;
 
 namespace PisApp.API.Interfaces
 {
@@ -7,7 +7,7 @@ namespace PisApp.API.Interfaces
     {
         public Task<IEnumerable<Motherboard>> GetAllMotherboardAsync();
         public Task<IEnumerable<PowerSupply>> GetAllPowerSupplyAsync();
-        public Task<List<Product>> GetCartItemProducts(int lockedNumber);
+        public Task<List<CartItemProduct>> GetCartItemProducts(int lockedNumber);
         public Task<IEnumerable<Cooler>> GetAllCoolerAsync();
         public Task<IEnumerable<Cpu>> GetAllCpuAsync();
         public Task<IEnumerable<Gpu>> GetAllGpuAsync();

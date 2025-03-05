@@ -17,6 +17,7 @@ namespace PisApp.API.DbContextes
         public DbSet<Login> baseEntities { get; set; } 
         public DbSet<Product> products   { get; set; }
         public DbSet<CartItem> cartItems { get; set; }
+        public DbSet<CartItemProduct> cartItemProducts { get; set; }
         public DbSet<Compatible> compatibles  { get; set; }
         public DbSet<Cooler> coolers { get; set; }
         public DbSet<Gpu> gpus       { get; set; }
@@ -45,6 +46,7 @@ namespace PisApp.API.DbContextes
             modelBuilder.Entity<CartItem>       ().HasNoKey();
             modelBuilder.Entity<VIPCheckResult> ().HasNoKey();
             modelBuilder.Entity<UserRefferCode> ().HasNoKey();
+            modelBuilder.Entity<CartItemProduct>().HasNoKey();
             modelBuilder.Entity<Compatible>     ().HasNoKey();
             modelBuilder.Entity<Cooler>         ().HasNoKey();
             modelBuilder.Entity<Cpu>            ().HasNoKey();
