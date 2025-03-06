@@ -3,7 +3,7 @@ using PisApp.API.Dtos;
 
 namespace PisApp.API.Services.Dtos.Validators
 {
-    public class CompatibleProductsRequestValidation : AbstractValidator<CompatibleProductsRequestDto>
+    public class CompatibleProductsRequestValidation : AbstractValidator<CompatibleRequestDto>
     {
         public CompatibleProductsRequestValidation()
         {

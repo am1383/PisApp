@@ -13,7 +13,7 @@ namespace PisApp.API.Controllers
     public class CompatibleController(ICompatibleService compatibleService) : ControllerBase
     {
         [HttpPost("compatible")]
-        public async Task<ResponseDto<IEnumerable<ProductDetailsDto>>> GetCompatibleParts(CompatibleProductsRequestDto dto, [FromQuery] string? type)
+        public async Task<ResponseDto<IEnumerable<ProductDetailsDto>>> GetCompatibleParts(CompatibleRequestDto dto, [FromQuery] string? type)
         {
             try
             {

@@ -1,6 +1,4 @@
-using PisApp.API.Dtos;
-using PisApp.API.Products.Dtos;
-using PisApp.API.Products.Entities;
+using PisApp.API.Products.Dtos.Common;
 
 namespace PisApp.API.Interfaces
 {
@@ -9,12 +7,12 @@ namespace PisApp.API.Interfaces
         public Task<IEnumerable<TDto>> GetAllProducts<TEntity, TDto>(
             Func<IProductRepository, Task<IEnumerable<TEntity>>> getMethod,
             Func<TEntity, TDto> mapFunction);
-        public Task<IEnumerable<MotherboardDetailsDto>> GetAllMotherboard();
-        public Task<IEnumerable<PowerSupplyDetailsDto>> GetAllPowerSupply();
-        public Task<IEnumerable<CoolerDetailsDto>> GetAllCooler();
-        public Task<IEnumerable<CpuDetailsDto>> GetAllCpu();
-        public Task<IEnumerable<GpuDetailsDto>> GetAllGpu();
-        public Task<IEnumerable<RamDetailDto>> GetAllRam();
-        public Task<IEnumerable<SsdDetailDto>> GetAllSsd();
+        public Task<IEnumerable<CommonProductsDto>> GetAllMotherboard();
+        public Task<IEnumerable<CommonProductsDto>> GetAllPowerSupply();
+        public Task<IEnumerable<CommonProductsDto>> GetAllCooler();
+        public Task<IEnumerable<CommonProductsDto>> GetAllCpu();
+        public Task<IEnumerable<CommonProductsDto>> GetAllGpu();
+        public Task<IEnumerable<CommonProductsDto>> GetAllRam();
+        public Task<IEnumerable<CommonProductsDto>> GetAllSsd();
     }
 }

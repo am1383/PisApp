@@ -1,6 +1,6 @@
 namespace PisApp.API.Dtos
 {
-    public class PrivateDiscountDetailsDto
+    public class PrivateDiscountDetailDto
     {
         public int? code { get; set; }
     }

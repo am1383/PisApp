@@ -86,7 +86,7 @@ namespace PisApp.API.Controllers
 
                 var giftedCodeCount  = await userService.UserGiftedCodeCount(userRefferCode);
 
-                var discountsSummary = userService.UserDiscountsSummary(privateCode, giftedCodeCount);
+                var discountsSummary = userService.MapUserDiscountsSummary(privateCode, giftedCodeCount);
 
                 return new ResponseDto<DiscountSummaryDto>(discountsSummary);
             }

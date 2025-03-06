@@ -1,5 +1,4 @@
 using PisApp.API.Entities;
-using PisApp.API.Products.Entities.Common;
 
 namespace PisApp.API.Dtos
 {

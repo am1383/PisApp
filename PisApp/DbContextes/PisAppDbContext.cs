@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PisApp.API.Entities;
 using PisApp.API.Entities.Common;
-using PisApp.API.Products.Entities;
 using PisApp.API.Products.Entities.Common;
 
 namespace PisApp.API.DbContextes
@@ -14,19 +13,13 @@ namespace PisApp.API.DbContextes
             //
         }
 
-        public DbSet<Login> baseEntities { get; set; } 
+        public DbSet<UserLogin> userLogins { get; set; } 
+        public DbSet<CommonProduct> commonProducts { get; set; }
         public DbSet<Product> products   { get; set; }
         public DbSet<CartItem> cartItems { get; set; }
         public DbSet<CartItemProduct> cartItemProducts { get; set; }
-        public DbSet<Compatible> compatibles  { get; set; }
-        public DbSet<Cooler> coolers { get; set; }
-        public DbSet<Gpu> gpus       { get; set; }
-        public DbSet<Cpu> cpus       { get; set; }
+        public DbSet<Compatible> compatibles     { get; set; }
         public DbSet<UserRefferCode> refferCodes { get; set; }
-        public DbSet<Motherboard> motherboards   { get; set; }
-        public DbSet<PowerSupply> powerSupplies  { get; set; }
-        public DbSet<Ram> rams  { get; set; }
-        public DbSet<Ssd> ssds  { get; set; }
         public DbSet<VIPUser> vIPUsers   { get; set; }
         public DbSet<Discount> discounts { get; set; }
         public DbSet<Refer> refers       { get; set; }
@@ -46,16 +39,10 @@ namespace PisApp.API.DbContextes
             modelBuilder.Entity<CartItem>       ().HasNoKey();
             modelBuilder.Entity<VIPCheckResult> ().HasNoKey();
             modelBuilder.Entity<UserRefferCode> ().HasNoKey();
+            modelBuilder.Entity<CommonProduct>  ().HasNoKey();
             modelBuilder.Entity<CartItemProduct>().HasNoKey();
             modelBuilder.Entity<Compatible>     ().HasNoKey();
-            modelBuilder.Entity<Cooler>         ().HasNoKey();
-            modelBuilder.Entity<Cpu>            ().HasNoKey();
-            modelBuilder.Entity<Gpu>            ().HasNoKey();
-            modelBuilder.Entity<Ram>            ().HasNoKey();
-            modelBuilder.Entity<PowerSupply>    ().HasNoKey();
-            modelBuilder.Entity<Motherboard>    ().HasNoKey();
-            modelBuilder.Entity<Ssd>            ().HasNoKey();
-            modelBuilder.Entity<Login>          ().HasNoKey();
+            modelBuilder.Entity<UserLogin>      ().HasNoKey();
             modelBuilder.Entity<User>           ().HasNoKey();
             modelBuilder.Entity<Cart>           ().HasNoKey();
             modelBuilder.Entity<Discount>       ().HasNoKey();

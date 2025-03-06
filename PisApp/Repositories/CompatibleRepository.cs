@@ -49,7 +49,7 @@ namespace PisApp.API.Repositories
                     FROM compatible_cc_socket
                     WHERE cpu_id IN (SELECT product_id FROM SelectedParts)
                 )
-                SELECT p.*, cp.type
+                SELECT p.id AS product_id, p.model, p.brand, p.category, cp.type
                 FROM product p
                 JOIN CompatibleParts cp ON p.id = cp.product_id
                 WHERE (@p0 IS NULL OR @p0 = '' OR cp.type = @p0);

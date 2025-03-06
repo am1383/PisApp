@@ -4,7 +4,6 @@ using PisApp.API.Interfaces;
 using PisApp.API.Interfaces.UnitOfWork;
 using PisApp.API.Entities;
 using PisApp.API.Utils;
-using PisApp.API.Products.Entities.Common;
 
 namespace PisApp.API.Services
 {
@@ -97,27 +96,27 @@ namespace PisApp.API.Services
             return await unitOfWork.Refers.CountUserReferrerByCode(referCode);
         }
 
-        public async Task<IEnumerable<PrivateDiscountDetailsDto>> UserPrivateCodeWithLimiteTime(int userId)
+        public async Task<IEnumerable<PrivateDiscountDetailDto>> UserPrivateCodeWithLimiteTime(int userId)
         {
             var privateCodes = await unitOfWork.Discounts.GetPrivateDiscountCodesWithLessThanOneWeekLeft(userId);
 
-            return privateCodes.Select(code => new PrivateDiscountDetailsDto
+            return privateCodes.Select(code => new PrivateDiscountDetailDto
             {
                 code = code.code
             }).ToList();
         }
 
-        public async Task<GiftDiscountDetailDto> UserGiftedCodeCount(string userRefferCode)
+        public async Task<GiftedDiscountDetailDto> UserGiftedCodeCount(string userRefferCode)
         {
             var giftedCodesCount = await unitOfWork.Discounts.GetGiftedDiscountCodesCount(userRefferCode);
 
-            return new GiftDiscountDetailDto
+            return new GiftedDiscountDetailDto
             {
                 gifted_code = giftedCodesCount
             };
         }
 
-        public DiscountSummaryDto UserDiscountsSummary(IEnumerable<PrivateDiscountDetailsDto> privateCodes, GiftDiscountDetailDto giftCodes)
+        public DiscountSummaryDto MapUserDiscountsSummary(IEnumerable<PrivateDiscountDetailDto> privateCodes, GiftedDiscountDetailDto giftCodes)
         {
             return new DiscountSummaryDto
             {

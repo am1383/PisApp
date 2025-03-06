@@ -14,11 +14,10 @@ namespace PisApp.API.Services
 
             return compatibleParts.Select(p => new ProductDetailsDto
             {
-                model         = p.model,
-                brand         = p.brand,
-                category      = p.category,
-                current_price = p.current_price,
-                stock_count   = p.stock_count
+                product_id  = p.product_id,
+                model       = p.model,
+                brand       = p.brand,
+                category    = p.category,
             });
         }
     }

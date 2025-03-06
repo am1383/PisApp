@@ -1,6 +1,6 @@
 namespace PisApp.API.Dtos
 {
-    public class CompatibleProductsRequestDto
+    public class CompatibleRequestDto
     {
         public required List<int> products_id { get; set; }
     }

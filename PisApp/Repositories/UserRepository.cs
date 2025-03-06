@@ -12,7 +12,7 @@ namespace PisApp.API.Repositories
         {
             var query  = "SELECT phone_number FROM client WHERE phone_number = @p0";
 
-            var result = await unitOfWork.Context.Set<Login>()
+            var result = await unitOfWork.Context.Set<UserLogin>()
                                                  .FromSqlRaw(query, phoneNumber)
                                                  .FirstOrDefaultAsync();
 

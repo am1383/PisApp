@@ -2,71 +2,85 @@ using Microsoft.EntityFrameworkCore;
 using PisApp.API.Entities;
 using PisApp.API.Interfaces;
 using PisApp.API.Interfaces.UnitOfWork;
-using PisApp.API.Products.Entities;
+using PisApp.API.Products.Entities.Common;
 
 namespace PisApp.API.Repositories
 {
     public class ProductRepository(IUnitOfWork unitOfWork) : IProductRepository
     {
-        public async Task<IEnumerable<Motherboard>> GetAllMotherboardAsync()
+        public async Task<IEnumerable<CommonProduct>> GetAllMotherboardAsync()
         {
-            var query = "SELECT * FROM motherboard JOIN product ON product_id = id";
+            var query = @"SELECT product_id, brand, model 
+                        FROM motherboard 
+                        JOIN product ON product_id = id";
  
-            return await unitOfWork.Context.Set<Motherboard>()
+            return await unitOfWork.Context.Set<CommonProduct>()
                                            .FromSqlRaw(query) 
                                            .ToListAsync();
         }
 
-        public async Task<IEnumerable<Cpu>> GetAllCpuAsync()
+        public async Task<IEnumerable<CommonProduct>> GetAllCpuAsync()
         {
-            var query = "SELECT * FROM cpu JOIN product ON product_id = id";
+            var query = @"SELECT product_id, brand, model 
+                        FROM cpu 
+                        JOIN product ON product_id = id";
  
-            return await unitOfWork.Context.Set<Cpu>()
+            return await unitOfWork.Context.Set<CommonProduct>()
                                            .FromSqlRaw(query) 
                                            .ToListAsync();
         }
 
-        public async Task<IEnumerable<Ram>> GetAllRamAsync()
+        public async Task<IEnumerable<CommonProduct>> GetAllRamAsync()
         {
-            var query = "SELECT * FROM ram_stick JOIN product ON product_id = id";
+            var query = @"SELECT product_id, brand, model 
+                        FROM ram_stick 
+                        JOIN product ON product_id = id";
  
-            return await unitOfWork.Context.Set<Ram>()
+            return await unitOfWork.Context.Set<CommonProduct>()
                                            .FromSqlRaw(query) 
                                            .ToListAsync();
         }
 
-        public async Task<IEnumerable<Gpu>> GetAllGpuAsync()
+        public async Task<IEnumerable<CommonProduct>> GetAllGpuAsync()
         {
-            var query = "SELECT * FROM gpu JOIN product ON product_id = id";
+            var query = @"SELECT product_id, brand, model 
+                        FROM gpu 
+                        JOIN product ON product_id = id";
  
-            return await unitOfWork.Context.Set<Gpu>()
+            return await unitOfWork.Context.Set<CommonProduct>()
                                            .FromSqlRaw(query) 
                                            .ToListAsync();
         }
 
-        public async Task<IEnumerable<Ssd>> GetAllSsdAsync()
+        public async Task<IEnumerable<CommonProduct>> GetAllSsdAsync()
         {
-            var query = "SELECT * FROM ssd JOIN product ON product_id = id";
+            var query = @"SELECT product_id, brand, model 
+                        FROM ssd 
+                        JOIN product ON product_id = id";
  
-            return await unitOfWork.Context.Set<Ssd>()
+            return await unitOfWork.Context.Set<CommonProduct>()
                                            .FromSqlRaw(query) 
                                            .ToListAsync();
         }
 
-        public async Task<IEnumerable<Cooler>> GetAllCoolerAsync()
+        public async Task<IEnumerable<CommonProduct>> GetAllCoolerAsync()
         {
-            var query = "SELECT * FROM cooler JOIN product ON product_id = id";
+            var query = @"SELECT product_id, brand, model 
+                        FROM cooler 
+                        JOIN product ON product_id = id";
 
-            return await unitOfWork.Context.Set<Cooler>()
+            return await unitOfWork.Context.Set<CommonProduct>()
                                            .FromSqlRaw(query)
                                            .ToListAsync();
         }
 
-        public async Task<IEnumerable<PowerSupply>> GetAllPowerSupplyAsync()
+        public async Task<IEnumerable<CommonProduct>> GetAllPowerSupplyAsync()
         {
-            var query = "SELECT * FROM power_supply JOIN product ON product_id = id";
+            var query = @"SELECT product_id, brand, model 
+                        FROM power_supply 
+                        JOIN product ON product_id = id";
  
-            return await unitOfWork.Context.Set<PowerSupply>()
+            return await unitOfWork.Context.Set<CommonProduct>()
                                            .FromSqlRaw(query) 
                                            .ToListAsync();
         }
