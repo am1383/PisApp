@@ -65,10 +65,7 @@ public class JwtService(string _key, string _issuer)
     {
         var userIdClaim = httpContext.User.FindFirst("userId")?.Value;
 
-        if (userIdClaim is null)
-        {
-            throw new ArgumentNullException("userId not found");
-        }
+        ArgumentNullException.ThrowIfNull(userIdClaim, nameof(userIdClaim));
 
         var userId = ConvertUserIdToInt(userIdClaim);
 
@@ -79,11 +76,8 @@ public class JwtService(string _key, string _issuer)
     {
         var userVIPClaim = httpContext.User.FindFirst("isUserVIP")?.Value;
 
-        if (userVIPClaim is null)
-        {
-            throw new ArgumentNullException("isVip not found");
-        }
-
+        ArgumentNullException.ThrowIfNull(userVIPClaim, nameof(userVIPClaim));
+        
         var isUserVIP = ConvertUserVIPStatusToBool(userVIPClaim);
 
         return isUserVIP;
