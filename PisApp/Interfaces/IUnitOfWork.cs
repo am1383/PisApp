@@ -13,6 +13,6 @@ namespace PisApp.API.Interfaces.UnitOfWork
         IShoppingCartRepository ShoppingCarts { get; }
         ITransactionRepository  Transactions  { get; }
         IReferRepository        Refers        { get; }
-        Task<int>               CompleteAsync();
+        Task<int> CompleteAsync();
     }
 }

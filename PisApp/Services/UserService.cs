@@ -27,7 +27,7 @@ namespace PisApp.API.Services
         {
             var normalizePhoneNumber = PhoneNumberHelper.NormalizePhoneNumber(phoneNumber);
 
-            if (await unitOfWork.Users.GetUserByPhoneNumberAsync(normalizePhoneNumber))
+            if (await unitOfWork.Users.FindUserByPhoneNumberOrFailAsync(normalizePhoneNumber) is true)
             {   
                 return await unitOfWork.Users.GetUserIdByPhoneNumberAsync(normalizePhoneNumber);
             } 
@@ -160,9 +160,9 @@ namespace PisApp.API.Services
             return result;
         }
 
-        public async Task<CartResponseDto> UserCartsStatus(int userId)
+        public async Task<CartResponseDto> GetUserCarts(int userId)
         {
-            var carts          = await unitOfWork.ShoppingCarts.UserCartsStatus(userId);
+            var carts          = await unitOfWork.ShoppingCarts.GetUserCarts(userId);
             var availableCarts = await unitOfWork.ShoppingCarts.AvailabeUserCarts(userId);
 
             return new CartResponseDto
@@ -177,12 +177,12 @@ namespace PisApp.API.Services
             };
         }
 
-        public async Task<bool> isUserVIPChecker(int userId)
+        public async Task<bool> IsUserVIPChecker(int userId)
         {
             return await unitOfWork.Users.isUserVIP(userId);
         }
 
-        public async Task<string> userRefferCode(int userId)
+        public async Task<string> GetUserRefferCode(int userId)
         {
             return await unitOfWork.Users.GetUserRefferCode(userId);
         }

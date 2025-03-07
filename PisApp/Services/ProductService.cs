@@ -21,8 +21,8 @@ namespace PisApp.API.Services
                 m => new CommonProductsDto
                 {
                     product_id = m.product_id,
-                    model    = m.model,
-                    brand    = m.brand,
+                    model      = m.model,
+                    brand      = m.brand,
                 });
         }
 

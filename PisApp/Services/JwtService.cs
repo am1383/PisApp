@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-public class JwtService(string _key, string _issuer)
+public class JwtService(string key, string issuer)
 {
     public string GenerateToken(int userId, bool isUserVIP, int expiryMinutes = 1440)
     {
@@ -12,12 +12,12 @@ public class JwtService(string _key, string _issuer)
             new Claim("isUserVIP", isUserVIP.ToString())
         };
 
-        var key   = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var issuerKey   = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+        var creds       = new SigningCredentials(issuerKey, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer   : _issuer,
-            audience : _issuer,
+            issuer   : issuer,
+            audience : issuer,
             claims   : claims,
             expires  : DateTime.UtcNow.AddMinutes(expiryMinutes),
             signingCredentials: creds
@@ -28,7 +28,7 @@ public class JwtService(string _key, string _issuer)
 
     public ClaimsPrincipal? ValidateToken(string token)
     {
-        var key          = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_key));
+        var issuerKey    = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
         var tokenHandler = new JwtSecurityTokenHandler();
 
         try
@@ -38,9 +38,9 @@ public class JwtService(string _key, string _issuer)
                 ValidateIssuer   = true,
                 ValidateAudience = true,
                 ValidateLifetime = true,
-                ValidIssuer      = _issuer,
-                ValidAudience    = _issuer,
-                IssuerSigningKey = key,
+                ValidIssuer      = issuer,
+                ValidAudience    = issuer,
+                IssuerSigningKey = issuerKey,
                 ClockSkew        = TimeSpan.Zero // Prevent clock skew issues
             };
 

@@ -8,7 +8,7 @@ namespace PisApp.API.Repositories
 {
     public class UserRepository(IUnitOfWork unitOfWork) : IUserRepository
     {
-        public async Task<bool> GetUserByPhoneNumberAsync(string phoneNumber)
+        public async Task<bool> FindUserByPhoneNumberOrFailAsync(string phoneNumber)
         {
             var query  = "SELECT phone_number FROM client WHERE phone_number = @p0";
 

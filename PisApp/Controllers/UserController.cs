@@ -18,7 +18,7 @@ namespace PisApp.API.Controllers
             {
                 var userId      = await userService.FindUserIdByPhoneNumber(loginDto.phone_number);
 
-                var isUserVIP   = await userService.isUserVIPChecker(userId);
+                var isUserVIP   = await userService.IsUserVIPChecker(userId);
 
                 var token       = jwtService.GenerateToken(userId, isUserVIP);
 
@@ -82,7 +82,7 @@ namespace PisApp.API.Controllers
 
                 var privateCode      = await userService.UserPrivateCodeWithLimiteTime(userId);
 
-                var userRefferCode   = await userService.userRefferCode(userId);
+                var userRefferCode   = await userService.GetUserRefferCode(userId);
 
                 var giftedCodeCount  = await userService.UserGiftedCodeCount(userRefferCode);
 
@@ -122,7 +122,7 @@ namespace PisApp.API.Controllers
             {
                 var userId = jwtService.GetUserId(HttpContext);
 
-                var carts  = await userService.UserCartsStatus(userId);
+                var carts  = await userService.GetUserCarts(userId);
 
                 return new ResponseDto<CartResponseDto>(carts);
             }

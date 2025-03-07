@@ -22,17 +22,16 @@ namespace PisApp.API.Repositories
                     LIMIT 5;
             ";
 
-            var result = await unitOfWork.Context.Set<ShoppingCart>()
+            return await unitOfWork.Context.Set<ShoppingCart>()
                                            .FromSqlRaw(query, userId)
                                            .ToListAsync();
-            return result;
         }
 
-        public async Task<List<Cart>> UserCartsStatus(int userId)
+        public async Task<List<Cart>> GetUserCarts(int userId)
         {
             var query = @"SELECT cart_number, cart_status
                           FROM shopping_cart
-                          WHERE s.client_id = @p0
+                          WHERE client_id = @p0
                     ";
 
             return await unitOfWork.Context.Set<Cart>()
@@ -43,7 +42,7 @@ namespace PisApp.API.Repositories
         public async Task<int> AvailabeUserCarts(int userId)
         {
             var query = @"
-                        SELECT COALESCE(COUNT(*), 0)
+                        SELECT COALESCE(COUNT(*), 0) AS count
                         FROM shopping_cart
                         WHERE client_id = @p0 
                             AND cart_status IN ('active', 'locked')

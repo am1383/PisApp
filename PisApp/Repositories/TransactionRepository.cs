@@ -12,9 +12,9 @@ namespace PisApp.API.Repositories
             var query = @"
                     SELECT COALESCE(SUM(adt.cart_price) * 0.15, 0) AS user_profit
                     FROM vip_client vc
-                    JOIN issued_for ifo ON vc.client_id = ifo.client_id
+                    JOIN issued_for ifo ON vc.client_id      = ifo.client_id
                     JOIN transaction t  ON ifo.tracking_code = t.tracking_code
-                    JOIN added_to adt   ON ifo.client_id = adt.client_id 
+                    JOIN added_to adt   ON ifo.client_id     = adt.client_id 
                         AND ifo.cart_number   = adt.cart_number 
                         AND ifo.locked_number = adt.locked_number
                     WHERE vc.client_id        = @p0
