@@ -163,7 +163,6 @@ namespace PisApp.API.Services
         public async Task<CartResponseDto> UserCartsStatus(int userId)
         {
             var carts          = await unitOfWork.ShoppingCarts.UserCartsStatus(userId);
-
             var availableCarts = await unitOfWork.ShoppingCarts.AvailabeUserCarts(userId);
 
             return new CartResponseDto

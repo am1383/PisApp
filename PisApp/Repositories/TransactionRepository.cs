@@ -10,17 +10,18 @@ namespace PisApp.API.Repositories
         public async Task<UserProfit> GetUserProfitForVIPClients(int userId)
         {
             var query = @"
-                SELECT COALESCE(SUM(at.cart_price), 0) * 0.15 AS user_profit
-                    FROM issued_for AS ifr
-                    JOIN transaction AS t 
-                        ON ifr.tracking_code = t.tracking_code
-                    JOIN added_to AS at 
-                        ON at.client_id      = ifr.client_id
-                        AND at.cart_number   = ifr.cart_number
-                        AND at.locked_number = ifr.locked_number
-                    WHERE t.time_stamp      >= date_trunc('month', CURRENT_DATE - INTERVAL '1 month')
-                        AND t.time_stamp     < date_trunc('month', CURRENT_DATE)
-                        AND ifr.client_id    = @p0
+                    SELECT COALESCE(SUM(adt.cart_price) * 0.15, 0) AS user_profit
+                    FROM vip_client vc
+                    JOIN issued_for ifo ON vc.client_id = ifo.client_id
+                    JOIN transaction t  ON ifo.tracking_code = t.tracking_code
+                    JOIN added_to adt   ON ifo.client_id = adt.client_id 
+                        AND ifo.cart_number   = adt.cart_number 
+                        AND ifo.locked_number = adt.locked_number
+                    WHERE vc.client_id        = @p0
+                        AND t.transaction_status = 'successful'
+                        AND t.time_stamp        >= DATE_TRUNC('month', CURRENT_DATE)
+                        AND t.time_stamp        <= NOW()
+                        AND vc.expiration_time  >= t.time_stamp
                     ";
 
             return await unitOfWork.Context.Set<UserProfit>()

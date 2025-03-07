@@ -10,16 +10,12 @@ namespace PisApp.API.Repositories
         public async Task<List<PrivateDiscount>> GetPrivateDiscountCodesWithLessThanOneWeekLeft(int userId)
         {
             var query = @"
-                    SELECT 
-                        pc.code  
-                    FROM 
-                        private_code pc
-                    JOIN 
-                        discount_code dc ON pc.code = dc.code
-                    WHERE 
-                        pc.client_id = @p0
-                        AND dc.expiration_time <= NOW() + INTERVAL '7 days'
-                ";
+                        SELECT d.code
+                        FROM discount_code d
+                        INNER JOIN private_code p ON d.code = p.code
+                        WHERE p.client_id = @p0
+                            AND d.expiration_time BETWEEN NOW() AND (NOW() + INTERVAL '7 DAY')
+                    ";  
 
             return await unitOfWork.Context.Set<PrivateDiscount>()
                                            .FromSqlRaw(query, userId) 
