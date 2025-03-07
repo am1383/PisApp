@@ -9,7 +9,9 @@ namespace PisApp.API.Repositories
     {
         public async Task<List<Address>> GetUserAddressesAsync(int userId)
         {
-            var query = "SELECT province, remain_address FROM address_of_client WHERE client_id = @p0";
+            var query = @"SELECT province, remain_address 
+                        FROM address_of_client 
+                        WHERE client_id = @p0";
 
             return await unitOfWork.Context.Set<Address>()
                                            .FromSqlRaw(query, userId)

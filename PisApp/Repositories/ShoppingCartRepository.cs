@@ -30,10 +30,9 @@ namespace PisApp.API.Repositories
 
         public async Task<List<Cart>> UserCartsStatus(int userId)
         {
-            var query = @"
-                        SELECT cart_number, cart_status
-                        FROM shopping_cart
-                        WHERE s.client_id = @p0
+            var query = @"SELECT cart_number, cart_status
+                          FROM shopping_cart
+                          WHERE s.client_id = @p0
                     ";
 
             return await unitOfWork.Context.Set<Cart>()

@@ -8,65 +8,54 @@ namespace PisApp.API.Repositories
 {
     public class CompatibleRepository(IUnitOfWork unitOfWork) : ICompatibleRepository
     {
-        public async Task<List<Product>> GetCompatiblePartsAsync(int[] selectedPartIds, string? partType)
+        public async Task<List<Product>> GetCompatiblePartsAsync(IEnumerable<int> selectedPartIds)
         {
-            var query = @"
-                WITH SelectedParts AS (
-                    SELECT unnest(@selectedPartIds) AS product_id
-                ),
-                CompatibleParts AS (
-                    SELECT motherboard_id AS product_id, 'motherboard' AS type 
-                    FROM compatible_mc_socket
-                    WHERE cpu_id IN (SELECT product_id FROM SelectedParts)
+            var query = @"SELECT p.id AS product_id, p.brand, p.model, p.category
+                FROM (
+                    SELECT cooler_id AS compatible_id FROM compatible_cc_socket WHERE cpu_id = ANY(@selectedPartIds)
+                    UNION
+                    SELECT cpu_id FROM compatible_cc_socket WHERE cooler_id = ANY(@selectedPartIds)
                     
                     UNION ALL
                     
-                    SELECT ram_id AS product_id, 'ram_stick' AS type 
-                    FROM compatible_rm_slot
-                    WHERE motherboard_id IN (SELECT product_id FROM SelectedParts)
+                    SELECT motherboard_id FROM compatible_mc_socket WHERE cpu_id = ANY(@selectedPartIds)
+                    UNION
+                    SELECT cpu_id FROM compatible_mc_socket WHERE motherboard_id = ANY(@selectedPartIds)
                     
                     UNION ALL
                     
-                    SELECT gpu_id AS product_id, 'gpu' AS type 
-                    FROM compatible_gm_slot
-                    WHERE motherboard_id IN (SELECT product_id FROM SelectedParts)
+                    SELECT motherboard_id FROM compatible_rm_slot WHERE ram_id = ANY(@selectedPartIds)
+                    UNION
+                    SELECT ram_id FROM compatible_rm_slot WHERE motherboard_id = ANY(@selectedPartIds)
                     
                     UNION ALL
                     
-                    SELECT ssd_id AS product_id, 'ssd' AS type 
-                    FROM compatible_sm_slot
-                    WHERE motherboard_id IN (SELECT product_id FROM SelectedParts)
+                    SELECT power_supply_id FROM compatible_gp_connector WHERE gpu_id = ANY(@selectedPartIds)
+                    UNION
+                    SELECT gpu_id FROM compatible_gp_connector WHERE power_supply_id = ANY(@selectedPartIds)
                     
                     UNION ALL
                     
-                    SELECT gpu_id AS product_id, 'gpu' AS type 
-                    FROM compatible_gp_connector
-                    WHERE power_supply_id IN (SELECT product_id FROM SelectedParts)
+                    SELECT motherboard_id FROM compatible_sm_slot WHERE ssd_id = ANY(@selectedPartIds)
+                    UNION
+                    SELECT ssd_id FROM compatible_sm_slot WHERE motherboard_id = ANY(@selectedPartIds)
                     
                     UNION ALL
                     
-                    SELECT cooler_id AS product_id, 'cooler' AS type 
-                    FROM compatible_cc_socket
-                    WHERE cpu_id IN (SELECT product_id FROM SelectedParts)
-                )
-                SELECT p.id AS product_id, p.model, p.brand, p.category, cp.type
-                FROM product p
-                JOIN CompatibleParts cp ON p.id = cp.product_id
-                WHERE (@p0 IS NULL OR @p0 = '' OR cp.type = @p0);
+                    SELECT motherboard_id FROM compatible_gm_slot WHERE gpu_id = ANY(@selectedPartIds)
+                    UNION
+                    SELECT gpu_id FROM compatible_gm_slot WHERE motherboard_id = ANY(@selectedPartIds)
+                ) AS compat
+                JOIN product p ON p.id = compat.compatible_id
             ";
 
             var selectedPartIdsParam = new NpgsqlParameter("@selectedPartIds", NpgsqlTypes.NpgsqlDbType.Array | NpgsqlTypes.NpgsqlDbType.Integer)
             {
-                Value = selectedPartIds
-            };
-
-            var partTypeParam = new NpgsqlParameter("@p0", NpgsqlTypes.NpgsqlDbType.Text)
-            {
-                Value = string.IsNullOrEmpty(partType) ? (object)DBNull.Value : partType
+                Value = selectedPartIds?.Any() == true ? selectedPartIds.ToArray() : new int[0]
             };
 
             return await unitOfWork.Context.Set<Product>()
-                                           .FromSqlRaw(query, selectedPartIdsParam, partTypeParam)
+                                           .FromSqlRaw(query, selectedPartIdsParam)
                                            .ToListAsync();
         }
     }

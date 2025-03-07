@@ -4,6 +4,6 @@ namespace PisApp.API.Interfaces
 {
     public interface ICompatibleService
     {
-        public Task<IEnumerable<ProductDetailsDto>> GetCompatibleParts(List<int> selectedPartIds, string? type);
+        public Task<IEnumerable<ProductDetailsDto>> GetCompatibleParts(IEnumerable<int> selectedPartIds, string? type);
     }
 }

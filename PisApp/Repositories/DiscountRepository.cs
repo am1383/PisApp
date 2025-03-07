@@ -9,11 +9,10 @@ namespace PisApp.API.Repositories
     {
         public async Task<List<PrivateDiscount>> GetPrivateDiscountCodesWithLessThanOneWeekLeft(int userId)
         {
-            var query = @"
-                        SELECT d.code
-                        FROM discount_code d
-                        INNER JOIN private_code p ON d.code = p.code
-                        WHERE p.client_id = @p0
+            var query = @"SELECT d.code
+                          FROM discount_code d
+                          INNER JOIN private_code p ON d.code = p.code
+                          WHERE p.client_id = @p0
                             AND d.expiration_time BETWEEN NOW() AND (NOW() + INTERVAL '7 DAY')
                     ";  
 
