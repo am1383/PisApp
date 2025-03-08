@@ -26,22 +26,17 @@ namespace PisApp.API.Repositories
         {
             var query = @"
                     WITH RECURSIVE referral_chain AS (
-                        SELECT
-                            referee_id,
-                            referrer_id
+                        SELECT referee_id, referrer_id
                         FROM refers
                         WHERE referrer_id = @p0
 
                         UNION ALL
 
-                        SELECT
-                            r.referee_id,
-                            r.referrer_id
+                        SELECT r.referee_id, r.referrer_id
                         FROM referral_chain rc
                         JOIN refers r ON rc.referee_id = r.referrer_id
                     )
-                    SELECT 
-                        COUNT(*) AS gifted_codes_count
+                    SELECT COUNT(*) AS gifted_codes_count
                     FROM referral_chain
                 ";
 

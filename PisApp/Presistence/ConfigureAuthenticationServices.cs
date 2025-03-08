@@ -19,9 +19,9 @@ namespace PisApp.API.Persistence
                     ValidateAudience  = true,
                     ValidateLifetime  = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer      = configuration["JwtSettings:Issuer"],
-                    ValidAudience    = configuration["JwtSettings:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(
+                    ValidIssuer       = configuration["JwtSettings:Issuer"],
+                    ValidAudience     = configuration["JwtSettings:Issuer"],
+                    IssuerSigningKey   = new SymmetricSecurityKey(
                         Encoding.UTF8.GetBytes(configuration["JwtSettings:Secret"]!)
                     )
                 };
