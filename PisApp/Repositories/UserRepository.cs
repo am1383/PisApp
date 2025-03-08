@@ -45,7 +45,11 @@ namespace PisApp.API.Repositories
 
         public async Task<bool> isUserVIP(int userId)
         {
-            var query  = "SELECT EXISTS(SELECT * FROM vip_client WHERE client_id = @p0)";
+            var query  = @"
+                        SELECT EXISTS(SELECT *
+		                FROM vip_client
+		                WHERE client_id = @p0 
+                        AND expiration_time >= NOW())";
 
             var result = await unitOfWork.Context.Set<VIPCheckResult>()
                                                  .FromSqlRaw(query, userId)
