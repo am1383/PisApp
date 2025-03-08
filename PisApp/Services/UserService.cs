@@ -147,7 +147,7 @@ namespace PisApp.API.Services
 
             foreach (var lockedNumber in uniqueLockerNumbers)
             {
-                var products   = await unitOfWork.Products.GetCartItemProducts(lockedNumber);
+                var products   = await unitOfWork.Products.GetCartItemProducts(lockedNumber, userId);
                 var totalPrice = await unitOfWork.ShoppingCarts.GetCartItemTotalPrice(lockedNumber);
 
                 result.Add(new ShoppingCartsDetailsDto

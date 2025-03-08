@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using PisApp.API.Entities;
 using PisApp.API.Entities.Common;
+using PisApp.API.Products.Entities;
 using PisApp.API.Products.Entities.Common;
 
 namespace PisApp.API.DbContextes
@@ -13,28 +14,15 @@ namespace PisApp.API.DbContextes
             //
         }
 
-        public DbSet<UserLogin> userLogins { get; set; } 
-        public DbSet<CommonProduct> commonProducts { get; set; }
-        public DbSet<Product> products   { get; set; }
-        public DbSet<CartItem> cartItems { get; set; }
-        public DbSet<CartItemProduct> cartItemProducts { get; set; }
-        public DbSet<Compatible> compatibles     { get; set; }
-        public DbSet<UserRefferCode> refferCodes { get; set; }
-        public DbSet<VIPUser> vIPUsers   { get; set; }
-        public DbSet<Discount> discounts { get; set; }
-        public DbSet<Refer> refers       { get; set; }
-        public DbSet<Address> addresses  { get; set; }
-        public DbSet<ShoppingCart> shoppingCarts { get; set; }
-        public DbSet<UserProfit> userProfits     { get; set; }
-        public DbSet<Cart> carts                 { get; set; }
-        public DbSet<VIPCheckResult> vipCheckResults   { get; set; }
-        public DbSet<UserDetail> userDetails           { get; set; }
-        public DbSet<PrivateDiscount> privateDiscounts { get; set; }
-        public DbSet<User> users { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<VIPUser>        ().HasNoKey();
+            modelBuilder.Entity<Motherboard>    ().HasNoKey();
+            modelBuilder.Entity<Cpu>            ().HasNoKey();
+            modelBuilder.Entity<Gpu>            ().HasNoKey();
+            modelBuilder.Entity<Cooler>         ().HasNoKey();
+            modelBuilder.Entity<Ssd>            ().HasNoKey();
+            modelBuilder.Entity<Hdd>            ().HasNoKey();
             modelBuilder.Entity<Product>        ().HasNoKey();
             modelBuilder.Entity<CartItem>       ().HasNoKey();
             modelBuilder.Entity<VIPCheckResult> ().HasNoKey();

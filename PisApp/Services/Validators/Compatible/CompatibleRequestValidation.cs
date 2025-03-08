@@ -7,27 +7,29 @@ namespace PisApp.API.Services.Dtos.Validators
     {
         public CompatibleProductsRequestValidation()
         {
-            RuleFor(c => c.products_id)
+            RuleFor(c => c.compatibles)
                 .NotNull()
                 .WithMessage("{PropertyName} نمی‌تواند خالی باشد.")
                 .NotEmpty()
                 .WithMessage("{PropertyName} را وارد کنید.")
-                .Must(HaveCorrectSize)
+                .Must(c => HaveCorrectSize(c))
                 .WithMessage("{PropertyName} باید حداقل یک مقدار داشته باشد.")
-                .Must(BeUnique)
+                .Must(c => BeUnique(c))
                 .WithMessage("{PropertyName} نباید مقدار تکراری داشته باشد.");
         }
 
-        private bool HaveCorrectSize(List<int> productsId)
+        private bool HaveCorrectSize(List<CompatibleDetailsDto> compatibles)
         {
             var minProductsCount = 1;
 
-            return productsId?.Count >= minProductsCount;
+            return compatibles.Count >= minProductsCount;
         }
 
-        private bool BeUnique(List<int> productsId)
+        private bool BeUnique(List<CompatibleDetailsDto> compatibles)
         {
-            return productsId.Distinct().Count() == productsId.Count;
+            var productsIds = compatibles.Select(c => c.products_id).ToList();
+
+            return productsIds.Distinct().Count() == productsIds.Count;
         }
     }
 }

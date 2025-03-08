@@ -17,9 +17,9 @@ namespace PisApp.API.Controllers
         {
             try
             {
-                var compatiblesPart = await compatibleService.GetCompatibleParts(dto.products_id, type);
+                var compatibleParts = await compatibleService.GetCompaitblesHandler(dto.compatibles, type);
 
-                return new ResponseDto<IEnumerable<ProductDetailsDto>>(compatiblesPart);
+                return new ResponseDto<IEnumerable<ProductDetailsDto>>(compatibleParts);
             }
             catch (Exception e)
             {
