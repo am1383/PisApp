@@ -80,7 +80,7 @@ namespace PisApp.API.Services
         {
             var cpu = await unitOfWork.Products.GetCpuDetails(productId);
 
-            return await unitOfWork.Compatibles.CompatibleWithCPU(productId, cpu.max_memory_limit, cpu.base_frequency, cpu.boost_frequency, cpu.supported_wattage);
+            return await unitOfWork.Compatibles.CompatibleWithCPU(productId, cpu.max_memory_limit, cpu.base_frequency, cpu.boost_frequency, cpu.wattage);
         }
 
         private async Task<List<Product>> CompatibleWithMotherbordHandler(int productId)

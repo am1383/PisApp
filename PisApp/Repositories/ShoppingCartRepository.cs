@@ -45,7 +45,7 @@ namespace PisApp.API.Repositories
                         SELECT COALESCE(COUNT(*), 0) AS count
                         FROM shopping_cart
                         WHERE client_id = @p0 
-                            AND cart_status = 'active'
+                        AND cart_status = 'active'
                     ";
 
             var result = await unitOfWork.Context.Set<Refer>()

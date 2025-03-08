@@ -65,7 +65,7 @@ namespace PisApp.API.Repositories
                 SELECT p.id AS product_id, p.brand, p.model, p.category
                 FROM product p
                 JOIN power_supply ps ON p.id = ps.product_id
-                WHERE ps.supported_wattage  >= @p0
+                WHERE ps.supported_wattage >= @p0
 
                 UNION
 
@@ -153,7 +153,7 @@ namespace PisApp.API.Repositories
                 SELECT p.id AS product_id, p.brand, p.model, p.category
                 FROM product p
                 JOIN power_supply ps ON p.id = ps.product_id
-                WHERE ps.supported_wattage  >= @p2
+                WHERE ps.supported_wattage >= @p2
 
                 UNION
 

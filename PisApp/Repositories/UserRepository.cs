@@ -32,10 +32,9 @@ namespace PisApp.API.Repositories
 
         public async Task<UserDetail> GetUserDetailAsync(int userId)
         {
-            var query = @"SELECT 
-                            first_name, last_name, wallet_balance, time_stamp, referral_code 
-                        FROM client
-                        WHERE client_id = @p0
+            var query = @"SELECT first_name, last_name, wallet_balance, time_stamp, referral_code 
+                          FROM client
+                          WHERE client_id = @p0
                     ";  
 
             return await unitOfWork.Context.Set<UserDetail>()
@@ -45,11 +44,10 @@ namespace PisApp.API.Repositories
 
         public async Task<bool> isUserVIP(int userId)
         {
-            var query  = @"
-                        SELECT EXISTS(SELECT *
-		                FROM vip_client
-		                WHERE client_id = @p0 
-                        AND expiration_time >= NOW())";
+            var query  = @"SELECT EXISTS(SELECT *
+		                   FROM vip_client
+		                   WHERE client_id      = @p0 
+                           AND expiration_time >= NOW())";
 
             var result = await unitOfWork.Context.Set<VIPCheckResult>()
                                                  .FromSqlRaw(query, userId)

@@ -92,8 +92,8 @@ namespace PisApp.API.Repositories
                         p.brand, p.model, p.category, a.cart_price AS price, a.quantity
                         FROM added_to a
                         JOIN product p ON a.product_id = p.id
-                        WHERE a.client_id   = @p0
-                        AND a.locked_number = @p1";
+                        WHERE a.client_id              = @p0
+                        AND a.locked_number            = @p1";
 
             return await unitOfWork.Context.Set<CartItemProduct>()
                                            .FromSqlRaw(query, userId, lockedNumber)
@@ -102,16 +102,19 @@ namespace PisApp.API.Repositories
 
         public async Task<Cpu> GetCpuDetails(int productId)
         {
-            var query = @"SELECT * FROM cpu WHERE product_id = @p0";
+            var query = @"SELECT max_memory_limit, wattage,
+                          base_frequency, boost_frequency 
+                          FROM cpu 
+                          WHERE product_id = @p0";
 
             return await unitOfWork.Context.Set<Cpu>()
-                                            .FromSqlRaw(query, productId)
-                                            .FirstOrDefaultAsync();
+                                           .FromSqlRaw(query, productId)
+                                           .FirstOrDefaultAsync();
         }
 
         public async Task<Gpu> GetGpuDetails(int productId)
         {
-            var query = @"SELECT * FROM gpu WHERE product_id = @p0";
+            var query = @"SELECT wattage FROM gpu WHERE product_id = @p0";
 
             return await unitOfWork.Context.Set<Gpu>()
                                             .FromSqlRaw(query, productId)
@@ -120,7 +123,7 @@ namespace PisApp.API.Repositories
 
         public async Task<Ssd> GetSsdDetails(int productId)
         {
-            var query = @"SELECT * FROM ssd WHERE product_id = @p0";
+            var query = @"SELECT wattage FROM ssd WHERE product_id = @p0";
 
             return await unitOfWork.Context.Set<Ssd>()
                                            .FromSqlRaw(query, productId)
@@ -129,7 +132,9 @@ namespace PisApp.API.Repositories
 
         public async Task<Ram> GetRAMDetails(int productId)
         {
-            var query = @"SELECT * FROM ram WHERE product_id = @p0";
+            var query = @"SELECT wattage, capacity, frequency
+                          FROM ram 
+                          WHERE product_id = @p0";
 
             return await unitOfWork.Context.Set<Ram>()
                                            .FromSqlRaw(query, productId)
@@ -138,7 +143,9 @@ namespace PisApp.API.Repositories
 
         public async Task<Motherboard> GetMotherboardDetails(int productId)
         {
-            var query = @"SELECT * FROM motherboard WHERE product_id = @p0";
+            var query = @"SELECT wattage, memory_speed_range
+                          FROM motherboard 
+                          WHERE product_id = @p0";
 
             return await unitOfWork.Context.Set<Motherboard>()
                                            .FromSqlRaw(query, productId)
@@ -147,7 +154,7 @@ namespace PisApp.API.Repositories
 
         public async Task<Cooler> GetCoolerDetails(int productId)
         {
-            var query = @"SELECT * FROM cooler WHERE product_id = @p0";
+            var query = @"SELECT wattage FROM cooler WHERE product_id = @p0";
 
             return await unitOfWork.Context.Set<Cooler>()
                                            .FromSqlRaw(query, productId)
@@ -156,7 +163,7 @@ namespace PisApp.API.Repositories
 
         public async Task<Hdd> GetHddDetails(int productId)
         {
-            var query = @"SELECT * FROM hdd WHERE product_id = @p0";
+            var query = @"SELECT wattage FROM hdd WHERE product_id = @p0";
 
             return await unitOfWork.Context.Set<Hdd>()
                                            .FromSqlRaw(query, productId)
