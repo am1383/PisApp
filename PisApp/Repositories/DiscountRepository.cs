@@ -12,8 +12,9 @@ namespace PisApp.API.Repositories
             var query = @"SELECT d.code
                           FROM discount_code d
                           INNER JOIN private_code p ON d.code = p.code
-                          WHERE p.client_id = @p0
-                          AND d.expiration_time BETWEEN NOW() AND (NOW() + INTERVAL '7 DAY')
+                          WHERE p.client_id     = @p0
+                          AND d.expiration_time > NOW()
+                          AND d.expiration_time < (NOW() + INTERVAL '7 DAY')
                     ";  
 
             return await unitOfWork.Context.Set<PrivateDiscount>()
