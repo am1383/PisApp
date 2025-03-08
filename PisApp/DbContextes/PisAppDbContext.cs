@@ -23,13 +23,13 @@ namespace PisApp.API.DbContextes
             modelBuilder.Entity<Cooler>         ().HasNoKey();
             modelBuilder.Entity<Ssd>            ().HasNoKey();
             modelBuilder.Entity<Hdd>            ().HasNoKey();
+            modelBuilder.Entity<Ram>            ().HasNoKey();
             modelBuilder.Entity<Product>        ().HasNoKey();
             modelBuilder.Entity<CartItem>       ().HasNoKey();
             modelBuilder.Entity<VIPCheckResult> ().HasNoKey();
             modelBuilder.Entity<UserRefferCode> ().HasNoKey();
             modelBuilder.Entity<CommonProduct>  ().HasNoKey();
             modelBuilder.Entity<CartItemProduct>().HasNoKey();
-            modelBuilder.Entity<Compatible>     ().HasNoKey();
             modelBuilder.Entity<UserLogin>      ().HasNoKey();
             modelBuilder.Entity<User>           ().HasNoKey();
             modelBuilder.Entity<Cart>           ().HasNoKey();
